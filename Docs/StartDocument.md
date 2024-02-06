@@ -40,7 +40,7 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 ### Class Diagram
 
-![ClassDiagram]
+![ClassDiagram](ClassDiagram.png)
 
 ### Design Mockups
 
