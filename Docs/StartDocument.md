@@ -35,7 +35,7 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 * Card game
 * 2D view point
-* Multiplayer mode only (connected via the same LAN Network)
+* Multiplayer mode only 
 * To start, it will require  **2 people**
 
 ### Class Diagram
