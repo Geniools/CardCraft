@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.8.34525.116
+VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCraft", "CardCraft.csproj", "{790B0535-9347-43AE-B0AC-14F70F90C363}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCraftClient", "CardCraftClient\CardCraftClient.csproj", "{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCraftServer", "CardCraftServer\CardCraftServer.csproj", "{28404A57-5269-41BC-B59C-64DAF750E533}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CardCraftShared", "CardCraftShared\CardCraftShared.shproj", "{9CD3FD3E-C08A-48FA-9FDB-1FBEB6050E3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,17 +15,24 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{790B0535-9347-43AE-B0AC-14F70F90C363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{790B0535-9347-43AE-B0AC-14F70F90C363}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{790B0535-9347-43AE-B0AC-14F70F90C363}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{790B0535-9347-43AE-B0AC-14F70F90C363}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{790B0535-9347-43AE-B0AC-14F70F90C363}.Release|Any CPU.Build.0 = Release|Any CPU
-		{790B0535-9347-43AE-B0AC-14F70F90C363}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{28404A57-5269-41BC-B59C-64DAF750E533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28404A57-5269-41BC-B59C-64DAF750E533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28404A57-5269-41BC-B59C-64DAF750E533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28404A57-5269-41BC-B59C-64DAF750E533}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3721049B-1BE6-4378-8E56-7BDDDDD0F0E1}
+		SolutionGuid = {63D69AEA-AAA5-402E-A4C0-2C7A1C86F66F}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CardCraftShared\CardCraftShared.projitems*{9cd3fd3e-c08a-48fa-9fdb-1fbeb6050e3b}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
