@@ -4,6 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>93b7b144-6ed4-43ab-8c21-d0be0be2f9a5</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.21.2" />
+  </ItemGroup>
+
+  <Import Project="..\CardCraftShared\CardCraftShared.projitems" Label="Shared" />
 
 </Project>
