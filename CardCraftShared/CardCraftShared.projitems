@@ -9,5 +9,20 @@
     <Import_RootNamespace>CardCraftShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseMinion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseSpell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Board.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CardRarity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AlexCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Deck.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Graveyard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseHero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISpecialAbility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SpecialStatus.cs" />
   </ItemGroup>
 </Project>

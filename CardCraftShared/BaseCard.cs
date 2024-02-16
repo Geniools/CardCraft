@@ -12,12 +12,17 @@ public abstract class BaseCard
         this.Rarity = rarity;
     }
 
-    public int ManaCost { 
+    public int ManaCost {
         get => this._manaCost;
         set {
-            if ( value < 0 && value >= 10)
+            if (value > 0)
             {
                 this._manaCost = value;
+            }
+            else
+            {
+                // TODO: Change to a more informative exception
+                throw new Exception();
             }
         }
     }

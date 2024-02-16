@@ -1,17 +1,16 @@
 ﻿namespace CardCraftShared;
 
-
 public class GameManager
 {
-    private readonly List<Player> _players;
-    private readonly Board _board;
-    private readonly Graveyard _graveyard;
+    private  List<Player> Players { get; init; }
+    private Board Board { get; init; }
+    private Graveyard Graveyard {  get; init; }
 
     public GameManager()
     {
-        this._players = new();
-        this._board = new();
-        this._graveyard = new();
+        this.Players = new();
+        this.Board = new();
+        this.Graveyard = new();
     }
 
     public void StartGame()

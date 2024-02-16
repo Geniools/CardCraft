@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCraftClient", "CardCraftClient\CardCraftClient.csproj", "{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardCraftClient", "CardCraftClient\CardCraftClient.csproj", "{F667934B-AAE3-486A-B9B6-F02EE9B1E4EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardCraftServer", "CardCraftServer\CardCraftServer.csproj", "{28404A57-5269-41BC-B59C-64DAF750E533}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardCraftServer", "CardCraftServer\CardCraftServer.csproj", "{28404A57-5269-41BC-B59C-64DAF750E533}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CardCraftShared", "CardCraftShared\CardCraftShared.shproj", "{9CD3FD3E-C08A-48FA-9FDB-1FBEB6050E3B}"
 EndProject
@@ -33,6 +33,7 @@ Global
 		SolutionGuid = {63D69AEA-AAA5-402E-A4C0-2C7A1C86F66F}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CardCraftShared\CardCraftShared.projitems*{28404a57-5269-41bc-b59c-64daf750e533}*SharedItemsImports = 5
 		CardCraftShared\CardCraftShared.projitems*{9cd3fd3e-c08a-48fa-9fdb-1fbeb6050e3b}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
