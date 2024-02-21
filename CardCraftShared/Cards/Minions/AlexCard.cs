@@ -3,11 +3,12 @@ namespace CardCraftShared.Cards.Minions;
 
 public class AlexCard : BaseMinion, ISpecialAbility
 {
-    public AlexCard(int manaCost, string name, string description, CardRarity rarity) : base(manaCost, name, description, rarity)
+    public AlexCard(int manaCost, string name, string description, CardRarityEnum rarity, int health, int attack) : base(manaCost, name, description, rarity, health, attack)
     {
+
     }
 
-    void ISpecialAbility.TriggerSpecialAbility(Deck deck, Deck enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    public void Trigger(Deck deck, Deck enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
     {
         throw new NotImplementedException();
     }

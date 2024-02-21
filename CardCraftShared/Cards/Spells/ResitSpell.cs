@@ -2,7 +2,7 @@
 
 public class ResitSpell : BaseSpell
 {
-    public ResitSpell(int manaCost, string name, string description, CardRarity rarity) : base(manaCost, name, description, rarity)
+    public ResitSpell(int manaCost, string name, string description, CardRarityEnum rarity) : base(manaCost, name, description, rarity)
     {
 
     }

@@ -1,4 +1,6 @@
-﻿namespace CardCraftClient
+﻿using CardCraftClient.View;
+
+namespace CardCraftClient
 {
     public partial class App : Application
     {

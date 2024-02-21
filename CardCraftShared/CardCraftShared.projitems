@@ -9,20 +9,26 @@
     <Import_RootNamespace>CardCraftShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)BaseCard.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BaseMinion.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BaseSpell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Board.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CardRarity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\AlexHero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseMinion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseSpell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Board.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\CardRarityEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AlexCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Deck.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GameManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Graveyard.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)BaseHero.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ISpecialAbility.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SpecialStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Deck.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\GameManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Graveyard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseHero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\ICardStatsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\ISpecialAbility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Hand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\SpecialStatusEnum.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Core\Enums\" />
   </ItemGroup>
 </Project>

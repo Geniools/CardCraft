@@ -4,12 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:CardCraftClient"
+    xmlns:view="clr-namespace:CardCraftClient.View"
     Shell.FlyoutBehavior="Disabled"
     Title="CardCraftClient">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Card Craft"
+        ContentTemplate="{DataTemplate view:StartPage}"
+        Route="StartPage" />
 
 </Shell>
