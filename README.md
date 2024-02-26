@@ -19,7 +19,7 @@ https://hearthstone.blizzard.com/en-gb.
 
 ## Description
 
-This game is being developed part of the course "Design Patterns" at NHL Stenden University of Applied Sciences.
+This game is being developed as a part of the Year 3, Period 3 courses at NHL Stenden University of Applied Sciences.
 
 - The Start Document can be found [here](./Docs/StartDocument.md).
 - The rules can be found [here](https://hearthstone.fandom.com/wiki/Gameplay).
