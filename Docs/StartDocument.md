@@ -21,7 +21,7 @@ which determine its effectiveness in combat.
 
 ### About the developers
 
-This game is being developed part of the course "Design Patterns" at NHL Stenden University of Applied Sciences.
+This game is being developed as a part of the Year 3, Period 3 courses at NHL Stenden University of Applied Sciences.
 Below you can find the team members:
 
 |        Name        | Student Nr |               Student email               |
