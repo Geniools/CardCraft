@@ -44,11 +44,21 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 ### Class Diagram
 
-![ClassDiagram](ClassDiagram.png)
+![ClassDiagram](./Assets/ClassDiagram.png)
 
 ### Design Mockups
+#### Icon
 
-![Icon](./Assets/Card_Craft_Icon%202.png)
+![Icon](./Assets/Card_Craft_Icon.png)
+
+#### Splash Screen
+![Splash](./Assets/Card_Craft_Splash.png)
+
+#### User Naming
+![PreLobby](./Assets/Card_Craft_PreLobby.png)
+
+#### Lobby Screen
+![Lobby](./Assets/Card_Craft_Lobby.png)
 
 #### Game
 
