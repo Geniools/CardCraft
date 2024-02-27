@@ -40,7 +40,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\cardcraft_icon.svg" />
+		<MauiIcon Include="Resources\AppIcon\cardcraft_icon.svg" />
 
     <!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\cardcraft_splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -57,8 +57,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <!-- <None Remove="Resources\AppIcon\cardcraft_icon.svg" /> -->
-	  <!-- <None Remove="Resources\Splash\cardcraft_splash.svg" /> -->
+		<!-- <None Remove="Resources\AppIcon\cardcraft_icon.svg" /> -->
+		<!-- <None Remove="Resources\Splash\cardcraft_splash.svg" /> -->
 	</ItemGroup>
 
 	<ItemGroup>
@@ -74,8 +74,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <!-- <MauiImage Include="Resources\AppIcon\cardcraft_icon.svg" /> -->
-	  <!-- <MauiImage Include="Resources\Splash\cardcraft_splash.svg" /> -->
+		<!-- <MauiImage Include="Resources\AppIcon\cardcraft_icon.svg" /> -->
+		<!-- <MauiImage Include="Resources\Splash\cardcraft_splash.svg" /> -->
 	</ItemGroup>
 
 	<ItemGroup>
