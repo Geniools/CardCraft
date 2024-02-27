@@ -21,7 +21,8 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>CardCraftClient</ApplicationTitle>
+		<!-- <ApplicationTitle>CardCraftClient</ApplicationTitle> -->
+		<ApplicationTitle>Card Craft</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.cardcraftclient</ApplicationId>
@@ -47,18 +48,18 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<!-- <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" /> -->
 
 		<!-- Custom Fonts -->
-		<MauiFont Include="Resources\Fonts\*" />
+		<MauiFont Include="Resources\Fonts\*" BaseSize="376,678" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <!-- <None Remove="Resources\AppIcon\cardcraft_icon.svg" /> -->
-	  <!-- <None Remove="Resources\Splash\cardcraft_splash.svg" /> -->
+	  <None Remove="Resources\AppIcon\cardcraft_icon.svg" BaseSize="376,678" />
+	  <None Remove="Resources\Splash\cardcraft_splash.svg" BaseSize="376,678" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -74,8 +75,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <!-- <MauiImage Include="Resources\AppIcon\cardcraft_icon.svg" /> -->
-	  <!-- <MauiImage Include="Resources\Splash\cardcraft_splash.svg" /> -->
+	  <!-- <MauiImage Include="Resources\AppIcon\cardcraft_icon.svg" BaseSize="376,678" /> -->
+	  <!-- <MauiImage Include="Resources\Splash\cardcraft_splash.svg" BaseSize="376,678" /> -->
 	</ItemGroup>
 
 	<ItemGroup>
