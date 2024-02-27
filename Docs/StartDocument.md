@@ -62,7 +62,7 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 #### Game
 
-![Game]
+![Game](./Assets/Card_Craft_Board.png)
 
 ## Input & Output
 
