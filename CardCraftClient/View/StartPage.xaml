@@ -7,17 +7,20 @@
              xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
              x:DataType="viewmodel:StartPageViewModel"
              Title="{Binding Title}"
-             BackgroundColor="#EDF26F">
+             BackgroundColor="#cab070">
 
     <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Entry Grid.Row="0" Placeholder="Enter text here" HorizontalOptions="Center" />
-        <Button Grid.Row="1" Text="Click Me" HorizontalOptions="Center" />
+        <Image Grid.Row="0" Source="..\Resources\Images\sword.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="256" WidthRequest="256" Margin="0,-200,0,0" />
+        <Entry Grid.Row="1" Placeholder="Insert your username" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,100,0,0" />
+        <Button Grid.Row="2" Text="Click Me" HorizontalOptions="Center" BackgroundColor="#463C2D" TextColor="WhiteSmoke" Margin="0,20,0,0" />
+
     </Grid>
 
 </ContentPage>

@@ -4,7 +4,7 @@ public partial class StartPageViewModel : BaseViewModel
 {
     public StartPageViewModel()
     {
-        Title = "CardCraft";
+        //Title = "CardCraft"; 
     }
 
 

@@ -41,7 +41,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\cardcraft_icon.svg" />
+		<MauiIcon Include="Resources\AppIcon\cardcraft_icon2.svg" />
 
     <!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\cardcraft_splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -58,8 +58,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- <None Remove="Resources\AppIcon\cardcraft_icon.svg" /> -->
-		<!-- <None Remove="Resources\Splash\cardcraft_splash.svg" /> -->
+	  <MauiImage Remove="Resources\Images\sword.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\AppIcon\cardcraft_icon.svg" />
+	  <None Remove="Resources\AppIcon\cardcraft_icon2.svg" />
+	  <None Remove="Resources\Images\sword.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -75,10 +80,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- <MauiImage Include="Resources\AppIcon\cardcraft_icon.svg" /> -->
-		<!-- <MauiImage Include="Resources\Splash\cardcraft_splash.svg" /> -->
+	  <MauiAsset Include="Resources\Images\sword.png" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 	  <Compile Update="View\StartPage.xaml.cs">
 	    <DependentUpon>StartPage.xaml</DependentUpon>
