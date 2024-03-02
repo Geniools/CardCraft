@@ -38,7 +38,7 @@ public static class MauiProgram
                     switch (appWindow.Presenter)
                     {
                         case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
-                            overlappedPresenter.SetBorderAndTitleBar(false, false);
+                            overlappedPresenter.SetBorderAndTitleBar(true, true);
                             overlappedPresenter.Maximize();
                             break;
                     }
