@@ -1,7 +1,7 @@
 ﻿using CardCraftShared;
 namespace CardCraftShared.Cards.Minions;
 
-public class AlexCard : BaseMinion, ISpecialAbility
+public class AlexCard : BaseMinion
 {
     public AlexCard(int manaCost, string name, string description, CardRarityEnum rarity, int health, int attack) : base(manaCost, name, description, rarity, health, attack)
     {

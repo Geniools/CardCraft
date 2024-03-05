@@ -1,4 +1,8 @@
-﻿namespace CardCraftShared;
+﻿using CardCraftShared.Cards.Minions;
+using CardCraftShared.Core.Decorators;
+using CardCraftShared.Core.Interfaces;
+
+namespace CardCraftShared;
 
 public class GameManager
 {
@@ -12,10 +16,10 @@ public class GameManager
         this.Board = new();
         this.Graveyard = new();
     }
-
+    
     public void StartGame()
     {
-
+        
     }
 
     public void EndGame()

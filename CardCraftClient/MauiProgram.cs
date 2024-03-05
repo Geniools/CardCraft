@@ -1,4 +1,5 @@
-﻿using CardCraftClient.View;
+﻿using Android.App;
+using CardCraftClient.View;
 using CardCraftClient.ViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
@@ -21,7 +22,9 @@ public static class MauiProgram
             })
             .Services
             .RegisterViews()
-            .RegisterViewModels();
+            .RegisterViewModels()
+            .AddSingleton<GameManager>();
+        
 
 #if WINDOWS
         builder.ConfigureLifecycleEvents(events =>

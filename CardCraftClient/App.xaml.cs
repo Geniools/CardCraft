@@ -7,8 +7,8 @@ namespace CardCraftClient
         public App()
         {
             InitializeComponent();
-
             MainPage = new AppShell();
+            
         }
     }
 }

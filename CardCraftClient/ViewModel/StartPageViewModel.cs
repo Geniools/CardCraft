@@ -1,8 +1,10 @@
-﻿namespace CardCraftClient.ViewModel;
+﻿using Android.App;
+
+namespace CardCraftClient.ViewModel;
 
 public partial class StartPageViewModel : BaseViewModel
 {
-    public StartPageViewModel()
+    public StartPageViewModel(GameManager gm)
     {
         //Title = "CardCraft"; 
     }

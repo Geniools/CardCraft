@@ -8,7 +8,7 @@ public class Board : ICardStatsManager
 
     public Board()
     {
-        Cards = new();
+        Cards = [];
     }
 
     public void PlayMinion(BaseMinion minion)

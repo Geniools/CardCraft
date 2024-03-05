@@ -6,4 +6,9 @@ public class ResitSpell : BaseSpell
     {
 
     }
+
+    public override void Trigger(Deck deck, Deck enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    {
+        throw new NotImplementedException();
+    }
 }

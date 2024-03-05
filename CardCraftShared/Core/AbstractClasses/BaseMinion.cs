@@ -1,12 +1,12 @@
-﻿namespace CardCraftShared;
+﻿using CardCraftShared.Core.Interfaces;
 
-public abstract class BaseMinion : BaseCard
+namespace CardCraftShared;
+
+public abstract class BaseMinion : BaseCard, IMinion
 {
     private int _health;
     private int _attack;
 
-    public List<SpecialStatusEnum> SpecialStatuses { get; init; }
-    
     public int Health
     {
         get => this._health;
@@ -43,13 +43,17 @@ public abstract class BaseMinion : BaseCard
     protected BaseMinion(int manaCost, string name, string description, CardRarityEnum rarity, int health, int attack) 
         : base(manaCost, name, description, rarity)
     {
-        this.SpecialStatuses = new();
         this.Health = health;
         this.Attack = attack;
     }
 
-    public void AddSpecialStatus(SpecialStatusEnum specialStatus)
+    public void TriggerEffect()
     {
-        this.SpecialStatuses.Add(specialStatus);
+        throw new NotImplementedException();
+    }
+
+    public void AttackMinion(IMinion minion)
+    {
+        throw new NotImplementedException();
     }
 }
