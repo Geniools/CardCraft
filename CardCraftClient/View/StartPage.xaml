@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardCraftClient.View.StartPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+             xmlns:view="clr-namespace:CardCraftClient.View"
              x:DataType="viewmodel:StartPageViewModel"
-             Title="{Binding Title}"
              BackgroundColor="#cab070">
 
     <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
@@ -23,4 +23,4 @@
 
     </Grid>
 
-</ContentPage>
+</view:BasePage>

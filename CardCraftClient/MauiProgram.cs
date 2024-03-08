@@ -1,4 +1,5 @@
-﻿using CardCraftClient.View;
+﻿using CardCraftClient.Service;
+using CardCraftClient.View;
 using CardCraftClient.ViewModel;
 using CardCraftShared;
 using CommunityToolkit.Maui;
@@ -23,7 +24,8 @@ public static class MauiProgram
             .Services
             .RegisterViews()
             .RegisterViewModels()
-            .AddSingleton<GameManager>();
+            .AddSingleton<GameManager>()
+            .AddSingleton<SignalRService>();
         
 
 #if WINDOWS

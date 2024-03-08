@@ -73,6 +73,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="SharpHook" Version="5.3.1" />
+		<PackageReference Include="SharpHook.Reactive" Version="5.3.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -84,12 +86,21 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Compile Update="View\BasePage.xaml.cs">
+	    <DependentUpon>BasePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\GamePage.xaml.cs">
+	    <DependentUpon>GamePage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\StartPage.xaml.cs">
 	    <DependentUpon>StartPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\BasePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -11,12 +11,7 @@
     <ShellContent
         Title="StartPage"
         ContentTemplate="{DataTemplate view:StartPage}"
-        Route="StartPage" />
-
-    <ShellContent 
-        Title="MainPage"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"
-    />
+        Route="StartPage"
+        />
 
 </Shell>

@@ -4,10 +4,8 @@ namespace CardCraftClient.ViewModel;
 
 public partial class StartPageViewModel : BaseViewModel
 {
-    public StartPageViewModel(GameManager gm)
+    public StartPageViewModel()
     {
-        //Title = "CardCraft"; 
+        this.Title = "Card Craft";
     }
-
-
 }
