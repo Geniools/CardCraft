@@ -1,4 +1,4 @@
-﻿using Android.App;
+﻿using CardCraftShared;
 
 namespace CardCraftClient.ViewModel;
 

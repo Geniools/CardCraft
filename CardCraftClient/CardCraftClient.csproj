@@ -95,4 +95,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<Import Project="..\CardCraftShared\CardCraftShared.projitems" Label="Shared" />
+
 </Project>

@@ -35,5 +35,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CardCraftShared\CardCraftShared.projitems*{28404a57-5269-41bc-b59c-64daf750e533}*SharedItemsImports = 5
 		CardCraftShared\CardCraftShared.projitems*{9cd3fd3e-c08a-48fa-9fdb-1fbeb6050e3b}*SharedItemsImports = 13
+		CardCraftShared\CardCraftShared.projitems*{f667934b-aae3-486a-b9b6-f02ee9b1e4ee}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

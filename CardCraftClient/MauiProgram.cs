@@ -1,6 +1,6 @@
-﻿using Android.App;
-using CardCraftClient.View;
+﻿using CardCraftClient.View;
 using CardCraftClient.ViewModel;
+using CardCraftShared;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
