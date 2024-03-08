@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,21 +6,104 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
              xmlns:view="clr-namespace:CardCraftClient.View"
-             x:DataType="viewmodel:StartPageViewModel"
-             BackgroundColor="#cab070">
+             x:DataType="viewmodel:StartPageViewModel">
 
-    <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+    <Grid BackgroundColor="#cab070">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="3*"/>
+		</Grid.RowDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1.5*"/>
+			<ColumnDefinition Width="2.5*"/>
+			<ColumnDefinition Width="1.5*"/>
+		</Grid.ColumnDefinitions>
 
-        <Image Grid.Row="0" Source="..\Resources\Images\sword.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="256" WidthRequest="256" Margin="0,-200,0,0" />
-        <Entry Grid.Row="1" Placeholder="Insert your username" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,100,0,0" />
-        <Button Grid.Row="2" Text="Click Me" HorizontalOptions="Center" BackgroundColor="#463C2D" TextColor="WhiteSmoke" Margin="0,20,0,0" />
+		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Source="..\Resources\Images\sword.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="256" WidthRequest="256" Margin="0,-400,0,0" />
+		<Grid Grid.Row="1" Grid.Column="1" Padding="20" RowSpacing="10" BackgroundColor="Transparent">
 
-    </Grid>
+			<Grid
+				Grid.Row="1"
+				Grid.Column="1"
+				Padding="20"
+				RowSpacing="10"
+				>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="70"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="100"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Label
+					Grid.Row="2"
+					Text="{Binding GameName}"
+					FontSize="50"
+					TextColor="Black"
+					HorizontalTextAlignment="Center"
+					FontFamily="GermanicaBold"
+				/>
+
+				<Entry
+					Grid.Row="4"
+					x:Name="UserNameEntry"
+					Placeholder="Username"
+					TextColor="Black"
+					HorizontalTextAlignment="Center"
+					Text="{Binding Username}"
+					BackgroundColor="White"
+					IsSpellCheckEnabled="False"
+					IsEnabled="{Binding IsEnabled}"
+				/>
+
+				<Entry
+					Grid.Row="5"
+					x:Name="LobbyCodeEntry"
+					Placeholder="Lobby Code"
+					TextColor="Black"
+					HorizontalTextAlignment="Center"
+					Text="{Binding LobbyCode}"
+					BackgroundColor="White"
+					IsSpellCheckEnabled="False"
+					ClearButtonVisibility="WhileEditing"
+					IsEnabled="{Binding IsEnabled}"
+				/>
+
+				<Grid Grid.Row="6" ColumnSpacing="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<Button
+						Grid.Column="0"
+						x:Name="JoinButton"
+						Text="JOIN"
+						BackgroundColor="#525252"
+						FontAttributes="Bold"
+						TextColor="#FBB969"
+						IsEnabled="{Binding IsEnabled}"
+					/>
+
+					<Button
+						Grid.Column="1"
+						x:Name="CreateButton"
+						Text="CREATE"
+						BackgroundColor="#525252"
+						FontAttributes="Bold"
+						TextColor="#FBB969"
+						IsEnabled="{Binding IsEnabled}"
+					/>
+
+				</Grid>
+			</Grid>
+		</Grid>
+	</Grid>
 
 </view:BasePage>
