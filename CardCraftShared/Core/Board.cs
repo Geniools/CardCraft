@@ -4,7 +4,7 @@ namespace CardCraftShared;
 
 public class Board : ICardStatsManager
 {
-    private List<BaseCard> Cards { get; init; }
+    private List<IBaseCard> Cards { get; init; }
 
     public Board()
     {
@@ -31,12 +31,12 @@ public class Board : ICardStatsManager
         throw new NotImplementedException();
     }
 
-    public void DamageMinion(BaseMinion minion, int damage)
+    public void DamageMinion(IMinion minion, int damage)
     {
         throw new NotImplementedException();
     }
 
-    public void HealMinion(BaseMinion minion, int heal)
+    public void HealMinion(IMinion minion, int heal)
     {
         throw new NotImplementedException();
     }
