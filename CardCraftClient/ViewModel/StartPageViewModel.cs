@@ -20,12 +20,13 @@ public partial class StartPageViewModel : BaseViewModel
     [ObservableProperty]
     private bool _isEnabled;
 
-    public StartPageViewModel()
+    public StartPageViewModel(GameManager gm)
     {
         this.GameName = "Card Craft";
         this.Title = "Join or Create a Game:";
         this.IsEnabled = true;
         this.Username = "Chris";
         this.LobbyCode = "773";
+        gm.StartGame();
     }
 }

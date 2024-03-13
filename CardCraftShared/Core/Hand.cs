@@ -4,19 +4,19 @@ namespace CardCraftShared;
 
 public class Hand : ICardStatsManager
 {
-    private List<BaseCard> Cards { get; init; }
+    private List<IMinion> Cards { get; init; }
 
     public Hand()
     {
-        this.Cards = new();
+        this.Cards = [];
     }
 
-    public void Add(BaseCard card)
+    public void Add(IMinion card)
     {
         this.Cards.Add(card);
     }
 
-    public void Remove(BaseCard card)
+    public void Remove(IMinion card)
     {
         this.Cards.Remove(card);
     }
@@ -31,12 +31,12 @@ public class Hand : ICardStatsManager
         throw new NotImplementedException();
     }
 
-    public void DamageMinion(BaseMinion minion, int damage)
+    public void DamageMinion(IMinion minion, int damage)
     {
         throw new NotImplementedException();
     }
 
-    public void HealMinion(BaseMinion minion, int heal)
+    public void HealMinion(IMinion minion, int heal)
     {
         throw new NotImplementedException();
     }

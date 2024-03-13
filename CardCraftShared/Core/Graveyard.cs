@@ -2,14 +2,14 @@
 
 public class Graveyard
 {
-    private List<BaseCard> Cards { get; set; } = new();
+    private List<IBaseCard> Cards { get; set; } = [];
 
-    public void AddCard(BaseCard card)
+    public void AddCard(IBaseCard card)
     {
         Cards.Add(card);
     }
 
-    public void RemoveCard(BaseCard card)
+    public void RemoveCard(IBaseCard card)
     {
         Cards.Remove(card);
     }

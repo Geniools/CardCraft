@@ -20,7 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\CardRarityEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AlexCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Deck.cs" />
+    <Compile Include="..\CardCraftShared\Core\DeckPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\GameManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graveyard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseHero.cs" />
