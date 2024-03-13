@@ -34,10 +34,10 @@
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="70"/>
 					<RowDefinition Height="50"/>
+					<RowDefinition Height="20"/>
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="50"/>
-					<RowDefinition Height="50"/>
-					<RowDefinition Height="100"/>
+					<RowDefinition Height="70"/>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 
@@ -60,6 +60,7 @@
 					BackgroundColor="White"
 					IsSpellCheckEnabled="False"
 					IsEnabled="{Binding IsEnabled}"
+					WidthRequest="450"
 				/>
 
 				<Entry
@@ -71,8 +72,8 @@
 					Text="{Binding LobbyCode}"
 					BackgroundColor="White"
 					IsSpellCheckEnabled="False"
-					ClearButtonVisibility="WhileEditing"
 					IsEnabled="{Binding IsEnabled}"
+					WidthRequest="450"
 				/>
 
 				<Grid Grid.Row="6" ColumnSpacing="10">

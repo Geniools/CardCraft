@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardCraftClient.View.LobbyPage"
-             BackgroundColor="#cab070">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+             xmlns:view="clr-namespace:CardCraftClient.View"
+             x:DataType="viewmodel:LobbyPageViewModel"
+             >
 
-    <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <Image Grid.Row="0" Source="..\Resources\Images\sword.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="256" WidthRequest="256" Margin="0,-200,0,0" />
-        <Button x:Name="joinButton" Grid.Row="1" Text="Join a Lobby" HorizontalOptions="Center" BackgroundColor="#463C2D" TextColor="WhiteSmoke" Margin="0,20,0,0" Clicked="JoinButton_Clicked"/>
-        <Entry x:Name="lobbyEntry" Grid.Row="2" Placeholder="Enter Lobby Code" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,20,0,0" IsVisible="False" />
-        <Button Grid.Row="3" Text="Create a Lobby" HorizontalOptions="Center" BackgroundColor="#463C2D" TextColor="WhiteSmoke" Margin="0,20,0,0" />
-        <Button Grid.Row="4" Text="Next" HorizontalOptions="Center" BackgroundColor="#463C2D" TextColor="WhiteSmoke" Margin="0,20,0,0" />
-
+    <Grid>
+        <Label
+            Text="Smth"/>
     </Grid>
 
-</ContentPage>
+
+</view:BasePage>

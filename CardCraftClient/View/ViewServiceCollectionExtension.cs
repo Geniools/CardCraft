@@ -6,6 +6,7 @@ public static class ViewServiceCollectionExtension
     {
         services.AddTransient<StartPage>();
         services.AddTransient<GamePage>();
+        services.AddTransient<LobbyPage>();
 
         return services;
     }

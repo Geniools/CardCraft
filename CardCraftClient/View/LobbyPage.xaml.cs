@@ -1,15 +1,11 @@
+using CardCraftClient.ViewModel;
+
 namespace CardCraftClient.View;
 
-public partial class LobbyPage : ContentPage
+public partial class LobbyPage : BasePage
 {
-	public LobbyPage()
+	public LobbyPage(LobbyPageViewModel vm) : base(vm)
 	{
 		InitializeComponent();
 	}
-
-    private void JoinButton_Clicked(object sender, EventArgs e)
-    {
-        lobbyEntry.IsVisible = true;
-        lobbyEntry.Focus();
-    }
 }
