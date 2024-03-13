@@ -14,11 +14,11 @@ public partial class App : Application
     {
         var window = base.CreateWindow(activationState);
 
-        var deviceWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
-        var deviceHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
+        // var deviceWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+        // var deviceHeight = DeviceDisplay.Current.MainDisplayInfo.Height;
 
-        window.MinimumHeight = deviceHeight;
-        window.MinimumWidth = deviceWidth;
+        window.MinimumWidth = 1024;
+        window.MinimumHeight = 600;
 
         return window;
     }
