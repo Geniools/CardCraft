@@ -21,12 +21,14 @@ internal abstract class MinionEffectDecorator : IMinion
     public string Name { get; init; }
     public string Description { get; init; }
 
-    protected MinionEffectDecorator(IMinion minion, string name, string description, CardRarityEnum rarity)
+    protected MinionEffectDecorator(IMinion minion)
     {
         this._minion = minion;
-        this.Name = name;
-        this.Description = description;
-        this.Rarity = rarity;
+        this.ManaCost = minion.ManaCost;
+        this.Rarity = minion.Rarity;
+        this.Name = minion.Name;
+        this.Description = minion.Description;
+        this.Rarity = minion.Rarity;
     }
 
     public void AttackMinion(IMinion minion)
