@@ -2,49 +2,35 @@
 
 namespace CardCraftShared;
 
-public abstract class BaseMinion : BaseCard, IMinion
+public abstract class BaseMinion : IMinion
 {
     private int _health;
     private int _attack;
 
-    public int Health
+    int IMinion.Attack
     {
-        get => this._health;
-        set {
-            if (value >= 0)
-            {
-                this._health = value;
-            }
-            else
-            {
-                // TODO: Change to a more informative exception
-                throw new Exception();
-            }
-        }
+        get => _attack;
+        set => _attack = Math.Max(value, 0);
     }
 
-    public int Attack
+    int IMinion.Health
     {
-        get => this._attack;
-        set
-        {
-            if (value >= 0)
-            {
-                this._attack = value;
-            }
-            else
-            {
-                // TODO: Change to a more informative exception
-                throw new Exception();
-            }
-        }
+        get => _health;
+        set => _health = Math.Max(value, 0);
     }
+    public int ManaCost { get ; set; }
+    public CardRarityEnum Rarity { get; set; }
+    public string Name { get; init; }
+    public string Description { get; init; }
 
-    protected BaseMinion(int manaCost, string name, string description, CardRarityEnum rarity, int health, int attack) 
-        : base(manaCost, name, description, rarity)
+    public BaseMinion(int health, int attack, int manaCost, string name, string description, CardRarityEnum rarity)
     {
-        this.Health = health;
-        this.Attack = attack;
+        _health = health;
+        _attack = attack;
+        ManaCost = manaCost;
+        Name = name;
+        Description = description;
+        Rarity = rarity;
     }
 
     public void TriggerEffect()
@@ -54,6 +40,12 @@ public abstract class BaseMinion : BaseCard, IMinion
 
     public void AttackMinion(IMinion minion)
     {
-        throw new NotImplementedException();
+        minion.Damage(_attack);
+        Damage(minion.Attack);
+    }
+
+    public void Damage(int damage)
+    {
+        _health -= damage;
     }
 }
