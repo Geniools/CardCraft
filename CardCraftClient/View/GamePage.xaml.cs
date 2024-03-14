@@ -1,7 +1,6 @@
-﻿using CardCraftClient.View;
-using CardCraftClient.ViewModel;
+﻿using CardCraftClient.ViewModel;
 
-namespace CardCraftClient;
+namespace CardCraftClient.View;
 
 public partial class GamePage : BasePage
 {

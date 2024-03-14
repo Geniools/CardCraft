@@ -1,8 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:view="clr-namespace:CardCraftClient.View"
-             x:Class="CardCraftClient.GamePage">
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="CardCraftClient.View.GamePage"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+               xmlns:view="clr-namespace:CardCraftClient.View"
+               xmlns:model="clr-namespace:CardCraftShared"
+               x:DataType="viewmodel:GamePageViewModel"
+               BackgroundColor="#cab070">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Player Info -->
+        <StackLayout Grid.Row="0" Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="Start">
+            <Image Source="person.png" HorizontalOptions="Center" HeightRequest="50" WidthRequest="50" Margin="0,10,0,0"/>
+            <Label Text="Player 1" FontSize="18" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="Health: 30" FontSize="16" TextColor="White" VerticalOptions="Center" Margin="0,0,10,0" HorizontalOptions="Center"/>
+            <!-- Add more player info as needed -->
+        </StackLayout>
+
+        <!-- Player's Hand - Top -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal">
+                <!-- Placeholder for player's cards -->
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Game Board -->
+        <Frame Grid.Row="1" BackgroundColor="#35414A" Margin="10" Padding="5" BorderColor="#FFFFFF" HasShadow="False">
+            <Grid>
+                <!-- Opponent's Field -->
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <!-- Add opponent's minions and other elements -->
+                </StackLayout>
+
+                <!-- Middle Divider -->
+                <BoxView Color="White" HeightRequest="1" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+
+                <!-- Your Field -->
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <!-- Add your minions and other elements -->
+                </StackLayout>
+            </Grid>
+        </Frame>
+
+        <!-- Player's Hand - Bottom -->
+        <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal">
+                <!-- Placeholder for player's cards -->
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Bottom Player Info -->
+        <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="End">
+            <Image Source="person.png" HorizontalOptions="Center" HeightRequest="50" WidthRequest="50" Margin="0,10,0,0"/>
+            <Label Text="Player 2" FontSize="18" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label Text="Health: 30" FontSize="16" TextColor="White" VerticalOptions="Center" Margin="0,0,10,0" HorizontalOptions="Center"/>
+            <!-- Add more player info as needed -->
+        </StackLayout>
+
+
+        <!-- End Turn Button -->
+        <Button Grid.Row="1" Text="End Turn" BackgroundColor="#E64343" TextColor="White"
+                HorizontalOptions="End" VerticalOptions="Center" WidthRequest="100" HeightRequest="100" Margin="10"
+                CornerRadius="50"/>
+
+
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalOptions="End">
+            <Grid>
+                <!-- Placeholder for deck of cards -->
+                <BoxView Grid.Column="0" BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+            </Grid>
+        </ScrollView>
+
+        <!-- Deck of Cards (Beneath End Turn Button) -->
+        <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalOptions="End">
+            <Grid>
+                <!-- Placeholder for deck of cards -->
+                <BoxView Grid.Column="0" BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+            </Grid>
+        </ScrollView>
+    </Grid>
+
 
 
 </view:BasePage>
