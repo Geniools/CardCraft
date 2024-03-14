@@ -5,7 +5,7 @@ namespace CardCraftShared;
 
 public class DeckPool : ICardStatsManager
 {
-    public List<IBaseCard> Cards { get; init; }
+    public Queue<IBaseCard> Cards { get; set; }
     public int maxCards = 30;
 
     public DeckPool()
@@ -15,19 +15,16 @@ public class DeckPool : ICardStatsManager
     
     public void Shuffle()
     {
-        for (int i = Cards.Count - 1; i > 0; i--)
-        {
-            int j = Random.Shared.Next(0, i + 1);
-            (Cards[j], Cards[i]) = (Cards[i], Cards[j]);
-        }
+        var cards = Cards.ToList();
+        var shuffled = cards.OrderBy(a => Guid.NewGuid()).ToList();
+        Cards = new Queue<IBaseCard>(shuffled);
     }
 
     public IBaseCard DrawMinion()
     {
         if (!IsEmpty())
         {
-            IBaseCard card = Cards[0];
-            Cards.RemoveAt(0);
+            IBaseCard card = Cards.Dequeue();
             return card;
         }
         throw new Exception("Deck is empty");
@@ -36,7 +33,7 @@ public class DeckPool : ICardStatsManager
 
     public void AddCard(IBaseCard card)
     {
-        if (!IsFull()) Cards.Add(card);
+        if (!IsFull()) Cards.Enqueue(card);
     }
 
     public bool IsEmpty()
@@ -52,7 +49,7 @@ public class DeckPool : ICardStatsManager
     {
         if (Cards.Count == maxCards)
         {
-            throw new Exception("Deck is full");
+            return true;
         }
         return false;
     }
@@ -67,12 +64,12 @@ public class DeckPool : ICardStatsManager
         throw new NotImplementedException();
     }
 
-    public void DamageMinion(IMinion minion, int damage)
+    public void DamageMinion(IBaseCard minion, int damage)
     {
         throw new NotImplementedException();
     }
 
-    public void HealMinion(IMinion minion, int heal)
+    public void HealMinion(IBaseCard minion, int heal)
     {
         throw new NotImplementedException();
     }

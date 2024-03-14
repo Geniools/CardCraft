@@ -4,6 +4,6 @@ internal interface ICardStatsManager
 {
     void DamageAllMinions(int damage);
     void HealAllMinions(int heal);
-    void DamageMinion(IMinion minion, int damage);
-    void HealMinion(IMinion minion, int heal);
+    void DamageMinion(IBaseCard minion, int damage);
+    void HealMinion(IBaseCard minion, int heal);
 }

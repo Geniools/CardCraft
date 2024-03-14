@@ -1,6 +1,7 @@
 ﻿using CardCraftClient.Service;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Cards.Spells;
+using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Core.Decorators;
 using CardCraftShared.Core.Interfaces;
 using System.Diagnostics;
@@ -42,14 +43,22 @@ public class GameManager
 
     public void TestStuff() 
     {
+        DeckPool deck = new();
+        BaseHero hero = new AlexHero(1, "", "", "aboba");
+        Player player = new(hero, deck);
+
         IMinion minion = new AlexCard();
         IMinion minion2 = new AlexCard();
         ResitSpell spell = new();
-        DeckPool deck = new();
+        
         deck.AddCard(minion);
         deck.AddCard(minion2);
         deck.AddCard(spell);
         deck.Shuffle();
+
+        player.DrawCard();
+        player.DrawCard();
+        
         Trace.WriteLine(deck);
         minion = new DivineShield(minion);
         minion2 = new TauntDecorator(minion2);

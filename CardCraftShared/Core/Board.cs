@@ -11,12 +11,12 @@ public class Board : ICardStatsManager
         Cards = [];
     }
 
-    public void PlayMinion(BaseMinion minion)
+    public void PlayMinion(IBaseCard minion)
     {
         throw new NotImplementedException();
     }
 
-    public void KillMinion(BaseMinion minion)
+    public void KillMinion(IBaseCard minion)
     {
         throw new NotImplementedException();
     }
@@ -31,12 +31,12 @@ public class Board : ICardStatsManager
         throw new NotImplementedException();
     }
 
-    public void DamageMinion(IMinion minion, int damage)
+    public void DamageMinion(IBaseCard minion, int damage)
     {
         throw new NotImplementedException();
     }
 
-    public void HealMinion(IMinion minion, int heal)
+    public void HealMinion(IBaseCard minion, int heal)
     {
         throw new NotImplementedException();
     }
