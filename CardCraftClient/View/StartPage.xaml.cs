@@ -8,4 +8,10 @@ public partial class StartPage : BasePage
     {
         InitializeComponent();
     }
+
+
+    private async void StartGameButton_Click(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(LobbyPage));
+    }
 }

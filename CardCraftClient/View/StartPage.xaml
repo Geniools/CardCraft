@@ -90,6 +90,7 @@
 						FontAttributes="Bold"
 						TextColor="#FBB969"
 						IsEnabled="{Binding IsEnabled}"
+						Clicked="StartGameButton_Click"
 					/>
 
 					<Button
@@ -100,6 +101,7 @@
 						FontAttributes="Bold"
 						TextColor="#FBB969"
 						IsEnabled="{Binding IsEnabled}"
+						Clicked="StartGameButton_Click"
 					/>
 
 				</Grid>

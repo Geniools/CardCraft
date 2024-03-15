@@ -98,7 +98,9 @@
                     TextColor="#FBB969"
                     FontSize="30"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
+                    VerticalOptions="Center"
+                    Clicked="StartGameButton_Click"
+                />
             </Grid>
         </Frame>
     </Grid>
