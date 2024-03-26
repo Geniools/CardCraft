@@ -12,6 +12,7 @@
     Shell.TitleColor="Transparent"
     DisabledColor="Transparent"
     UnselectedColor="Transparent"
+    NavigationPage.HasBackButton="False"
     Title="Card Craft">
 
     <ShellContent

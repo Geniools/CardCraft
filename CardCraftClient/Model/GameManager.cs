@@ -12,7 +12,6 @@ namespace CardCraftClient.Model;
 public class GameManager
 {
     private readonly SignalRService _signalRService;
-    private static GameManager? _instance;
 
     public Player? Player1 { get; set; }
     public Player? Player2 { get; set; }
@@ -25,15 +24,6 @@ public class GameManager
 
         this.Board = new();
         this.Graveyard = new();
-    }
-    
-    public static GameManager Instance
-    {
-        get
-        {
-            _instance ??= new GameManager(new SignalRService());
-            return _instance;
-        }
     }
 
     public void StartGame()

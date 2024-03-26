@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
-using CardCraftClient.View;
 using CardCraftShared;
-using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Core.Other;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
@@ -52,7 +50,9 @@ public class SignalRService
         // Define server callbacks
         this._hubConnection.On<string>(ServerCallbacks.ErrorMessage, async (message) =>
         {
-            Shell.Current.DisplayAlert("Error", message, "Ok");
+            // await Shell.Current.DisplayAlert("Error", message, "Ok");
+            Trace.WriteLine("\nError: ================== ");
+            Trace.WriteLine(message);
 
             await Shell.Current.GoToAsync("..");
         });
@@ -98,7 +98,8 @@ public class SignalRService
         {
             // The navigation must happen before the HubConnection call
             // Otherwise, the LobbyPageViewModel will not be able to handle the event
-            await Shell.Current.GoToAsync(nameof(LobbyPage));
+            // await Shell.Current.GoToAsync(nameof(LobbyPage));
+            await Shell.Current.GoToAsync("LobbyPage");
             await this.HubConnection.InvokeAsync(ServerCallbacks.JoinGame, player, lobbyCode);
         }
         catch (Exception e)

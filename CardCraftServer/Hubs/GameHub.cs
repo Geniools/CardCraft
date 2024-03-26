@@ -36,6 +36,8 @@ public class GameHub : Hub
         }
         catch (Exception e)
         {
+            this._onlineGameManagerDatabase.LogString(e.Message);
+            // await this.Clients.Client(this.Context.ConnectionId).SendAsync(ServerCallbacks.ErrorMessage, e.Message);
             await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
         }
     }

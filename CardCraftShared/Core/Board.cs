@@ -1,5 +1,4 @@
-﻿using CardCraftClient.Model;
-using CardCraftShared.Core.Interfaces;
+﻿using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
@@ -7,7 +6,7 @@ public class Board : ICardStatsManager
 {
     public List<IBaseCard> FriendlySide { get; set; }
     public List<IBaseCard> EnemySide { get; set; }
-    
+
     
     public Board()
     {
@@ -17,14 +16,15 @@ public class Board : ICardStatsManager
 
     public void AddCard(IBaseCard card, Player player)
     {
-        if (player == GameManager.Instance.Player1)
-        {
-            FriendlySide.Add(card);
-        }
-        else
-        {
-            EnemySide.Add(card);
-        }
+        // TODO: Add a card to the correct side of the board
+        // if (player == ayer1)
+        // {
+        //     FriendlySide.Add(card);
+        // }
+        // else
+        // {
+        //     EnemySide.Add(card);
+        // }
     }
 
     public void KillMinion(IBaseCard minion)

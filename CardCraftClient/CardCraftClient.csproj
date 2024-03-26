@@ -84,10 +84,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Model\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiAsset Include="Resources\Images\sword.png" />
 	</ItemGroup>
 	

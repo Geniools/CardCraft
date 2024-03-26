@@ -10,7 +10,7 @@ namespace CardCraftClient.ViewModel;
 public partial class GamePageViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private string _username;    
+    private string _username;
     
     [ObservableProperty]
     private int _manaCost;
@@ -39,7 +39,7 @@ public partial class GamePageViewModel : BaseViewModel
         this.Id = 1;
         DeckPool deck = new();
         BaseHero hero = new AlexHero(1, "", "", "aboba");
-        Player player = new(hero, deck);
+        Player player = new();
 
         IMinion minion = new AlexCard();
         IMinion minion2 = new AlexCard();

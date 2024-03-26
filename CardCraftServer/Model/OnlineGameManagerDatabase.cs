@@ -125,4 +125,9 @@ public class OnlineGameManagerDatabase
 
         this._logger.LogInformation(message);
     }
+
+    public void LogString(string message)
+    {
+        this._logger.LogInformation(message);
+    }
 }
