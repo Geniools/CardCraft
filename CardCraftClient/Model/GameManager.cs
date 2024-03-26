@@ -12,9 +12,10 @@ namespace CardCraftClient.Model;
 public class GameManager
 {
     private readonly SignalRService _signalRService;
+    private static GameManager? _instance;
 
-    private Player Player1 { get; set; }
-    private Player Player2 { get; set; }
+    public Player? Player1 { get; set; }
+    public Player? Player2 { get; set; }
     private Board Board { get; init; }
     private Graveyard Graveyard { get; init; }
 
@@ -26,10 +27,19 @@ public class GameManager
         this.Graveyard = new();
     }
     
+    public static GameManager Instance
+    {
+        get
+        {
+            _instance ??= new GameManager(new SignalRService());
+            return _instance;
+        }
+    }
+
     public void StartGame()
     {
         this._signalRService.StartConnection();
-        // TestStuff();
+        TestStuff();
     }
 
     public void EndGame()
@@ -37,12 +47,16 @@ public class GameManager
         this._signalRService.StopConnection();
     }
 
-    public void AddPlayer()
+    public void AddPlayer(Player player)
     {
-
+        if (Player1 is null)
+        {
+            Player1 = player;
+        }
+        else Player2 ??= player;
     }
 
-    public void TestStuff() 
+    public void TestStuff()
     {
         DeckPool deck = new();
         BaseHero hero = new AlexHero(1, "", "", "aboba");
@@ -51,19 +65,32 @@ public class GameManager
         player.Deck = deck;
         player.Hand = new Hand();
         player.Name = "Player";
-    
+        
+        Board board = new();
+
         IMinion minion = new AlexCard();
         IMinion minion2 = new AlexCard();
         ResitSpell spell = new();
-        
+
         deck.AddCard(minion);
         deck.AddCard(minion2);
         deck.AddCard(spell);
         deck.Shuffle();
-    
-        player.DrawCard();
-        player.DrawCard();
-        
+
+        Player player1 = new();
+        Player player2 = new();
+        AddPlayer(player1);
+        AddPlayer(player2);
+
+        player1.DrawCard();
+        player2.DrawCard();
+
+        player1.PlayCard(minion, board);
+        player2.PlayCard(minion, board);
+
+        Trace.WriteLine(board.EnemySide.Count);
+        Trace.WriteLine(board.FriendlySide.Count);
+
         Trace.WriteLine(deck);
         minion = new DivineShield(minion);
         minion2 = new TauntDecorator(minion2);

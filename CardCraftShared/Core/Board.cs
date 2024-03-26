@@ -1,19 +1,30 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using CardCraftClient.Model;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
 public class Board : ICardStatsManager
 {
-    private List<IBaseCard> Cards { get; init; }
-
+    public List<IBaseCard> FriendlySide { get; set; }
+    public List<IBaseCard> EnemySide { get; set; }
+    
+    
     public Board()
     {
-        Cards = [];
+        FriendlySide = new();
+        EnemySide = new();
     }
 
-    public void PlayMinion(IBaseCard minion)
+    public void AddCard(IBaseCard card, Player player)
     {
-        throw new NotImplementedException();
+        if (player == GameManager.Instance.Player1)
+        {
+            FriendlySide.Add(card);
+        }
+        else
+        {
+            EnemySide.Add(card);
+        }
     }
 
     public void KillMinion(IBaseCard minion)

@@ -24,17 +24,18 @@ public class Player
 
     public Hand Hand { get; set; }
 
-    public IBaseCard PlayCard(IBaseCard card)
+    public void PlayCard(IBaseCard card, Board board)
     {
         Hand.Remove(card);
-        return card;
+        board.AddCard(card, this);
     }
 
     public void DrawCard()
     {
-        if (Deck.IsEmpty()) return;
-
-        IBaseCard card = Deck.DrawMinion();
-        Hand.Add(card);
+        if (!Deck.IsEmpty())
+        {
+            IBaseCard card = Deck.DrawCard();
+            Hand.Add(card);
+        }
     }
 }

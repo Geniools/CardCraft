@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CardCraftClient.ViewModel;
 
+
 public partial class LobbyPageViewModel : BaseViewModel
 {
     [ObservableProperty]
