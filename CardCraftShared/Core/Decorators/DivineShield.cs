@@ -4,13 +4,13 @@ namespace CardCraftShared.Core.Decorators;
 
 internal class DivineShield(IMinion minion) : MinionEffectDecorator(minion)
 {
-    bool hasDivineShield = true;
+    private bool _hasDivineShield = true;
 
     public override void Damage(int damage)
     {
-        if (hasDivineShield)
+        if (_hasDivineShield)
         {
-            hasDivineShield = false;
+            _hasDivineShield = false;
         }
         else
         {
