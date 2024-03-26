@@ -20,8 +20,25 @@
 			<ColumnDefinition Width="1.5*"/>
 		</Grid.ColumnDefinitions>
 
-		<Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Source="..\Resources\Images\sword.png" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="256" WidthRequest="256" Margin="0,-400,0,0" />
-		<Grid Grid.Row="1" Grid.Column="1" Padding="20" RowSpacing="10" BackgroundColor="Transparent">
+		<Image 
+            Grid.Row="0"
+            Grid.RowSpan="2" 
+            Grid.Column="1"
+            Source="..\Resources\Images\sword.png" 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center" 
+            HeightRequest="256" 
+            WidthRequest="256" 
+            Margin="0,-400,0,0" 
+            />
+
+		<Grid 
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Padding="20" 
+            RowSpacing="10" 
+            BackgroundColor="Transparent"
+            >
 
 			<Grid
 				Grid.Row="1"
@@ -47,7 +64,6 @@
 					FontSize="50"
 					TextColor="Black"
 					HorizontalTextAlignment="Center"
-					FontFamily="GermanicaBold"
 				/>
 
 				<Entry
@@ -59,7 +75,7 @@
 					Text="{Binding Username}"
 					BackgroundColor="White"
 					IsSpellCheckEnabled="False"
-					IsEnabled="{Binding IsEnabled}"
+					IsEnabled="{Binding IsNotBusy}"
 					WidthRequest="450"
 				/>
 
@@ -72,38 +88,21 @@
 					Text="{Binding LobbyCode}"
 					BackgroundColor="White"
 					IsSpellCheckEnabled="False"
-					IsEnabled="{Binding IsEnabled}"
+					IsEnabled="{Binding IsNotBusy}"
 					WidthRequest="450"
 				/>
 
 				<Grid Grid.Row="6" ColumnSpacing="10">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-
 					<Button
 						Grid.Column="0"
-						x:Name="JoinButton"
-						Text="JOIN"
+						x:Name="StartButton"
+						Text="Start Game"
 						BackgroundColor="#525252"
 						FontAttributes="Bold"
 						TextColor="#FBB969"
-						IsEnabled="{Binding IsEnabled}"
-						Clicked="StartGameButton_Click"
+						IsEnabled="{Binding CanStartGame}"
+						Command="{Binding JoinGameCommand}"
 					/>
-
-					<Button
-						Grid.Column="1"
-						x:Name="CreateButton"
-						Text="CREATE"
-						BackgroundColor="#525252"
-						FontAttributes="Bold"
-						TextColor="#FBB969"
-						IsEnabled="{Binding IsEnabled}"
-						Clicked="StartGameButton_Click"
-					/>
-
 				</Grid>
 			</Grid>
 		</Grid>

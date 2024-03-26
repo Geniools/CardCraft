@@ -1,7 +1,7 @@
-﻿using CardCraftClient.Service;
+﻿using CardCraftClient.Model;
+using CardCraftClient.Service;
 using CardCraftClient.View;
 using CardCraftClient.ViewModel;
-using CardCraftShared;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;

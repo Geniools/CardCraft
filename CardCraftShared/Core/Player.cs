@@ -2,16 +2,28 @@
 
 public class Player
 {
-    public BaseHero Hero { get; set; }
-    private DeckPool Deck { get; set; }
-    private Hand Hand { get; set; }
+    public Player() { }
 
-    public Player(BaseHero hero, DeckPool deck)
+    public Player(string name)
     {
-        this.Hero = hero;
-        this.Deck = deck;
         this.Hand = new Hand();
+        this.Name = name;
     }
+
+    // Connection-related properties
+
+    public string? ConnectionId { get; set; }
+
+    public string Name { get; set; }
+
+    // Game-related properties
+
+
+    public BaseHero Hero { get; set; }
+
+    private DeckPool Deck { get; set; }
+
+    private Hand Hand { get; set; }
 
     public IBaseCard PlayCard(IBaseCard card)
     {
@@ -21,10 +33,9 @@ public class Player
 
     public void DrawCard()
     {
-        if (!Deck.IsEmpty())
-        {
-            IBaseCard card = Deck.DrawMinion();
-            Hand.Add(card);
-        }
+        if (Deck.IsEmpty()) return;
+
+        IBaseCard card = Deck.DrawMinion();
+        Hand.Add(card);
     }
 }

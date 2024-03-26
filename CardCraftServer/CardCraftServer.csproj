@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.21.2" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.25.1" />
   </ItemGroup>
 
   <Import Project="..\CardCraftShared\CardCraftShared.projitems" Label="Shared" />
