@@ -4,11 +4,20 @@ namespace CardCraftServer.Model;
 
 public class OnlineGameManagerDatabase
 {
+    private readonly ILogger<OnlineGameManagerDatabase> _logger;
     private readonly List<OnlineGameManager> _onlineGames;
 
-    public OnlineGameManagerDatabase()
+    public OnlineGameManagerDatabase(ILogger<OnlineGameManagerDatabase> logger)
     {
         this._onlineGames = new();
+        this._logger = logger;
+
+
+        this._logger.LogInformation(
+            "==================================\n" +
+                   "OnlineGameManagerDatabase created!\n" + 
+                   "==================================\n"
+            );
     }
     
     /// <summary>
@@ -30,11 +39,31 @@ public class OnlineGameManagerDatabase
 
         // Add the player to the game
         game.AddPlayer(player);
+
+        this.LogGamesAndPlayers();
     }
 
     public void RemovePlayer(string connectionId)
     {
-        this._onlineGames.ForEach(game => game.RemovePlayer(connectionId));
+        OnlineGameManager? gameToRemove = null;
+
+        this._onlineGames.ForEach(game =>
+        {
+            game.RemovePlayer(connectionId);
+
+            if (game.Players.Count == 0)
+            {
+                gameToRemove = game;
+            }
+        });
+
+        // Remove the game if there are no players left
+        if (gameToRemove is not null)
+        {
+            this.RemoveGame(gameToRemove);
+        }
+
+        this.LogGamesAndPlayers();
     }
 
     /// <summary>
@@ -42,7 +71,7 @@ public class OnlineGameManagerDatabase
     /// </summary>
     /// <param name="game">The game to be added</param>
     /// <exception cref="GameAlreadyExistsException">If the game already exists</exception>
-    public void AddGame(OnlineGameManager game)
+    private void AddGame(OnlineGameManager game)
     {
         // Check if the game already exists
         if (this._onlineGames.Contains(game))
@@ -53,8 +82,47 @@ public class OnlineGameManagerDatabase
         this._onlineGames.Add(game);
     }
 
+    private void RemoveGame(OnlineGameManager game)
+    {
+        this._onlineGames.Remove(game);
+    }
+
     public OnlineGameManager? GetGame(string lobbyCode)
     {
         return this._onlineGames.Find(game => game.LobbyCode == lobbyCode);
+    }
+
+    public Player? GetOtherPlayerFromGame(string lobbyCode, string connectionId)
+    {
+        OnlineGameManager? game = this.GetGame(lobbyCode);
+
+        if (game is null)
+        {
+            return null;
+        }
+
+        return game.Players.Find(player => player.ConnectionId != connectionId);
+    }
+
+
+    /// <summary>
+    /// A helper method that logs all games and players in the database.
+    /// </summary>
+    private void LogGamesAndPlayers()
+    {
+        string message = "==================================\n" +
+                         "OnlineGameManagerDatabase games:\n";
+
+        this._onlineGames.ForEach(game =>
+        {
+            message += $"\nGame Lobby Code: {game.LobbyCode}\n";
+            game.Players.ForEach(player =>
+            {
+                message += $"Player: {player.Name} | {player.ConnectionId}\n";
+            });
+        });
+        message += "==================================\n";
+
+        this._logger.LogInformation(message);
     }
 }

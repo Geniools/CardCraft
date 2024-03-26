@@ -18,13 +18,15 @@ public class GameHub : Hub
     {
         try
         {
+            player.ConnectionId = this.Context.ConnectionId;
             // Joins the game with the given lobby code. Also performs the necessary checks.
             this._onlineGameManagerDatabase.JoinGame(lobbyCode, player);
+            Player? otherPlayer = this._onlineGameManagerDatabase.GetOtherPlayerFromGame(lobbyCode, player.ConnectionId);
 
             // Adds the player to a group with the lobby code for easier communication
             await this.Groups.AddToGroupAsync(this.Context.ConnectionId, lobbyCode);
 
-            await this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.GameJoined, lobbyCode, player);
+            await this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.GameJoined, lobbyCode, player, otherPlayer);
 
             // Check if the game can be started
             if (this._onlineGameManagerDatabase.GetGame(lobbyCode)!.CanStartGame())
@@ -36,15 +38,6 @@ public class GameHub : Hub
         {
             await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
         }
-        // catch (GameAlreadyExistsException e)
-        // {
-        //     await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
-        // }
-        // catch (MaxPlayersReachedException e)
-        // {
-        //     await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
-        // }
-
     }
 
     public override Task OnDisconnectedAsync(Exception? exception)

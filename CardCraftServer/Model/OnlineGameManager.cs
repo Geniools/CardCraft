@@ -6,6 +6,7 @@ public class OnlineGameManager
 {
     private const int REQUIRED_PLAYERS = 2;
     private readonly List<Player> _players;
+    public List<Player> Players => this._players;
     public string LobbyCode { get; init; }
 
     public OnlineGameManager(string lobbyCode)

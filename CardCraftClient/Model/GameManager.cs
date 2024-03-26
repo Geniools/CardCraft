@@ -46,7 +46,11 @@ public class GameManager
     {
         DeckPool deck = new();
         BaseHero hero = new AlexHero(1, "", "", "aboba");
-        Player player = new(hero, deck, "Player");
+        Player player = new();
+        player.Hero = hero;
+        player.Deck = deck;
+        player.Hand = new Hand();
+        player.Name = "Player";
     
         IMinion minion = new AlexCard();
         IMinion minion2 = new AlexCard();

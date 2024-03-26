@@ -18,12 +18,11 @@ public class Player
 
     // Game-related properties
 
-
     public BaseHero Hero { get; set; }
 
-    private DeckPool Deck { get; set; }
+    public DeckPool Deck { get; set; }
 
-    private Hand Hand { get; set; }
+    public Hand Hand { get; set; }
 
     public IBaseCard PlayCard(IBaseCard card)
     {

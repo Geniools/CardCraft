@@ -2,6 +2,8 @@ using CardCraftServer.Hubs;
 using CardCraftServer.Model;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddSignalR(options =>
 {

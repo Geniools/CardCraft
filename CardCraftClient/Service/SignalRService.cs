@@ -10,7 +10,7 @@ namespace CardCraftClient.Service;
 
 public class SignalRService
 {
-    public Player? Player { get; set; }
+    public Player Player { get; set; }
     public string LobbyCode { get; set; }
     private readonly HubConnection _hubConnection;
     public HubConnection HubConnection => this._hubConnection;
@@ -21,10 +21,11 @@ public class SignalRService
 
     public event Action? OnConnectionError;
     public event Action? OnGameStartedEvent;
-    public event Action<Player>? OnGameJoinedEvent;
+    public event Action<Player, Player?>? OnGameJoinedEvent;
 
     public SignalRService()
     {
+        this.Player = new();
         this._hubConnection = new HubConnectionBuilder()
             .WithUrl(CONNECTION_URL_LOCAL)
             .WithAutomaticReconnect()
@@ -56,12 +57,13 @@ public class SignalRService
             await Shell.Current.GoToAsync("..");
         });
 
-        this._hubConnection.On<string, Player>(ServerCallbacks.GameJoined, (lobbyCode, player) =>
+        this._hubConnection.On<string, Player, Player?>(ServerCallbacks.GameJoined, (lobbyCode, player, otherPlayer) =>
         {
             Trace.WriteLine("==================================================================");
             Trace.WriteLine($"Player {player.Name} joined the game with lobby code {lobbyCode}!");
             Trace.WriteLine("==================================================================");
-            this.OnGameJoinedEvent?.Invoke(player);
+
+            this.OnGameJoinedEvent?.Invoke(player, otherPlayer);
         });
 
         this._hubConnection.On<string>(ServerCallbacks.GameStarted, (lobbyCode) =>
@@ -79,6 +81,8 @@ public class SignalRService
             return Task.Run(async () =>
             {
                 await this._hubConnection.StartAsync();
+
+                this.Player.ConnectionId = this._hubConnection.ConnectionId;
             });
         }
 

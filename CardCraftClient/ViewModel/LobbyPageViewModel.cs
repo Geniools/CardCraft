@@ -1,10 +1,7 @@
 ﻿using System.Diagnostics;
 using CardCraftClient.Service;
 using CardCraftShared;
-using CardCraftShared.Cards.Heroes;
-using CardCraftShared.Core.Other;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CardCraftClient.ViewModel;
 
@@ -24,11 +21,19 @@ public partial class LobbyPageViewModel : BaseViewModel
 
     public LobbyPageViewModel(SignalRService signalRService)
     {
-        signalRService.OnGameJoinedEvent += async (player) =>
+        signalRService.OnGameJoinedEvent += async (player, otherPlayer) =>
         {
             Trace.WriteLine("==================================================================");
             Trace.WriteLine($"{player.Name} should be updated in the ViewModel rn");
             Trace.WriteLine("==================================================================");
+
+            // The other player must be updated first
+            // to avoid the player being overwritten
+            if (otherPlayer is not null)
+            {
+                await this.JoinGame(otherPlayer);
+            }
+
             await this.JoinGame(player);
         };
 
