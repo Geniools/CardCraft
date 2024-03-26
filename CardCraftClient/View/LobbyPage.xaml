@@ -16,7 +16,6 @@
             WidthRequest="600"
             BackgroundColor="Transparent">
 
-
             <Grid
                 RowDefinitions="Auto, Auto, Auto"
                 RowSpacing="20"
@@ -36,7 +35,7 @@
                         TextColor="#000000"/>
 
                     <Label
-                        Text=" 773"
+                        Text="{Binding LobbyCode}"
                         FontSize="16"
                         VerticalOptions="Start"
                         HorizontalOptions="Start"
@@ -53,7 +52,7 @@
                         VerticalOptions="Center"
                         HorizontalOptions="Start"/>
                     <Label
-                        Text="Player 1"
+                        Text="{Binding Player1.Name}"
                         FontSize="70"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
@@ -80,7 +79,7 @@
                         HorizontalOptions="Start"
                         />
                     <Label
-                        Text="Player 2"
+                        Text="{Binding Player2.Name}"
                         FontSize="70"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
@@ -99,6 +98,7 @@
                     FontSize="30"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
+                    IsEnabled="{Binding CanStartGame}"
                     Clicked="StartGameButton_Click"
                 />
             </Grid>

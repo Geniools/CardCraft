@@ -41,6 +41,8 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
+		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
 		<MauiIcon Include="Resources\AppIcon\cardcraft_icon2.svg" />
 
     <!-- Splash Screen -->
@@ -62,6 +64,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.svg" />
+	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon2.svg" />
 	  <None Remove="Resources\Images\person.png" />

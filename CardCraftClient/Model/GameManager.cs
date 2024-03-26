@@ -1,18 +1,20 @@
-﻿using CardCraftClient.Service;
+﻿using System.Diagnostics;
+using CardCraftClient.Service;
+using CardCraftShared;
+using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Cards.Spells;
-using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Core.Decorators;
 using CardCraftShared.Core.Interfaces;
-using System.Diagnostics;
 
-namespace CardCraftShared;
+namespace CardCraftClient.Model;
 
 public class GameManager
 {
     private readonly SignalRService _signalRService;
 
-    private  List<Player> Players { get; init; }
+    private Player Player1 { get; set; }
+    private Player Player2 { get; set; }
     private Board Board { get; init; }
     private Graveyard Graveyard { get; init; }
 
@@ -20,7 +22,6 @@ public class GameManager
     {
         this._signalRService = signalRService;
 
-        this.Players = new();
         this.Board = new();
         this.Graveyard = new();
     }
@@ -28,7 +29,7 @@ public class GameManager
     public void StartGame()
     {
         this._signalRService.StartConnection();
-        TestStuff();
+        // TestStuff();
     }
 
     public void EndGame()
@@ -45,8 +46,8 @@ public class GameManager
     {
         DeckPool deck = new();
         BaseHero hero = new AlexHero(1, "", "", "aboba");
-        Player player = new(hero, deck);
-
+        Player player = new(hero, deck, "Player");
+    
         IMinion minion = new AlexCard();
         IMinion minion2 = new AlexCard();
         ResitSpell spell = new();
@@ -55,7 +56,7 @@ public class GameManager
         deck.AddCard(minion2);
         deck.AddCard(spell);
         deck.Shuffle();
-
+    
         player.DrawCard();
         player.DrawCard();
         

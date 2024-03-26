@@ -1,5 +1,9 @@
-﻿using CardCraftShared;
+﻿using CardCraftClient.Service;
+using CardCraftClient.View;
+using CardCraftShared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CardCraftClient.ViewModel;
 
@@ -18,15 +22,44 @@ public partial class StartPageViewModel : BaseViewModel
     private string _title;
 
     [ObservableProperty]
-    private bool _isEnabled;
+    private bool _canStartGame;
 
-    public StartPageViewModel(GameManager gm)
+    private readonly SignalRService _signalRService;
+
+    public StartPageViewModel(SignalRService signalRService)
     {
+        this._signalRService = signalRService;
+        this._canStartGame = this._signalRService.HubConnection.State == HubConnectionState.Connected;
+        this.IsBusy = false;
         this.GameName = "Card Craft";
-        this.Title = "Join or Create a Game:";
-        this.IsEnabled = true;
+        this.Title = "Join a Game:";
+
+        this.CheckConnectionStatus();
+
+        // Test credentials
         this.Username = "Chris";
         this.LobbyCode = "773";
-        gm.StartGame();
+    }
+
+    private Task CheckConnectionStatus()
+    { 
+        return Task.Run(async () =>
+        {
+            while (true)
+            {
+                this.CanStartGame = this._signalRService.HubConnection.State == HubConnectionState.Connected;
+                await Task.Delay(1000);
+            }
+        });
+    }
+
+    [RelayCommand]
+    private async Task JoinGame()
+    {
+        this.IsBusy = true;
+
+        await this._signalRService.JoinGame(this.LobbyCode, this.Username);
+
+        this.IsBusy = false;
     }
 }

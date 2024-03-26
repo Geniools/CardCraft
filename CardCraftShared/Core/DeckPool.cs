@@ -1,12 +1,11 @@
 ﻿using CardCraftShared.Core.Interfaces;
-using System.Collections.Generic;
 
 namespace CardCraftShared;
 
 public class DeckPool : ICardStatsManager
 {
     public Queue<IBaseCard> Cards { get; set; }
-    public int maxCards = 30;
+    public int MaxCards = 30;
 
     public DeckPool()
     {
@@ -20,17 +19,13 @@ public class DeckPool : ICardStatsManager
         Cards = new Queue<IBaseCard>(shuffled);
     }
 
-    public IBaseCard DrawMinion()
+    public IBaseCard DrawCard() 
     {
-        if (!IsEmpty())
-        {
-            IBaseCard card = Cards.Dequeue();
-            return card;
-        }
-        throw new Exception("Deck is empty");
+        if (IsEmpty()) throw new Exception("Deck is empty");
+        var card = Cards.Dequeue();
+        return card;
     }
     
-
     public void AddCard(IBaseCard card)
     {
         if (!IsFull()) Cards.Enqueue(card);
@@ -38,20 +33,12 @@ public class DeckPool : ICardStatsManager
 
     public bool IsEmpty()
     {
-        if (Cards.Count == 0)
-        {
-            return true;
-        }
-        return false;
+        return Cards.Count == 0;
     }
-
+    
     public bool IsFull()
     {
-        if (Cards.Count == maxCards)
-        {
-            return true;
-        }
-        return false;
+        return Cards.Count == MaxCards;
     }
 
     public void DamageAllMinions(int damage)
