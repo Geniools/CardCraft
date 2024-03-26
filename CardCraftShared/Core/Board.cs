@@ -1,4 +1,5 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using CardCraftClient.Model;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
