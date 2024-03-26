@@ -1,9 +1,11 @@
-﻿namespace CardCraftClient.ViewModel;
+﻿using CardCraftShared;
+
+namespace CardCraftClient.ViewModel;
 
 public partial class LobbyPageViewModel : BaseViewModel
 {
 
-    public LobbyPageViewModel()
+    public LobbyPageViewModel(GameManager gm)
     {
            
     }
