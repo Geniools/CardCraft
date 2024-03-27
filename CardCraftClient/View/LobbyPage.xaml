@@ -9,100 +9,119 @@
              xmlns:model="clr-namespace:CardCraftShared"
              x:DataType="viewmodel:LobbyPageViewModel"
              >
+
     <Grid BackgroundColor="#cab070">
-        <Frame
+        <Border
             HorizontalOptions="Center"
             VerticalOptions="Center"
             WidthRequest="600"
             BackgroundColor="Transparent">
 
-            <Grid
-                RowDefinitions="Auto, Auto, Auto"
-                RowSpacing="20"
-                Margin="20">
+            <VerticalStackLayout>
+                <Grid
+                    RowDefinitions="Auto, Auto, Auto"
+                    RowSpacing="20"
+                    Margin="20"
+                    >
 
-                <StackLayout
-                     Grid.Row="0"
-                     Orientation="Horizontal"
-                     HorizontalOptions="Start"
-                     VerticalOptions="Start">
+                    <StackLayout
+                       Grid.Row="0"
+                       Orientation="Horizontal"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start">
 
-                    <Label
-                        Text="Lobby Code: "
-                        FontSize="16"
-                        VerticalOptions="Start"
-                        HorizontalOptions="Start"
-                        TextColor="#000000"/>
-
-                    <Label
-                        Text="{Binding LobbyCode}"
-                        FontSize="16"
-                        VerticalOptions="Start"
-                        HorizontalOptions="Start"
-                        TextColor="White"/>
-                </StackLayout>
-
-
-                <!-- Player 1 -->
-                <Grid Grid.Row="0">
-                    <Image
-                        Source="person.png"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start"/>
-                    <Label
-                        Text="{Binding Player1.Name}"
-                        FontSize="70"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        TextColor="#000000"
-                        Margin="40"/>
-                </Grid>
-
-                <Label
-                    Text="VS"
-                    FontSize="44"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    TextColor="#000000"
-                    Grid.Row="0"
-                    Margin="0, 250, 0, 0"/>
-
-                <!-- Player 2 -->
-                <Grid Grid.Row="1">
-                    <Image
-                        Source="person.png"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start"
+                        <Label
+                            Text="Lobby Code: "
+                            FontSize="16"
+                            VerticalOptions="Start"
+                            HorizontalOptions="Start"
+                            TextColor="#000000"
                         />
+
+                        <Label
+                            Text="{Binding LobbyCode}"
+                            FontSize="16"
+                            VerticalOptions="Start"
+                            HorizontalOptions="Start"
+                            TextColor="White"
+                        />
+                    </StackLayout>
+
+
+                    <!-- Player 1 -->
+                    <Grid Grid.Row="0">
+                        <Image
+                            Source="person.png"
+                            WidthRequest="100"
+                            HeightRequest="100"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                        />
+
+                        <Label
+                            Text="{Binding Player1.Name}"
+                            FontSize="70"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            TextColor="#000000"
+                            Margin="40"
+                        />
+                    </Grid>
+
                     <Label
-                        Text="{Binding Player2.Name}"
-                        FontSize="70"
-                        HorizontalOptions="End"
+                        Text="VS"
+                        Grid.Row="0"
+                        FontSize="44"
+                        HorizontalOptions="Center"
                         VerticalOptions="Center"
                         TextColor="#000000"
-                        Margin="40"/>
+                        Margin="0, 250, 0, 0"
+                    />
+
+                    <!-- Player 2 -->
+                    <Grid Grid.Row="1">
+                        <Image
+                            Source="person.png"
+                            WidthRequest="100"
+                            HeightRequest="100"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                        />
+                        <Label
+                            Text="{Binding Player2.Name}"
+                            FontSize="70"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            TextColor="#000000"
+                            Margin="40"
+                        />
+                    </Grid>
                 </Grid>
 
-                <!-- Start Button -->
-                <Button
-                    Grid.Row="2"
-                    Text="Start"
-                    WidthRequest="200"
-                    HeightRequest="100"
-                    BackgroundColor="#525252"
-                    TextColor="#FBB969"
-                    FontSize="30"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    IsEnabled="{Binding CanStartGame}"
-                    Clicked="StartGameButton_Click"
-                />
-            </Grid>
-        </Frame>
+                <Border>
+                    <Grid
+                        RowDefinitions="Auto, Auto"
+                        RowSpacing="20"
+                        Margin="20"
+                        >
+                        <Label
+                            Grid.Row="0"
+                            Text="{Binding TimerText}"
+                            FontSize="44"
+                            HorizontalOptions="Center"
+                        />
+
+                        <ActivityIndicator
+                            Grid.Row="1"
+                            IsRunning="{Binding ActivityIndicatorRunning}"
+                            IsVisible="{Binding ActivityIndicatorRunning}"
+                            VerticalOptions="Center"
+                            Margin="10,-40,0,0" 
+                        />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </Border>
     </Grid>
 
 </view:BasePage>

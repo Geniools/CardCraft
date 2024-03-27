@@ -58,6 +58,9 @@ public partial class StartPageViewModel : BaseViewModel
     {
         this.IsBusy = true;
 
+        this._signalRService.Player.Name = this.Username;
+        this._signalRService.LobbyCode = this.LobbyCode;
+
         await this._signalRService.JoinGame(this.LobbyCode, this.Username);
 
         this.IsBusy = false;

@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
+﻿using CardCraftClient.Model;
 using CardCraftClient.Service;
+using CardCraftClient.View;
 using CardCraftShared;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -8,55 +9,88 @@ namespace CardCraftClient.ViewModel;
 
 public partial class LobbyPageViewModel : BaseViewModel
 {
+    private const int TIMER = 5;
+    private GameManager _gm;
+
     [ObservableProperty]
-    private Player? _player1;
+    private Player _player1;
     
     [ObservableProperty]
-    private Player? _player2;
+    private Player _player2;
 
     [ObservableProperty]
     private string _lobbyCode;
 
     [ObservableProperty]
-    private bool _canStartGame;
+    private string _timerText;
 
-    public LobbyPageViewModel(SignalRService signalRService)
+    [ObservableProperty] 
+    private bool _activityIndicatorRunning;
+
+    public LobbyPageViewModel(SignalRService signalRService, GameManager gm)
     {
-        signalRService.OnGameJoinedEvent += async (player, otherPlayer) =>
-        {
-            Trace.WriteLine("==================================================================");
-            Trace.WriteLine($"{player.Name} should be updated in the ViewModel rn");
-            Trace.WriteLine("==================================================================");
-
-            // The other player must be updated first
-            // to avoid the player being overwritten
-            if (otherPlayer is not null)
-            {
-                await this.JoinGame(otherPlayer);
-            }
-
-            await this.JoinGame(player);
-        };
+        this._gm = gm;
+        this.TimerText = "Waiting for players...";
+        this.LobbyCode = signalRService.LobbyCode;
+        this.ActivityIndicatorRunning = true;
 
         signalRService.OnGameStartedEvent += async () =>
         {
-            this.CanStartGame = true;
+            gm.IsGameStarted = true;
+            await this.StartGame();
         };
 
-        this.CanStartGame = false;
+        gm.CurrentPlayerChanged += (player) =>
+        {
+            this.Player1 = player;
+        };
+
+        gm.EnemyPlayerChanged += (player) =>
+        {
+            this.Player2 = player;
+        };
+
+        this.Player1 = gm.CurrentPlayer;
+        this.Player2 = gm.EnemyPlayer;
+
         this.LobbyCode = signalRService.LobbyCode;
     }
 
-    private async Task JoinGame(Player player)
+    private async Task StartTimer()
     {
-        if (this.Player1 is null)
+        this.ActivityIndicatorRunning = false;
+
+        for (int i = TIMER; i > 0; i--)
         {
-            this.Player1 = player;
+            this.TimerText = i.ToString();
+
+            if (!CanStartGame())
+            {
+                this.TimerText = "Waiting for players...";
+                this.ActivityIndicatorRunning = true;
+            }
+
+            await Task.Delay(1000);
         }
-        else
+    }
+
+    private async Task StartGame()
+    {
+        await this.StartTimer();
+
+        if (!CanStartGame())
         {
-            this.Player2 = player;
+            this.TimerText = "Waiting for players...";
+            this.ActivityIndicatorRunning = true;
         }
+
+        // If the contents of the "NavigateToGamePage" are placed here, the game will start regardless (could not fix it)
+        await this._gm.NavigateToGamePage();
+    }
+
+    private bool CanStartGame()
+    {
+        return this.Player1 is not null && this.Player2 is not null;
     }
 }
 

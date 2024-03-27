@@ -1,6 +1,7 @@
 ﻿using CardCraftShared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using CardCraftClient.Model;
 using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Core.Interfaces;
@@ -10,7 +11,10 @@ namespace CardCraftClient.ViewModel;
 public partial class GamePageViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private string _username;
+    private Player _currentPlayer;
+
+    [ObservableProperty]
+    private Player _enemyPlayer;
     
     [ObservableProperty]
     private int _manaCost;
@@ -28,10 +32,11 @@ public partial class GamePageViewModel : BaseViewModel
 
     public ObservableCollection<IBaseCard> PlayerHand { get; set; }
 
-    public GamePageViewModel()
+    public GamePageViewModel(GameManager gm)
     {
         this.Title = "Game";
-        this.Username = "Chris";
+        this.CurrentPlayer = gm.CurrentPlayer;
+        this.EnemyPlayer = gm.EnemyPlayer;
         this.Attack = 5;
         this.Health = 10;
         this.ManaCost = 3;

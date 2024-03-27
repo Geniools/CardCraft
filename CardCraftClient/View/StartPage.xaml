@@ -11,7 +11,7 @@
     <Grid BackgroundColor="#cab070">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="3*"/>
+			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
@@ -27,10 +27,10 @@
             Source="..\Resources\Images\sword.png" 
             HorizontalOptions="Center" 
             VerticalOptions="Center" 
-            HeightRequest="256" 
+            HeightRequest="300" 
             WidthRequest="256" 
             Margin="0,-400,0,0" 
-            />
+        />
 
 		<Grid 
             Grid.Row="1" 
