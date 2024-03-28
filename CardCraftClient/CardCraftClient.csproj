@@ -83,6 +83,9 @@
 	  <Compile Update="View\BasePage.xaml.cs">
 	    <DependentUpon>BasePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\CardView.xaml.cs">
+	    <DependentUpon>CardView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\GamePage.xaml.cs">
 	    <DependentUpon>GamePage.xaml</DependentUpon>
 	  </Compile>
@@ -93,6 +96,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="View\BasePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\CardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\StartPage.xaml">
