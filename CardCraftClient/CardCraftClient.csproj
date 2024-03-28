@@ -64,6 +64,10 @@
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon2.svg" />
+	  <None Remove="Resources\Fonts\Embossed Germanica.ttf" />
+	  <None Remove="Resources\Fonts\Fluted Germanica.ttf" />
+	  <None Remove="Resources\Fonts\Plain-Germanica.ttf" />
+	  <None Remove="Resources\Fonts\Shadowed-Germanica.ttf" />
 	  <None Remove="Resources\Images\person.png" />
 	  <None Remove="Resources\Images\sword.png" />
 	</ItemGroup>

@@ -20,7 +20,7 @@
     <Grid BackgroundColor="#cab070">
 	    <Grid.RowDefinitions>
 		    <RowDefinition Height="*"/>
-		    <RowDefinition Height="3*"/>
+		    <RowDefinition Height="4*"/>
 	    </Grid.RowDefinitions>
 
 	    <Grid.ColumnDefinitions>
@@ -34,11 +34,7 @@
             Grid.RowSpan="2" 
             Grid.Column="1"
             Source="sword.png" 
-            HorizontalOptions="Center" 
-            VerticalOptions="Center" 
-            HeightRequest="400" 
-            WidthRequest="300" 
-            Margin="0,-400,0,0" 
+			Opacity="0.7"
         />
 
 	    <Border 
@@ -55,8 +51,8 @@
 
                 <Grid.RowDefinitions>
 				    <RowDefinition Height="50"/>
-				    <RowDefinition Height="70"/>
-				    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="50"/>
 				    <RowDefinition Height="20"/>
 				    <RowDefinition Height="50"/>
 				    <RowDefinition Height="50"/>
@@ -64,16 +60,24 @@
 				    <RowDefinition Height="*"/>
 			    </Grid.RowDefinitions>
 
-			    <Label
+                <Label
 				    Grid.Row="2"
 				    Text="{Binding GameName}"
 				    FontSize="50"
-				    TextColor="Black"
+				    TextColor="WhiteSmoke"
+					FontFamily="GermanicaBold"
+					FontAttributes="Bold"
 				    HorizontalTextAlignment="Center"
 					VerticalTextAlignment="Center"
-			    />
+			    >
+					<Label.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="10,5"
+                                Opacity="1" />
+                    </Label.Shadow>
+                </Label>
 
-			    <Entry
+                <Entry
 				    Grid.Row="4"
 				    x:Name="UserNameEntry"
 				    Placeholder="Username"
