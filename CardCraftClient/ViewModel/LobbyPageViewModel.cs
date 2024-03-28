@@ -3,6 +3,7 @@ using CardCraftClient.Service;
 using CardCraftClient.View;
 using CardCraftShared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CardCraftClient.ViewModel;
 
@@ -30,7 +31,7 @@ public partial class LobbyPageViewModel : BaseViewModel
     public LobbyPageViewModel(SignalRService signalRService, GameManager gm)
     {
         this._gm = gm;
-        this.TimerText = "Waiting for players...";
+        this.TimerText = "Waiting for players";
         this.LobbyCode = signalRService.LobbyCode;
         this.ActivityIndicatorRunning = true;
 
@@ -54,6 +55,8 @@ public partial class LobbyPageViewModel : BaseViewModel
         this.Player2 = gm.EnemyPlayer;
 
         this.LobbyCode = signalRService.LobbyCode;
+
+        this.PlayWaitingPlayersAnimation();
     }
 
     private async Task StartTimer()
@@ -66,7 +69,7 @@ public partial class LobbyPageViewModel : BaseViewModel
 
             if (!CanStartGame())
             {
-                this.TimerText = "Waiting for players...";
+                this.TimerText = "Waiting for players";
                 this.ActivityIndicatorRunning = true;
             }
 
@@ -80,7 +83,7 @@ public partial class LobbyPageViewModel : BaseViewModel
 
         if (!CanStartGame())
         {
-            this.TimerText = "Waiting for players...";
+            this.TimerText = "Waiting for players";
             this.ActivityIndicatorRunning = true;
         }
 
@@ -88,9 +91,36 @@ public partial class LobbyPageViewModel : BaseViewModel
         await this._gm.NavigateToGamePage();
     }
 
+    private async Task PlayWaitingPlayersAnimation()
+    {
+        while (true)
+        {
+            if (CanStartGame())
+            {
+                break;
+            }
+
+            if (this.TimerText.Substring(this.TimerText.Length - 4).Equals("...."))
+            {
+                this.TimerText = "Waiting for players";
+            }
+
+            await Task.Delay(1000);
+            this.TimerText += ".";
+        }
+    }
+
     private bool CanStartGame()
     {
         return this.Player1 is not null && this.Player2 is not null;
+    }
+
+    [RelayCommand]
+    private async Task ReturnToStartPage()
+    {
+        Shell.Current.GoToAsync("..");
+
+        await this._gm.EndGame();
     }
 }
 

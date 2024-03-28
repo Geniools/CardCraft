@@ -145,7 +145,7 @@ public class GameManager
         {
             if (this.CurrentPlayer is not null && this.EnemyPlayer is not null)
             {
-                await Shell.Current.GoToAsync(nameof(GamePage));
+                Shell.Current.GoToAsync(nameof(GamePage));
             }
         });
     }
