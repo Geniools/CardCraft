@@ -1,12 +1,16 @@
 ﻿using CardCraftClient.ViewModel;
 
-namespace CardCraftClient.View;
-
-public partial class CardView : BasePage
+namespace CardCraftClient.View
 {
-
-    public CardView(CardViewModel vm) : base(vm)
+    public partial class CardView : BasePage
     {
-        InitializeComponent();
+        public CardView() : this(new CardViewModel())
+        {
+        }
+
+        public CardView(CardViewModel vm) : base(vm)
+        {
+            InitializeComponent();
+        }
     }
 }

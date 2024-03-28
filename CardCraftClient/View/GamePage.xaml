@@ -59,20 +59,15 @@
                     <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Center">
                         <StackLayout Orientation="Horizontal">
                             <!-- Placeholder for player's cards -->
-                            <CollectionView ItemsSource="{Binding PlayerHand}">
-                                <CollectionView.ItemTemplate>
+                            <!--<CollectionView ItemsSource="{Binding PlayerHand}">
+                                <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Frame BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5">
-                                            <StackLayout>
-                                                <Label Text="{Binding Description}" HorizontalOptions="Center" VerticalOptions="Start" TextColor="White"/>
-                                                <Label Text="{Binding ManaCost}" HorizontalOptions="Center" VerticalOptions="Start" TextColor="White"/>
-                                                <Label Text="{Binding Attack}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" TextColor="White"/>
-                                                <Label Text="{Binding Health}" HorizontalOptions="Center" VerticalOptions="End" TextColor="White"/>
-                                            </StackLayout>
+                                            <view:CardView BindingContext="{Binding .}" />
                                         </Frame>
                                     </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
+                                </BindableLayout.ItemTemplate>
+                            </CollectionView>-->
                         </StackLayout>
                     </ScrollView>
                 </StackLayout>

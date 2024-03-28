@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel;
+using CardCraftShared;
 using CardCraftShared.Cards.Minions;
 
 namespace CardCraftClient.ViewModel;
 
 public partial class CardViewModel : BaseViewModel
 {
-    private AlexCard _card;
-    public AlexCard Card
+    private BaseMinion _card;
+    public BaseMinion Card
     {
         get => _card;
         set

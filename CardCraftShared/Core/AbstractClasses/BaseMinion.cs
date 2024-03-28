@@ -22,8 +22,11 @@ public abstract class BaseMinion : IMinion
     public CardRarityEnum Rarity { get; set; }
     public string Name { get; init; }
     public string Description { get; init; }
+    public string Image { get; set; }
+    public string Attack { get; set; }
+    public string Health { get; set; }
 
-    public BaseMinion(int health, int attack, int manaCost, string name, string description, CardRarityEnum rarity)
+    public BaseMinion(int health, int attack, int manaCost, string name, string description, CardRarityEnum rarity, string image)
     {
         _health = health;
         _attack = attack;
@@ -31,6 +34,7 @@ public abstract class BaseMinion : IMinion
         Name = name;
         Description = description;
         Rarity = rarity;
+        Image = image;
     }
 
     public void TriggerEffect()
