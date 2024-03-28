@@ -42,10 +42,36 @@ public class GameHub : Hub
         }
     }
 
+    public async Task LeaveGame()
+    {
+        this._onlineGameManagerDatabase.LogString("Leave Game triggered: " + this.Context.ConnectionId);
+
+        // Remove the player from the game
+        this._onlineGameManagerDatabase.RemovePlayer(this.Context.ConnectionId);
+    }
+
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         // Remove the player from the game
-        this._onlineGameManagerDatabase.RemovePlayer(this.Context.ConnectionId);
+        string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+        Player? player = this._onlineGameManagerDatabase.GetPlayerFromConnectionId(this.Context.ConnectionId);
+
+        try
+        {
+            if (player is not null)
+            {
+                this._onlineGameManagerDatabase.LogString($"Player {player.Name} left the game with lobby code {lobbyCode}!");
+            }
+
+            this.LeaveGame();
+
+            this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.GameLeft, player);
+            this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.ErrorMessage, $"{player.Name} left the game!");
+        }
+        catch (Exception e)
+        {
+            this._onlineGameManagerDatabase.LogString(e.Message);
+        }
 
         return base.OnDisconnectedAsync(exception);
     }

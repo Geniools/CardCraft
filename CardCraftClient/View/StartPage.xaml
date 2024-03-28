@@ -8,104 +8,131 @@
              xmlns:view="clr-namespace:CardCraftClient.View"
              x:DataType="viewmodel:StartPageViewModel">
 
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
+
     <Grid BackgroundColor="#cab070">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="3*"/>
-		</Grid.RowDefinitions>
+	    <Grid.RowDefinitions>
+		    <RowDefinition Height="*"/>
+		    <RowDefinition Height="3*"/>
+	    </Grid.RowDefinitions>
 
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1.5*"/>
-			<ColumnDefinition Width="2.5*"/>
-			<ColumnDefinition Width="1.5*"/>
-		</Grid.ColumnDefinitions>
+	    <Grid.ColumnDefinitions>
+		    <ColumnDefinition Width="2.5*"/>
+		    <ColumnDefinition Width="3*"/>
+		    <ColumnDefinition Width="2.5*"/>
+	    </Grid.ColumnDefinitions>
 
-		<Image 
+	    <Image 
             Grid.Row="0"
             Grid.RowSpan="2" 
             Grid.Column="1"
-            Source="..\Resources\Images\sword.png" 
+            Source="sword.png" 
             HorizontalOptions="Center" 
             VerticalOptions="Center" 
-            HeightRequest="256" 
-            WidthRequest="256" 
+            HeightRequest="400" 
+            WidthRequest="300" 
             Margin="0,-400,0,0" 
-            />
+        />
 
-		<Grid 
+	    <Border 
             Grid.Row="1" 
-            Grid.Column="1" 
-            Padding="20" 
-            RowSpacing="10" 
+            Grid.Column="1"
+			StrokeThickness="0"
+            Padding="20"
             BackgroundColor="Transparent"
             >
+		    <Grid
+			    Padding="20"
+			    RowSpacing="10"
+			    >
 
-			<Grid
-				Grid.Row="1"
-				Grid.Column="1"
-				Padding="20"
-				RowSpacing="10"
-				>
+                <Grid.RowDefinitions>
+				    <RowDefinition Height="50"/>
+				    <RowDefinition Height="70"/>
+				    <RowDefinition Height="50"/>
+				    <RowDefinition Height="20"/>
+				    <RowDefinition Height="50"/>
+				    <RowDefinition Height="50"/>
+				    <RowDefinition Height="70"/>
+				    <RowDefinition Height="*"/>
+			    </Grid.RowDefinitions>
 
-				<Grid.RowDefinitions>
-					<RowDefinition Height="50"/>
-					<RowDefinition Height="70"/>
-					<RowDefinition Height="50"/>
-					<RowDefinition Height="20"/>
-					<RowDefinition Height="50"/>
-					<RowDefinition Height="50"/>
-					<RowDefinition Height="70"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
+			    <Label
+				    Grid.Row="2"
+				    Text="{Binding GameName}"
+				    FontSize="50"
+				    TextColor="Black"
+				    HorizontalTextAlignment="Center"
+					VerticalTextAlignment="Center"
+			    />
 
-				<Label
-					Grid.Row="2"
-					Text="{Binding GameName}"
-					FontSize="50"
-					TextColor="Black"
-					HorizontalTextAlignment="Center"
-				/>
+			    <Entry
+				    Grid.Row="4"
+				    x:Name="UserNameEntry"
+				    Placeholder="Username"
+				    TextColor="Black"
+				    HorizontalTextAlignment="Center"
+				    Text="{Binding Username}"
+				    BackgroundColor="White"
+				    IsSpellCheckEnabled="False"
+				    IsEnabled="{Binding IsNotBusy}"
+			    >
+				    <Entry.Behaviors>
+					    <toolkit:TextValidationBehavior
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"
+                            ValidStyle="{StaticResource ValidEntryStyle}"
+                            Flags="ValidateOnValueChanged"
+                            MinimumLength="2"
+                            MaximumLength="8"
+                        />
+				    </Entry.Behaviors>
+			    </Entry>
 
-				<Entry
-					Grid.Row="4"
-					x:Name="UserNameEntry"
-					Placeholder="Username"
-					TextColor="Black"
-					HorizontalTextAlignment="Center"
-					Text="{Binding Username}"
-					BackgroundColor="White"
-					IsSpellCheckEnabled="False"
-					IsEnabled="{Binding IsNotBusy}"
-					WidthRequest="450"
-				/>
+			    <Entry
+				    Grid.Row="5"
+				    x:Name="LobbyCodeEntry"
+				    Placeholder="Lobby Code"
+				    TextColor="Black"
+				    HorizontalTextAlignment="Center"
+				    Text="{Binding LobbyCode}"
+				    BackgroundColor="White"
+				    IsSpellCheckEnabled="False"
+				    IsEnabled="{Binding IsNotBusy}"
+			    >
+				    <Entry.Behaviors>
+					    <toolkit:TextValidationBehavior
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"
+                            ValidStyle="{StaticResource ValidEntryStyle}"
+                            Flags="ValidateOnValueChanged"
+                            MinimumLength="3"
+						    MaximumLength="6"
+                            />
+				    </Entry.Behaviors>
+			    </Entry>
 
-				<Entry
-					Grid.Row="5"
-					x:Name="LobbyCodeEntry"
-					Placeholder="Lobby Code"
-					TextColor="Black"
-					HorizontalTextAlignment="Center"
-					Text="{Binding LobbyCode}"
-					BackgroundColor="White"
-					IsSpellCheckEnabled="False"
-					IsEnabled="{Binding IsNotBusy}"
-					WidthRequest="450"
-				/>
-
-				<Grid Grid.Row="6" ColumnSpacing="10">
-					<Button
-						Grid.Column="0"
-						x:Name="StartButton"
-						Text="Start Game"
-						BackgroundColor="#525252"
-						FontAttributes="Bold"
-						TextColor="#FBB969"
-						IsEnabled="{Binding CanStartGame}"
-						Command="{Binding JoinGameCommand}"
-					/>
-				</Grid>
-			</Grid>
-		</Grid>
-	</Grid>
+			    <Grid 
+                    Grid.Row="6" 
+                    ColumnSpacing="10"
+                    >
+				    <Button
+					    x:Name="StartButton"
+					    Text="Start Game"
+					    BackgroundColor="#525252"
+					    TextColor="#FBB969"
+					    FontAttributes="Bold"
+					    IsEnabled="{Binding CanStartGame}"
+					    Command="{Binding JoinGameCommand}"
+				    />
+			    </Grid>
+		    </Grid>
+	    </Border>
+    </Grid>
 
 </view:BasePage>

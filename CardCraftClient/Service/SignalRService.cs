@@ -8,24 +8,27 @@ namespace CardCraftClient.Service;
 
 public class SignalRService
 {
+    private const string CONNECTION_URL = "https://cardcraftserver.azurewebsites.net/gameHub";
+    // Used for local testing (debugging) - requires the server to be running locally
+    private const string CONNECTION_URL_LOCAL = "http://localhost:5228/gameHub";
+
     public Player Player { get; set; }
     public string LobbyCode { get; set; }
+
     private readonly HubConnection _hubConnection;
     public HubConnection HubConnection => this._hubConnection;
-    private int _reconnectAttempts = 0;
-    private const int MAX_RECONNECT_ATTEMPTS = 3;
-    private const string CONNECTION_URL = "https://cardcraftserver.azurewebsites.net/gameHub";
-    private const string CONNECTION_URL_LOCAL = "http://localhost:5228/gameHub";
 
     public event Action? OnConnectionError;
     public event Action? OnGameStartedEvent;
     public event Action<Player, Player?>? OnGameJoinedEvent;
+    public event Action<Player?>? OnGameLeftEvent;
 
     public SignalRService()
     {
         this.Player = new();
+
         this._hubConnection = new HubConnectionBuilder()
-            .WithUrl(CONNECTION_URL_LOCAL)
+            .WithUrl(CONNECTION_URL)
             .WithAutomaticReconnect()
             .ConfigureLogging(logging =>
             {
@@ -46,17 +49,23 @@ public class SignalRService
             // TODO: Inform users about the reconnection
         };
 
-
         // Define server callbacks
+
+        // Called when an error occurs
         this._hubConnection.On<string>(ServerCallbacks.ErrorMessage, async (message) =>
         {
-            // await Shell.Current.DisplayAlert("Error", message, "Ok");
             Trace.WriteLine("\nError: ================== ");
             Trace.WriteLine(message);
 
-            await Shell.Current.GoToAsync("..");
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Shell.Current.GoToAsync("..");
+
+                Shell.Current.DisplayAlert("Error", message, "Ok");
+            });
         });
 
+        // Called when a player joins the game
         this._hubConnection.On<string, Player, Player?>(ServerCallbacks.GameJoined, (lobbyCode, player, otherPlayer) =>
         {
             Trace.WriteLine("==================================================================");
@@ -66,11 +75,19 @@ public class SignalRService
             this.OnGameJoinedEvent?.Invoke(player, otherPlayer);
         });
 
+        // Called when a player leaves the game
+        this._hubConnection.On<Player?>(ServerCallbacks.GameLeft, (player) =>
+        {
+            this.OnGameLeftEvent?.Invoke(player);
+        });
+
+        // Called when the game is started
         this._hubConnection.On<string>(ServerCallbacks.GameStarted, (lobbyCode) =>
         {
             this.OnGameStartedEvent?.Invoke();
         });
 
+        // Start the connection to the server
         this.StartConnection();
     }
 
@@ -105,7 +122,11 @@ public class SignalRService
         catch (Exception e)
         {
             Trace.WriteLine(e);
-            await Shell.Current.DisplayAlert("Error", e.Message, "Ok");
+
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await Shell.Current.DisplayAlert("Error", e.Message, "Ok");
+            });
         }
     }
 

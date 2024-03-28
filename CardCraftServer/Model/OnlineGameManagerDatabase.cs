@@ -104,6 +104,40 @@ public class OnlineGameManagerDatabase
         return game.Players.Find(player => player.ConnectionId != connectionId);
     }
 
+    public string GetLobbyCodeFromConnectionId(string connectionId)
+    {
+        foreach (OnlineGameManager game in this._onlineGames)
+        {
+            foreach (Player player in game.Players)
+            {
+                this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}. ConnectionID: {connectionId}");
+                if (connectionId.Equals(player.ConnectionId))
+                {
+                    return game.LobbyCode;
+                }
+            }
+        }
+
+        return "";
+    }
+
+    public Player? GetPlayerFromConnectionId(string connectionId)
+    {
+        foreach (OnlineGameManager game in this._onlineGames)
+        {
+            foreach (Player player in game.Players)
+            {
+                this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}. ConnectionID: {connectionId}");
+                if (connectionId.Equals(player.ConnectionId))
+                {
+                    return player;
+                }
+            }
+        }
+
+        return null;
+    }
+
 
     /// <summary>
     /// A helper method that logs all games and players in the database.

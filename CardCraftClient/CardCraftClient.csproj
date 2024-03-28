@@ -41,8 +41,8 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
-		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
+		<!-- <MauiIcon Include="Resources\AppIcon\appicon.svg" /> -->
+		<!-- <MauiIcon Include="Resources\AppIcon\appiconfg.svg" /> -->
 		<MauiIcon Include="Resources\AppIcon\cardcraft_icon2.svg" />
 
     <!-- Splash Screen -->
@@ -57,10 +57,6 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\sword.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,10 +77,6 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="SharpHook" Version="5.3.1" />
 		<PackageReference Include="SharpHook.Reactive" Version="5.3.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiAsset Include="Resources\Images\sword.png" />
 	</ItemGroup>
 	
 	<ItemGroup>
