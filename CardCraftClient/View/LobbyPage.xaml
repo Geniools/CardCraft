@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardCraftClient.View.LobbyPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+             xmlns:view="clr-namespace:CardCraftClient.View"
+             xmlns:model="clr-namespace:CardCraftShared"
+             x:DataType="viewmodel:LobbyPageViewModel"
+             BackgroundColor="#cab070"
+             >
+    <Grid
+        RowDefinitions="*, Auto"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        >
+        <Border
+            StrokeThickness="0"
+            Grid.Row="0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            >
+            <Grid
+                RowDefinitions="Auto, Auto, Auto"
+                Margin="20"
+                >   
+                <Grid
+                   Grid.Row="0"
+                   ColumnDefinitions="3*, 2*"
+                   ColumnSpacing="30"
+                   >
+                    <Grid
+                        ColumnDefinitions="*, *"
+                        ColumnSpacing="40"
+                        VerticalOptions="Center"
+                        >
+                        <Label
+                            Grid.Column="0"
+                            Text="Lobby Code: "
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            TextColor="#000000"
+                        />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding LobbyCode}"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="#525252"
+                            HorizontalOptions="End"
+                        />
+                    </Grid>
+
+                    <Button
+                        Grid.Column="1"
+                        Text="Return to Start"
+                        BackgroundColor="#525252"
+                        TextColor="#FBB969"
+                        Command="{Binding ReturnToStartPageCommand}"
+                    />
+                </Grid>
+
+
+                <Grid
+                    Grid.Row="1"
+                    RowDefinitions="*, 2*, *"
+                    >
+                    <!-- Player 1 -->
+                    <Grid 
+                        Grid.ColumnDefinitions="*, 3*"
+                        Grid.Row="0"
+                        ColumnSpacing="50"
+                        Margin="30"
+                    >
+                        <Image
+                            Grid.Column="0"
+                            Source="person.png"
+                            WidthRequest="100"
+                            HeightRequest="100"
+                        />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding Player1.Name}"
+                            FontSize="70"
+                            TextColor="#000000"
+                        />
+                    </Grid>
+
+                    <Label
+                        Grid.Row="1"
+                        Text="VS"
+                        FontSize="44"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="#000000"
+                        FontAttributes="Bold"
+                    />
+
+                    <!-- Player 2 -->
+                    <Grid 
+                        Grid.ColumnDefinitions="*, 3*"
+                        Grid.Row="2"
+                        ColumnSpacing="50"
+                        Margin="30"
+                    >
+                        <Image
+                            Grid.Column="0"
+                            Source="person.png"
+                            WidthRequest="100"
+                            HeightRequest="100"
+                        />
+
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding Player2.Name}"
+                            FontSize="70"
+                            TextColor="#000000"
+                        />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Label
+            Grid.Row="1"
+            Text="{Binding TimerText}"
+            FontSize="44"
+            HorizontalOptions="Center"
+        />
+    </Grid>
+
+</view:BasePage>

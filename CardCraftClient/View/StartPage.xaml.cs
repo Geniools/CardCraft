@@ -2,11 +2,10 @@
 
 namespace CardCraftClient.View;
 
-public partial class StartPage : ContentPage
+public partial class StartPage : BasePage
 {
-    public StartPage(StartPageViewModel vm)
+    public StartPage(StartPageViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

@@ -2,17 +2,40 @@
 
 public class Player
 {
-    public BaseHero Hero { get; set; }
-    private Deck Deck { get; set; }
-    private Hand Hand { get; set; }
+    public Player() { }
 
-    public Player(BaseHero hero)
+    public Player(string name)
     {
-        this.Hero = hero;
+        this.Hand = new Hand();
+        this.Name = name;
     }
 
-    public void PlayCard(BaseCard card)
+    // Connection-related properties
+
+    public string? ConnectionId { get; set; }
+
+    public string Name { get; set; }
+
+    // Game-related properties
+
+    public BaseHero Hero { get; set; }
+
+    public DeckPool Deck { get; set; }
+
+    public Hand Hand { get; set; }
+
+    public void PlayCard(IBaseCard card, Board board)
     {
-        throw new NotImplementedException();
+        Hand.Remove(card);
+        board.AddCard(card, this);
+    }
+
+    public void DrawCard()
+    {
+        if (!Deck.IsEmpty())
+        {
+            IBaseCard card = Deck.DrawCard();
+            Hand.Add(card);
+        }
     }
 }

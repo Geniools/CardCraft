@@ -14,18 +14,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseMinion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Board.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\DivineShield.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\MinionEffectDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\TauntDecorator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\CardRarityEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AlexCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Deck.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\GameManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ServerCallbacks.cs" />
+    <Compile Include="..\CardCraftShared\Core\DeckPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graveyard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseHero.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\ICardStatsManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\ISpecialAbility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Hand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\IMinion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Player.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\SpecialStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\" />

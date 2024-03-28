@@ -1,23 +1,142 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardCraftClient.View.StartPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
-             x:DataType="viewmodel:StartPageViewModel"
-             Title="{Binding Title}"
-             BackgroundColor="#EDF26F">
+             xmlns:view="clr-namespace:CardCraftClient.View"
+             x:DataType="viewmodel:StartPageViewModel">
 
-    <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Grid BackgroundColor="#cab070">
+	    <Grid.RowDefinitions>
+		    <RowDefinition Height="*"/>
+		    <RowDefinition Height="4*"/>
+	    </Grid.RowDefinitions>
 
-        <Entry Grid.Row="0" Placeholder="Enter text here" HorizontalOptions="Center" />
-        <Button Grid.Row="1" Text="Click Me" HorizontalOptions="Center" />
+	    <Grid.ColumnDefinitions>
+		    <ColumnDefinition Width="2.5*"/>
+		    <ColumnDefinition Width="3*"/>
+		    <ColumnDefinition Width="2.5*"/>
+	    </Grid.ColumnDefinitions>
+
+	    <Image 
+            Grid.Row="0"
+            Grid.RowSpan="2" 
+            Grid.Column="1"
+            Source="sword.png" 
+			Opacity="0.7"
+        />
+
+	    <Border 
+            Grid.Row="1" 
+            Grid.Column="1"
+			StrokeThickness="0"
+            Padding="20"
+            BackgroundColor="Transparent"
+            >
+		    <Grid
+			    Padding="20"
+			    RowSpacing="10"
+			    >
+
+                <Grid.RowDefinitions>
+				    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="50"/>
+				    <RowDefinition Height="20"/>
+				    <RowDefinition Height="50"/>
+				    <RowDefinition Height="50"/>
+				    <RowDefinition Height="70"/>
+				    <RowDefinition Height="*"/>
+			    </Grid.RowDefinitions>
+
+                <Label
+				    Grid.Row="2"
+				    Text="{Binding GameName}"
+				    FontSize="50"
+				    TextColor="WhiteSmoke"
+					FontFamily="GermanicaBold"
+					FontAttributes="Bold"
+				    HorizontalTextAlignment="Center"
+					VerticalTextAlignment="Center"
+			    >
+					<Label.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="10,5"
+                                Opacity="1" />
+                    </Label.Shadow>
+                </Label>
+
+                <Entry
+				    Grid.Row="4"
+				    x:Name="UserNameEntry"
+				    Placeholder="Username"
+				    TextColor="Black"
+				    HorizontalTextAlignment="Center"
+				    Text="{Binding Username}"
+				    BackgroundColor="White"
+				    IsSpellCheckEnabled="False"
+				    IsEnabled="{Binding IsNotBusy}"
+			    >
+				    <Entry.Behaviors>
+					    <toolkit:TextValidationBehavior
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"
+                            ValidStyle="{StaticResource ValidEntryStyle}"
+                            Flags="ValidateOnValueChanged"
+                            MinimumLength="2"
+                            MaximumLength="8"
+                        />
+				    </Entry.Behaviors>
+			    </Entry>
+
+			    <Entry
+				    Grid.Row="5"
+				    x:Name="LobbyCodeEntry"
+				    Placeholder="Lobby Code"
+				    TextColor="Black"
+				    HorizontalTextAlignment="Center"
+				    Text="{Binding LobbyCode}"
+				    BackgroundColor="White"
+				    IsSpellCheckEnabled="False"
+				    IsEnabled="{Binding IsNotBusy}"
+			    >
+				    <Entry.Behaviors>
+					    <toolkit:TextValidationBehavior
+                            InvalidStyle="{StaticResource InvalidEntryStyle}"
+                            ValidStyle="{StaticResource ValidEntryStyle}"
+                            Flags="ValidateOnValueChanged"
+                            MinimumLength="3"
+						    MaximumLength="6"
+                            />
+				    </Entry.Behaviors>
+			    </Entry>
+
+			    <Grid 
+                    Grid.Row="6" 
+                    ColumnSpacing="10"
+                    >
+				    <Button
+					    x:Name="StartButton"
+					    Text="Start Game"
+					    BackgroundColor="#525252"
+					    TextColor="#FBB969"
+					    FontAttributes="Bold"
+					    IsEnabled="{Binding CanStartGame}"
+					    Command="{Binding JoinGameCommand}"
+				    />
+			    </Grid>
+		    </Grid>
+	    </Border>
     </Grid>
 
-</ContentPage>
+</view:BasePage>

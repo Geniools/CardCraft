@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="CardCraftClient.View.CardView"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:view="clr-namespace:CardCraftClient.View"
+               xmlns:model="clr-namespace:CardCraftShared"
+               xmlns:viewModel="clr-namespace:CardCraftClient.ViewModel"
+               x:DataType="viewModel:CardViewModel"
+               BackgroundColor="#cab070">
+
+	<Grid>
+		<!-- Image -->
+        <Image Source="{Binding Card.Image}"
+               Aspect="AspectFill"
+               VerticalOptions="Start"
+               HorizontalOptions="FillAndExpand"/>
+
+        <!-- Description -->
+        <Label Text="{Binding Card.Description}"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Margin="10"/>
+
+        <!-- Attack -->
+        <Label Text="{Binding Card.Attack}"
+               VerticalOptions="End"
+               HorizontalOptions="Start"
+               Margin="10"/>
+
+        <!-- Health -->
+        <Label Text="{Binding Card.Health}"
+               VerticalOptions="End"
+               HorizontalOptions="End"
+               Margin="10"/>
+
+        <!-- Mana Points -->
+        <Label Text="{Binding Card.ManaCost}"
+               VerticalOptions="Start"
+               HorizontalOptions="End"
+               Margin="10"/>
+    </Grid>
+
+
+
+</view:BasePage>

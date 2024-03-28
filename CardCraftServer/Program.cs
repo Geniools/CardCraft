@@ -1,10 +1,16 @@
 using CardCraftServer.Hubs;
-using CardCraftShared;
+using CardCraftServer.Model;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
-builder.Services.AddSignalR();
-builder.Services.AddSingleton<GameManager>();
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+}); 
+
+builder.Services.AddSingleton<OnlineGameManagerDatabase>();
 
 var app = builder.Build();
 

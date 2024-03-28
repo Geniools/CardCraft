@@ -6,17 +6,18 @@
     xmlns:local="clr-namespace:CardCraftClient"
     xmlns:view="clr-namespace:CardCraftClient.View"
     Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.BackgroundColor="Transparent"
+    Shell.ForegroundColor="Transparent"
+    Shell.TitleColor="Transparent"
+    DisabledColor="Transparent"
+    UnselectedColor="Transparent"
     Title="Card Craft">
 
     <ShellContent
         Title="StartPage"
         ContentTemplate="{DataTemplate view:StartPage}"
-        Route="StartPage" />
-
-    <ShellContent 
-        Title="MainPage"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"
-    />
+        Route="StartPage"
+        />
 
 </Shell>

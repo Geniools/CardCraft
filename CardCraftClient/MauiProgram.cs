@@ -1,4 +1,6 @@
-﻿using CardCraftClient.View;
+﻿using CardCraftClient.Model;
+using CardCraftClient.Service;
+using CardCraftClient.View;
 using CardCraftClient.ViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
@@ -19,9 +21,14 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
+            .Logging
+            .AddDebug()
             .Services
             .RegisterViews()
-            .RegisterViewModels();
+            .RegisterViewModels()
+            .AddSingleton<GameManager>()
+            .AddSingleton<SignalRService>();
+        
 
 #if WINDOWS
         builder.ConfigureLifecycleEvents(events =>
@@ -38,7 +45,7 @@ public static class MauiProgram
                     switch (appWindow.Presenter)
                     {
                         case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
-                            overlappedPresenter.SetBorderAndTitleBar(false, false);
+                            overlappedPresenter.SetBorderAndTitleBar(true, true);
                             overlappedPresenter.Maximize();
                             break;
                     }

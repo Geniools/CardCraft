@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="CardCraftClient.View.HeroPage"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+               xmlns:view="clr-namespace:CardCraftClient.View"
+               x:DataType="viewmodel:HeroPageViewModel"
+               BackgroundColor="#cab070">
+
+    <StackLayout Spacing="30" VerticalOptions="Center">
+
+        <Button ImageSource="person.png"
+                Text="Hero 1"
+                FontSize="50"
+                HorizontalOptions="Center"
+                BackgroundColor="Grey"
+                WidthRequest="1000"
+                HeightRequest="300"
+                BorderWidth="2" 
+                BorderColor="white"
+                CornerRadius="25"
+                Clicked="OnHeroSelected"
+                CommandParameter="Hero 1"/>
+
+        <Button ImageSource="person.png"
+                Text="Hero 2"
+                FontSize="50"
+                HorizontalOptions="Center"
+                BackgroundColor="Grey"
+                WidthRequest="1000"
+                HeightRequest="300"
+                BorderWidth="2" 
+                BorderColor="white"
+                CornerRadius="25"
+                Clicked="OnHeroSelected"
+                CommandParameter="Hero 2"/>
+
+        <Button ImageSource="person.png"
+                Text="Hero 3"
+                FontSize="50"
+                HorizontalOptions="Center"
+                BackgroundColor="Grey"
+                WidthRequest="1000"
+                HeightRequest="300"
+                BorderWidth="2" 
+                BorderColor="white"
+                CornerRadius="25"
+                Clicked="OnHeroSelected"
+                CommandParameter="Hero 3"/>
+    </StackLayout>
+
+</view:BasePage>

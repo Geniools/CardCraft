@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardCraftClient.View.BasePage"
+             xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+             x:DataType="viewmodel:BaseViewModel"
+             NavigationPage.HasBackButton="false"
+             Title="{Binding Title}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="True" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem>
+            <MenuFlyoutItem Text="Full Screen" Clicked="OnToggleFullscreenClicked">
+                <MenuFlyoutItem.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Ctrl" Key="F" />
+                </MenuFlyoutItem.KeyboardAccelerators>
+            </MenuFlyoutItem>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+</ContentPage>

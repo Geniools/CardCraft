@@ -4,19 +4,30 @@ namespace CardCraftShared;
 
 public class Board : ICardStatsManager
 {
-    private List<BaseCard> Cards { get; init; }
+    public List<IBaseCard> FriendlySide { get; set; }
+    public List<IBaseCard> EnemySide { get; set; }
 
+    
     public Board()
     {
-        Cards = new();
+        FriendlySide = new();
+        EnemySide = new();
     }
 
-    public void PlayMinion(BaseMinion minion)
+    public void AddCard(IBaseCard card, Player player)
     {
-        throw new NotImplementedException();
+        // TODO: Add a card to the correct side of the board
+        // if (player == ayer1)
+        // {
+        //     FriendlySide.Add(card);
+        // }
+        // else
+        // {
+        //     EnemySide.Add(card);
+        // }
     }
 
-    public void KillMinion(BaseMinion minion)
+    public void KillMinion(IBaseCard minion)
     {
         throw new NotImplementedException();
     }
@@ -31,12 +42,12 @@ public class Board : ICardStatsManager
         throw new NotImplementedException();
     }
 
-    public void DamageMinion(BaseMinion minion, int damage)
+    public void DamageMinion(IBaseCard minion, int damage)
     {
         throw new NotImplementedException();
     }
 
-    public void HealMinion(BaseMinion minion, int heal)
+    public void HealMinion(IBaseCard minion, int heal)
     {
         throw new NotImplementedException();
     }
