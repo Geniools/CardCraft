@@ -43,7 +43,7 @@ public partial class GamePageViewModel : BaseViewModel
         this.Description = "nice";
         this.Id = 1;
         DeckPool deck = new();
-        BaseHero hero = new AlexHero(1, "", "", "aboba");
+        BaseHero hero = new AlexHero();
         Player player = new();
 
         IMinion minion = new AlexCard();

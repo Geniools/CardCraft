@@ -15,6 +15,7 @@ namespace CardCraftClient.Model;
 public class GameManager
 {
     public bool IsGameStarted { get; set; }
+
     private readonly SignalRService _signalRService;
 
     private Player? _currentPlayer;
@@ -168,7 +169,7 @@ public class GameManager
     public void TestStuff()
     {
         DeckPool deck = new();
-        BaseHero hero = new AlexHero(1, "", "", "aboba");
+        BaseHero hero = new AlexHero();
         Player player = new();
         player.Hero = hero;
         player.Deck = deck;

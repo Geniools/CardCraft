@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\AlexHero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\ChrisHero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\MiroHero.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseMinion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseSpell.cs" />
@@ -20,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\CardRarityEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AlexCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\ColorEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ServerCallbacks.cs" />
     <Compile Include="..\CardCraftShared\Core\DeckPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graveyard.cs" />
@@ -31,6 +34,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Core\Enums\" />
   </ItemGroup>
 </Project>

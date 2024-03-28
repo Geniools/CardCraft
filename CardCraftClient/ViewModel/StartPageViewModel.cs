@@ -85,6 +85,13 @@ public partial class StartPageViewModel : BaseViewModel
             errorMessage += "Lobby code must only contain numbers or letters!\n";
         }
 
+        // Check for the player to have selected a hero
+        if (this._signalRService.Player.Hero is null)
+        {
+            isValid = false;
+            errorMessage = "Select a hero first!\n";
+        }
+
         if (!isValid)
         {
             this.IsBusy = false;

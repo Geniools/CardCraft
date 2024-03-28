@@ -18,7 +18,7 @@ public class Player
 
     // Game-related properties
 
-    public BaseHero Hero { get; set; }
+    public BaseHero? Hero { get; set; }
 
     public DeckPool Deck { get; set; }
 
