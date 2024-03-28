@@ -28,7 +28,7 @@ public class SignalRService
         this.Player = new();
 
         this._hubConnection = new HubConnectionBuilder()
-            .WithUrl(CONNECTION_URL_LOCAL)
+            .WithUrl(CONNECTION_URL)
             .WithAutomaticReconnect()
             .ConfigureLogging(logging =>
             {
