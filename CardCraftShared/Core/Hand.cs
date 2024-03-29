@@ -20,7 +20,6 @@ public class Hand : ICardStatsManager
     {
         Cards.Remove(card);
         return card;
-
     }
 
     public void DamageAllMinions(int damage)

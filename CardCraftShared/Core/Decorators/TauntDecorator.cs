@@ -8,4 +8,3 @@ internal class TauntDecorator(IMinion minion) : MinionEffectDecorator(minion)
     {
     }
 }
-
