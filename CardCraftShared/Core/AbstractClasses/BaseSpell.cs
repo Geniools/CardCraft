@@ -8,7 +8,7 @@ public abstract class BaseSpell : IBaseCard
     public string Description { get; init; }
     public string Image { get; init; }
 
-    protected BaseSpell(int manaCost, string name, string description, CardRarityEnum rarity, string image)
+    protected BaseSpell(int manaCost, string name, string description, CardRarityEnum rarity,string image)
     {
         this.ManaCost = manaCost;
         this.Name = name;

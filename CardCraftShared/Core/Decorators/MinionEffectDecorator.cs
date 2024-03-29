@@ -11,15 +11,19 @@ internal abstract class MinionEffectDecorator : IMinion
         get => _minion.Health;
         set => _minion.Health = value;
     }
+
     int IMinion.Attack
     {
         get => _minion.Attack;
         set => _minion.Attack = Math.Max(value, 0);
     }
-    public int ManaCost { get ; set; }
+
+    public int ManaCost { get; set; }
     public CardRarityEnum Rarity { get; set; }
     public string Name { get; init; }
     public string Description { get; init; }
+    public bool CanAttack { get; set; }
+    public string Image { get; set; }
 
     protected MinionEffectDecorator(IMinion minion)
     {
@@ -29,11 +33,18 @@ internal abstract class MinionEffectDecorator : IMinion
         this.Name = minion.Name;
         this.Description = minion.Description;
         this.Rarity = minion.Rarity;
+        this.CanAttack = minion.CanAttack;
+        this.Image = minion.Image;
     }
 
     public void AttackMinion(IMinion minion)
     {
         this._minion.AttackMinion(minion);
+    }
+
+    public void AttackHero(BaseHero hero)
+    {
+        this._minion.AttackHero(hero);
     }
 
     public virtual void TriggerEffect()
@@ -45,4 +56,15 @@ internal abstract class MinionEffectDecorator : IMinion
     {
         this._minion.Damage(damage);
     }
+
+    public void TakeDamage(int damage)
+    {
+        this._minion.TakeDamage(damage);
+    }
+    
+    protected virtual void DoSomethingForIBla()
+    {
+        
+    }
+
 }

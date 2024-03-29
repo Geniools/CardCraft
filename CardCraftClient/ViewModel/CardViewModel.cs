@@ -6,8 +6,8 @@ namespace CardCraftClient.ViewModel;
 
 public partial class CardViewModel : BaseViewModel
 {
-    private BaseMinion _card;
-    public BaseMinion Card
+    private IBaseCard _card;
+    public IBaseCard Card
     {
         get => _card;
         set

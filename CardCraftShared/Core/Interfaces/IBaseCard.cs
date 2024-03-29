@@ -11,4 +11,3 @@ public interface IBaseCard
 
     public string Description { get; init; }
 }
-

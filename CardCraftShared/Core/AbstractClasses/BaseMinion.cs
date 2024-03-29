@@ -23,8 +23,7 @@ public abstract class BaseMinion : IMinion
     public string Name { get; init; }
     public string Description { get; init; }
     public string Image { get; set; }
-    public string Attack { get; set; }
-    public string Health { get; set; }
+    public bool CanAttack { get; set; }
 
     public BaseMinion(int health, int attack, int manaCost, string name, string description, CardRarityEnum rarity, string image)
     {
@@ -34,6 +33,7 @@ public abstract class BaseMinion : IMinion
         Name = name;
         Description = description;
         Rarity = rarity;
+        CanAttack = false;
         Image = image;
     }
 
@@ -45,10 +45,20 @@ public abstract class BaseMinion : IMinion
     public void AttackMinion(IMinion minion)
     {
         minion.Damage(_attack);
-        Damage(minion.Attack);
+        TakeDamage(minion.Attack);
+    }
+
+    public void AttackHero(BaseHero hero)
+    {
+        hero.Health -= _attack;
     }
 
     public void Damage(int damage)
+    {
+        _health -= damage;
+    }
+
+    public void TakeDamage(int damage)
     {
         _health -= damage;
     }
