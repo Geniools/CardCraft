@@ -7,7 +7,6 @@
              xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
              xmlns:view="clr-namespace:CardCraftClient.View"
              x:DataType="viewmodel:StartPageViewModel"
-             BackgroundColor="#cab070"
              >
 
     <ContentPage.Resources>
@@ -117,7 +116,7 @@
 			    </Entry>
 
 			    <Grid
-                    Grid.Row="3" 
+                    Grid.Row="3"
 					RowDefinitions="*, *"
                     RowSpacing="5"
                     >

@@ -7,13 +7,28 @@
                xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
                xmlns:view="clr-namespace:CardCraftClient.View"
                xmlns:model="clr-namespace:CardCraftShared"
+               xmlns:viewElements="using:CardCraftClient.ViewElements"
                x:DataType="viewmodel:HeroPageViewModel"
-               BackgroundColor="#cab070">
+               >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="HeroCardTemplate">
+                <viewElements:HeroCardTemplate 
+                    Name="{Binding SelectedHero.Name}" 
+                    Image="{Binding SelectedHero.Image}"
+                    Description="{Binding SelectedHero.Description}" 
+                    Color="{Binding SelectedHero.Color}"
+                    TextColor="{Binding SelectedHero.TextColor}"
+                    />
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <Grid
         HorizontalOptions="Center"
         VerticalOptions="Center"
-        RowDefinitions="*, 6*, *, *"
+        RowDefinitions="*, 8*, 2*, *"
         RowSpacing="50"
         >
         <Grid
@@ -27,117 +42,57 @@
             />
         </Grid>
 
-        <CollectionView
+        <Border
             Grid.Row="1"
-            ItemsSource="{Binding Heroes}"
-            SelectionMode="Single"
-            SelectedItem="{Binding SelectedHero}"
-            IsEnabled="{Binding IsNotBusy}"
+            StrokeThickness="4"
+            Background="{StaticResource Secondary}"
+            StrokeShape="RoundRectangle 40,0,0,40"
+            Padding="10"
+            Stroke="{StaticResource Main1}"
             >
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout    
-                    Orientation="Vertical"
-                    Span="3"
-                    VerticalItemSpacing="10"
-                    />
-            </CollectionView.ItemsLayout>
+            <CollectionView
+                ItemsSource="{Binding Heroes}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedHero}"
+                IsEnabled="{Binding IsNotBusy}"
+                VerticalScrollBarVisibility="Never"
+                ItemSizingStrategy="MeasureAllItems"
+                >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        Span="3"
+                        VerticalItemSpacing="10"
+                        HorizontalItemSpacing="10"
+                        />
+                </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:BaseHero}">
-                    <Border
-                        BackgroundColor="#525252"
-                        WidthRequest="200"
-                        HeightRequest="350"
-                        Padding="10"
-                        >
-                        <Grid>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{
-                                        Binding Source={RelativeSource AncestorType={x:Type viewmodel:HeroPageViewModel}}, 
-                                        Path=SelectHeroCommand
-                                    }"
-                                    CommandParameter="{Binding .}"
-                                    />
-                            </Grid.GestureRecognizers>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:BaseHero}">
+                        <viewElements:HeroCardTemplate
+                            Image="{Binding Image}"
+                            Name="{Binding Name}"
+                            Description="{Binding Description}"
+                            Health="{Binding Health}"
+                            Color="{Binding Color}"
+                            TextColor="{Binding TextColor}"
+                            />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="40" />
-                                <RowDefinition Height="100" />
-                                <RowDefinition Height="30" />
-                            </Grid.RowDefinitions>
-
-                            <Image 
-                                Grid.Row="0" 
-                                Source="{Binding Image}"
-                                Aspect="AspectFill" 
-                                HeightRequest="150"
-                                />
-
-                            <Label
-                                Grid.Row="1"
-                                Text="{Binding Name}"
-                                FontSize="Large" 
-                                FontFamily="CutOutsFLF"
-                                TextColor="#FBB969"
-                                HorizontalOptions="Center"
-                                />
-
-                            <Label
-                                Grid.Row="2"
-                                Text="{Binding Description}"
-                                TextColor="#FBB969"
-                                />
-                            
-                            <Grid
-                                Grid.Row="3"
-                                ColumnDefinitions="2*, *"
-                                >
-                                <Label
-                                    Text="Hero's health: "
-                                    TextColor="#FBB969"
-                                />
-
-                                <Label
-                                    Grid.Column="1"
-                                    Text="{Binding Health}"
-                                    TextColor="#FBB969"
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="End"
-                                />
-                            </Grid>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
 
         <Grid
             Grid.Row="2"
-            >
-            <Button
-                Text="Select hero"
-                Command="{Binding SelectCommand}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                BackgroundColor="#FBB969"
-                TextColor="#525252"
-                FontAttributes="Bold"
-                WidthRequest="300"
-            />
-        </Grid>
-        
-        <Grid
-            Grid.Row="3"
-            ColumnDefinitions="*, *"
+            ColumnDefinitions="*, *, *"
             ColumnSpacing="20"
+            HorizontalOptions="Center"
             >
             <Label
                 Grid.Column="0"
                 Text="Selected hero:"
                 FontSize="25"
-                HorizontalOptions="End"
                 VerticalOptions="Center"
                 />
 
@@ -146,10 +101,48 @@
                 Text="{Binding SelectedHero.Name}"
                 FontSize="30"
                 FontFamily="CutOutsFLF"
-                HorizontalOptions="Start"
                 VerticalOptions="Center"
+                TextColor="{Binding SelectedHero.Color}"
                 />
 
+            <Image
+                Grid.Column="2"
+                Source="{Binding SelectedHero.Image}"
+                HeightRequest="100"
+                WidthRequest="100"
+                Aspect="AspectFill"
+                VerticalOptions="Center"
+                />
+        </Grid>
+
+        <Grid
+            Grid.Row="3"
+            ColumnDefinitions="*, *"
+            ColumnSpacing="20"
+        >
+            <Button
+                Text="Select hero"
+                Command="{Binding SelectCommand}"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                BackgroundColor="#FBB969"
+                TextColor="#525252"
+                FontAttributes="Bold"
+                WidthRequest="200"
+            />
+
+            <Button
+                Grid.Column="1"
+                Text="Build deck"
+                IsEnabled="{Binding IsHeroSelected}"
+                Command="{Binding BuildDeckCommand}"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                BackgroundColor="#525252"
+                TextColor="#FBB969"
+                FontAttributes="Bold"
+                WidthRequest="200"
+            />
         </Grid>
     </Grid>
 

@@ -1,19 +1,52 @@
-﻿namespace CardCraftShared;
+﻿using CardCraftShared.Core.Other;
+
+namespace CardCraftShared;
 
 public abstract class BaseHero
 {
     protected const int DefaultHealth = 30;
-    public ColorEnum Color { get; init; }
+    // UI properties for the hero
+    public string Color { get; init; }
+    public string TextColor { get; init; }
     public string Image { get; init; }
-    public string Name { get; init; }
-    public string Description { get; init; }
 
-    public int Health { get; protected set; }
+    private string _name;
+    public string Name {
+        get => this._name;
+        init
+        {
+            if (value.Length > 10)
+            {
+                throw new ArgumentException("Name is too long");
+            }
 
-    protected BaseHero(int health, ColorEnum color, string image, string name, string description)
+            this._name = value;
+        }
+    }
+
+    private string _description;
+    public string Description
     {
-        this.Health = health;
-        this.Color = color;
+        get => this._description;
+        init
+        {
+            if (value.Length > 100)
+            {
+                throw new ArgumentException("Description is too long");
+            }
+
+            this._description = value;
+        }
+    }
+
+    public int Health { get; set; }
+
+    protected BaseHero(ColorEnum color, string image, string name, string description)
+    {
+        this.Health = DefaultHealth;
+        this.Color = ViewCardColor.GetColor(color);
+        this.TextColor = ViewCardColor.GetTextColor(color);
+
         this.Image = image;
         this.Name = name;
         this.Description = description;

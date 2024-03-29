@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardCraftClient.View.DeckPage"
+             xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+             xmlns:view="clr-namespace:CardCraftClient.View"
+             xmlns:model="clr-namespace:CardCraftShared"
+             xmlns:viewElements="using:CardCraftClient.ViewElements"
+             x:DataType="viewmodel:DeckPageViewModel"
+             >
+
+    <view:BasePage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="HeroCardTemplate">
+                <viewElements:BaseCardTemplate 
+                    Name="{Binding }" 
+                    Image="{Binding }"
+                    Description="{Binding }" 
+                    Color="{Binding }"
+                    TextColor="{Binding }"
+                />
+            </DataTemplate>
+        </ResourceDictionary>
+    </view:BasePage.Resources>
+
+    <Grid
+        RowDefinitions="*, 100"
+        Padding="10"
+        >
+        <Grid
+            Grid.Row="0"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Available Cards Collection -->
+            <Border
+                Grid.Column="0"
+                StrokeThickness="4"
+                Background="{StaticResource Secondary}"
+                StrokeShape="RoundRectangle 40,0,0,40"
+                Padding="10"
+                Stroke="{StaticResource Main1}"
+                >
+                <CollectionView 
+                    ItemsSource="{Binding AvailableCards}"
+                    SelectionMode="Multiple"
+                    SelectedItems="{Binding AddCardCommand}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            Orientation="Vertical"
+                            Span="5"
+                            VerticalItemSpacing="10"
+                            HorizontalItemSpacing="10"
+                        />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Base Card Template here -->
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <!-- Selected Cards Collection -->
+            <Border
+                Grid.Column="1"
+                StrokeThickness="4"
+                Background="{StaticResource Secondary}"
+                StrokeShape="RoundRectangle 0,40,40,0"
+                Padding="10"
+                Stroke="{StaticResource Main1}"
+                >
+                <CollectionView 
+                    ItemsSource="{Binding Deck}"
+                    SelectionMode="None"
+                    >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            Orientation="Vertical"
+                            Span="2"
+                            VerticalItemSpacing="10"
+                            HorizontalItemSpacing="10"
+                        />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Base Card Template here -->
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+        </Grid>
+
+        <Button 
+            Grid.Row="1"
+            Text="Finish"
+            Command="{Binding SaveDeckCommand}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            BackgroundColor="{StaticResource Main1}"
+            TextColor="{StaticResource Main2}"
+            FontAttributes="Bold"
+            WidthRequest="300" 
+        />
+    </Grid>
+</view:BasePage>

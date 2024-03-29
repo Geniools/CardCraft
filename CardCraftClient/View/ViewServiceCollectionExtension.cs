@@ -8,6 +8,7 @@ public static class ViewServiceCollectionExtension
         services.AddTransient<GamePage>();
         services.AddTransient<LobbyPage>();
         services.AddTransient<HeroPage>();
+        services.AddTransient<DeckPage>();
 
         return services;
     }

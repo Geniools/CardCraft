@@ -1,5 +1,7 @@
 ﻿using CardCraftShared;
 using CardCraftShared.Cards.Heroes;
+using CardCraftShared.Cards.Minions;
+using CardCraftShared.Cards.Spells;
 
 namespace CardCraftClient.Service;
 
@@ -25,7 +27,6 @@ public class GameComponentsRegistration
         heroes.Add(new AlexHero());
         heroes.Add(new MiroHero());
         heroes.Add(new ChrisHero());
-        heroes.Add(new ChrisHero());
 
         return heroes;
     }
@@ -37,6 +38,9 @@ public class GameComponentsRegistration
     private List<IBaseCard> GetRegisteredCards()
     {
         List<IBaseCard> cards = new();
+
+        cards.Add(new AlexCard());
+        cards.Add(new ResitSpell());
 
         return cards;
     }

@@ -2,9 +2,9 @@
 
 namespace CardCraftClient.View;
 
-public partial class HeroPage : BasePage
+public partial class DeckPage : BasePage
 {
-    public HeroPage(HeroPageViewModel vm) : base(vm)
+    public DeckPage(DeckPageViewModel vm) : base(vm)
     {
         InitializeComponent();
     }

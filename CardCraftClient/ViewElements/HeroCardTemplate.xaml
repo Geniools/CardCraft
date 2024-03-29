@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="using:CardCraftClient.ViewModel"
+             x:Class="CardCraftClient.ViewElements.HeroCardTemplate"
+             >
+
+    <ContentView.Content>
+        <Grid
+            BackgroundColor="{Binding Color}"
+            WidthRequest="200"
+            HeightRequest="350"
+            Padding="10"
+        >
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{
+                        Binding Source={RelativeSource AncestorType={x:Type viewmodel:HeroPageViewModel}}, 
+                        Path=SelectHeroCommand
+                    }"
+                    CommandParameter="{Binding .}"
+                />
+            </Grid.GestureRecognizers>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Image
+                Grid.Row="0"
+                Source="{Binding Image}"
+                Aspect="AspectFill"
+                HeightRequest="150"
+            />
+
+            <Label
+                Grid.Row="1"
+                Text="{Binding Name}"
+                FontSize="Large"
+                FontFamily="CutOutsFLF"
+                TextColor="{Binding TextColor}"
+                HorizontalOptions="Center"
+            />
+
+            <Label
+                Grid.Row="2"
+                Text="{Binding Description}"
+                TextColor="{Binding TextColor}"
+            />
+
+            <Grid
+                Grid.Row="3"
+                ColumnDefinitions="2*, *"
+            >
+                <Image
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Source="hearth.png"
+                />
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding Health}"
+                    TextColor="{StaticResource White}"
+                    FontAttributes="Bold"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Margin="0,0,11,5"
+                />
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+
+</ContentView>

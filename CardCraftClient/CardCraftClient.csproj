@@ -65,8 +65,10 @@
 	  <None Remove="Resources\AppIcon\cardcraft_icon.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon2.svg" />
 	  <None Remove="Resources\Fonts\CutOutsFLF.ttf" />
+	  <None Remove="Resources\Fonts\Progress.ttf" />
 	  <None Remove="Resources\Images\alexhero.jpeg" />
 	  <None Remove="Resources\Images\chrishero.jpeg" />
+	  <None Remove="Resources\Images\hearth.png" />
 	  <None Remove="Resources\Images\mirohero.jpeg" />
 	  <None Remove="Resources\Images\person.png" />
 	  <None Remove="Resources\Images\sword.png" />
@@ -84,11 +86,20 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Compile Update="ViewElements\BaseCardTemplate.xaml.cs">
+	    <DependentUpon>BaseCardTemplate.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ViewElements\HeroCardTemplate.xaml.cs">
+	    <DependentUpon>HeroCardTemplate.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\BasePage.xaml.cs">
 	    <DependentUpon>BasePage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\CardView.xaml.cs">
 	    <DependentUpon>CardView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\DeckPage.xaml.cs">
+	    <DependentUpon>DeckPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\GamePage.xaml.cs">
 	    <DependentUpon>GamePage.xaml</DependentUpon>
@@ -99,15 +110,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ViewElements\BaseCardTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewElements\HeroCardTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\BasePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\CardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\DeckPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Heroes\alexhero.jpeg" />
+	  <MauiImage Include="Resources\Images\Heroes\chrishero.jpeg" />
+	  <MauiImage Include="Resources\Images\Heroes\mirohero.jpeg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\Images\Cards\" />
 	</ItemGroup>
 
 	<Import Project="..\CardCraftShared\CardCraftShared.projitems" Label="Shared" />

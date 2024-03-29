@@ -8,6 +8,7 @@ public static class ViewModelServiceCollectionExtension
         services.AddTransient<LobbyPageViewModel>();
         services.AddTransient<GamePageViewModel>();
         services.AddTransient<HeroPageViewModel>();
+        services.AddTransient<DeckPageViewModel>();
 
         return services;
     }
