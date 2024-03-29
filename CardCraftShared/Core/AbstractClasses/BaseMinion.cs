@@ -22,7 +22,7 @@ public abstract class BaseMinion : IMinion
     public CardRarityEnum Rarity { get; set; }
     public string Name { get; init; }
     public string Description { get; init; }
-    public string Image { get; set; }
+    public string Image { get; init; }
     public bool CanAttack { get; set; }
 
     public BaseMinion(int health, int attack, int manaCost, string name, string description, CardRarityEnum rarity, string image)

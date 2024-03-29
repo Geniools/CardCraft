@@ -23,7 +23,7 @@ internal abstract class MinionEffectDecorator : IMinion
     public string Name { get; init; }
     public string Description { get; init; }
     public bool CanAttack { get; set; }
-    public string Image { get; set; }
+    public string Image { get; init; }
 
     protected MinionEffectDecorator(IMinion minion)
     {

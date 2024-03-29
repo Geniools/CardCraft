@@ -24,16 +24,16 @@
                Margin="10"/>
 
         <!-- Attack -->
-        <Label Text="{Binding Card.Attack}"
+        <!--<Label Text="{Binding Card.Attack}"
                VerticalOptions="End"
                HorizontalOptions="Start"
                Margin="10"/>
 
-        <!-- Health -->
+        --><!-- Health --><!--
         <Label Text="{Binding Card.Health}"
                VerticalOptions="End"
                HorizontalOptions="End"
-               Margin="10"/>
+               Margin="10"/>-->
 
         <!-- Mana Points -->
         <Label Text="{Binding Card.ManaCost}"
