@@ -7,6 +7,8 @@ public partial class HeroCardTemplate : ContentView
         InitializeComponent();
     }
 
+    // The following BindableProperties are needed to send custom data in the template when it is used in different parts of the project
+
     // Name of the hero ========================================
     public static readonly BindableProperty NameProperty =
         BindableProperty.Create(nameof(Name), typeof(string), typeof(HeroCardTemplate), null);

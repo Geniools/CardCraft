@@ -2,7 +2,7 @@
 
 public class ResitSpell : BaseSpell
 {
-    public ResitSpell() : base(2, "Resit", "Resit is a spell that gives a minion divine shield", CardRarityEnum.COMMON,"")
+    public ResitSpell() : base(2, "Resit", "Resit is a spell that destroys a student's sanity.", CardRarityEnum.COMMON,"resitspell.jpeg")
     {
     }
 

@@ -3,24 +3,23 @@
 <view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="CardCraftClient.View.HeroPage"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
-               xmlns:view="clr-namespace:CardCraftClient.View"
                xmlns:model="clr-namespace:CardCraftShared"
+               xmlns:view="clr-namespace:CardCraftClient.View"
                xmlns:viewElements="using:CardCraftClient.ViewElements"
                x:DataType="viewmodel:HeroPageViewModel"
                >
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="HeroCardTemplate">
-                <viewElements:HeroCardTemplate 
-                    Name="{Binding SelectedHero.Name}" 
-                    Image="{Binding SelectedHero.Image}"
-                    Description="{Binding SelectedHero.Description}" 
-                    Color="{Binding SelectedHero.Color}"
-                    TextColor="{Binding SelectedHero.TextColor}"
-                    />
+            <DataTemplate x:Key="HeroCardTemplate" x:DataType="{x:Type model:BaseHero}">
+                <viewElements:HeroCardTemplate
+                    Name="{Binding Name}"
+                    Image="{Binding Image}"
+                    Description="{Binding Description}"
+                    Color="{Binding Color}"
+                    TextColor="{Binding TextColor}"
+                />
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -52,9 +51,10 @@
             >
             <CollectionView
                 ItemsSource="{Binding Heroes}"
-                SelectionMode="Single"
+                ItemTemplate="{StaticResource HeroCardTemplate}"
                 SelectedItem="{Binding SelectedHero}"
                 IsEnabled="{Binding IsNotBusy}"
+                SelectionMode="Single"
                 VerticalScrollBarVisibility="Never"
                 ItemSizingStrategy="MeasureAllItems"
                 >
@@ -64,24 +64,10 @@
                         Span="3"
                         VerticalItemSpacing="10"
                         HorizontalItemSpacing="10"
-                        />
+                    />
                 </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:BaseHero}">
-                        <viewElements:HeroCardTemplate
-                            Image="{Binding Image}"
-                            Name="{Binding Name}"
-                            Description="{Binding Description}"
-                            Health="{Binding Health}"
-                            Color="{Binding Color}"
-                            TextColor="{Binding TextColor}"
-                            />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
             </CollectionView>
         </Border>
-
 
         <Grid
             Grid.Row="2"
@@ -94,7 +80,7 @@
                 Text="Selected hero:"
                 FontSize="25"
                 VerticalOptions="Center"
-                />
+            />
 
             <Label
                 Grid.Column="1"
@@ -103,7 +89,7 @@
                 FontFamily="CutOutsFLF"
                 VerticalOptions="Center"
                 TextColor="{Binding SelectedHero.Color}"
-                />
+            />
 
             <Image
                 Grid.Column="2"
@@ -112,7 +98,7 @@
                 WidthRequest="100"
                 Aspect="AspectFill"
                 VerticalOptions="Center"
-                />
+            />
         </Grid>
 
         <Grid

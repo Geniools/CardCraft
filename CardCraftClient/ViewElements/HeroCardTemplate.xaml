@@ -2,7 +2,6 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="using:CardCraftClient.ViewModel"
              x:Class="CardCraftClient.ViewElements.HeroCardTemplate"
              >
 
@@ -13,16 +12,6 @@
             HeightRequest="350"
             Padding="10"
         >
-            <Grid.GestureRecognizers>
-                <TapGestureRecognizer
-                    Command="{
-                        Binding Source={RelativeSource AncestorType={x:Type viewmodel:HeroPageViewModel}}, 
-                        Path=SelectHeroCommand
-                    }"
-                    CommandParameter="{Binding .}"
-                />
-            </Grid.GestureRecognizers>
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="40" />
@@ -63,6 +52,7 @@
                     HeightRequest="40"
                     Source="hearth.png"
                 />
+
                 <Label
                     Grid.Column="1"
                     Text="{Binding Health}"

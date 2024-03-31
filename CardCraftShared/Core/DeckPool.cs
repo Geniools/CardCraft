@@ -41,6 +41,15 @@ public class DeckPool : ICardStatsManager
         return Cards.Count == MaxCards;
     }
 
+    public void AddDeck(IList<IBaseCard> deck)
+    {
+        if (deck.Count > MaxCards) throw new Exception("Deck is too large");
+        foreach (var card in deck)
+        {
+            AddCard(card);
+        }
+    }
+
     public void DamageAllMinions(int damage)
     {
         throw new NotImplementedException();

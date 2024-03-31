@@ -27,14 +27,6 @@ public partial class HeroPageViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SelectHero(BaseHero hero)
-    {
-        this.IsBusy = true;
-        this.SelectedHero = hero;
-        this.IsBusy = false;
-    }
-
-    [RelayCommand]
     private async Task BuildDeck()
     {
         Shell.Current.GoToAsync(nameof(DeckPage));
@@ -56,7 +48,7 @@ public partial class HeroPageViewModel : BaseViewModel
 
             this._signalRService.Player.Hero = this.SelectedHero;
 
-            Shell.Current.GoToAsync($"///{nameof(StartPage)}");
+            await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
         }
         else
         {

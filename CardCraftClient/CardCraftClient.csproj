@@ -67,8 +67,12 @@
 	  <None Remove="Resources\Fonts\CutOutsFLF.ttf" />
 	  <None Remove="Resources\Fonts\Progress.ttf" />
 	  <None Remove="Resources\Images\alexhero.jpeg" />
+	  <None Remove="Resources\Images\attack.png" />
+	  <None Remove="Resources\Images\Cards\Minions\alexcard.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\resitspell.jpeg" />
 	  <None Remove="Resources\Images\chrishero.jpeg" />
 	  <None Remove="Resources\Images\hearth.png" />
+	  <None Remove="Resources\Images\manacost.png" />
 	  <None Remove="Resources\Images\mirohero.jpeg" />
 	  <None Remove="Resources\Images\person.png" />
 	  <None Remove="Resources\Images\sword.png" />
@@ -86,8 +90,11 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Compile Update="ViewElements\BaseCardTemplate.xaml.cs">
-	    <DependentUpon>BaseCardTemplate.xaml</DependentUpon>
+	  <Compile Update="ViewElements\BaseMinionTemplate.xaml.cs">
+	    <DependentUpon>BaseMinionTemplate.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ViewElements\BaseSpellTemplate.xaml.cs">
+	    <DependentUpon>BaseSpellTemplate.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="ViewElements\HeroCardTemplate.xaml.cs">
 	    <DependentUpon>HeroCardTemplate.xaml</DependentUpon>
@@ -110,7 +117,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ViewElements\BaseCardTemplate.xaml">
+	  <MauiXaml Update="ViewElements\BaseMinionTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewElements\BaseSpellTemplate.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewElements\HeroCardTemplate.xaml">
@@ -131,13 +141,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Cards\Minions\alexcard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\resitspell.jpeg" />
 	  <MauiImage Include="Resources\Images\Heroes\alexhero.jpeg" />
 	  <MauiImage Include="Resources\Images\Heroes\chrishero.jpeg" />
 	  <MauiImage Include="Resources\Images\Heroes\mirohero.jpeg" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Resources\Images\Cards\" />
 	</ItemGroup>
 
 	<Import Project="..\CardCraftShared\CardCraftShared.projitems" Label="Shared" />

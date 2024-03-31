@@ -1,105 +1,231 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CardCraftClient.View.DeckPage"
-             xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
-             xmlns:view="clr-namespace:CardCraftClient.View"
-             xmlns:model="clr-namespace:CardCraftShared"
-             xmlns:viewElements="using:CardCraftClient.ViewElements"
-             x:DataType="viewmodel:DeckPageViewModel"
-             >
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="CardCraftClient.View.DeckPage"
+               xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
+               xmlns:view="clr-namespace:CardCraftClient.View"
+               xmlns:model="clr-namespace:CardCraftShared"
+               xmlns:viewElements="using:CardCraftClient.ViewElements"
+               x:DataType="viewmodel:DeckPageViewModel">
 
-    <view:BasePage.Resources>
+    <ContentPage.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="HeroCardTemplate">
-                <viewElements:BaseCardTemplate 
-                    Name="{Binding }" 
-                    Image="{Binding }"
-                    Description="{Binding }" 
-                    Color="{Binding }"
-                    TextColor="{Binding }"
-                />
+            <DataTemplate x:Name="BaseMinionTemplate" x:Key="BaseMinionTemplate" x:DataType="{x:Type model:BaseMinion}">
+                <Grid>
+                    <viewElements:BaseMinionTemplate
+                        Name="{Binding Name}"
+                        Image="{Binding Image}"
+                        Description="{Binding Description}"
+                        Color="{Binding Color}"
+                        TextColor="{Binding TextColor}"
+                        ManaCost="{Binding ManaCost}"
+                        Attack="{Binding Attack}"
+                        Health="{Binding Health}" />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Name="BaseSpellTemplate" x:Key="BaseSpellTemplate" x:DataType="{x:Type model:BaseSpell}">
+                <Grid>
+                    <viewElements:BaseSpellTemplate
+                        Name="{Binding Name}"
+                        Image="{Binding Image}"
+                        Description="{Binding Description}"
+                        Color="{Binding Color}"
+                        TextColor="{Binding TextColor}"
+                        ManaCost="{Binding ManaCost}" />
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
-    </view:BasePage.Resources>
+    </ContentPage.Resources>
 
     <Grid
-        RowDefinitions="*, 100"
-        Padding="10"
-        >
+        RowDefinitions="*, 70"
+        Padding="10">
         <Grid
             Grid.Row="0"
-            >
+            ColumnSpacing="5">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Available Cards Collection -->
-            <Border
+            <Grid
                 Grid.Column="0"
-                StrokeThickness="4"
-                Background="{StaticResource Secondary}"
-                StrokeShape="RoundRectangle 40,0,0,40"
-                Padding="10"
-                Stroke="{StaticResource Main1}"
-                >
-                <CollectionView 
-                    ItemsSource="{Binding AvailableCards}"
-                    SelectionMode="Multiple"
-                    SelectedItems="{Binding AddCardCommand}"
-                    IsEnabled="{Binding IsNotBusy}"
-                    >
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            Orientation="Vertical"
-                            Span="5"
-                            VerticalItemSpacing="10"
-                            HorizontalItemSpacing="10"
-                        />
-                    </CollectionView.ItemsLayout>
+                RowDefinitions="60, *">
+                <Label
+                    Grid.Row="0"
+                    Text="Available Cards"
+                    FontSize="Large"
+                    FontFamily="CutOutsFLF"
+                    TextColor="{StaticResource Main1}"
+                    TextTransform="Uppercase"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <!-- Base Card Template here -->
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Border>
+                <!-- Available Cards Collection -->
+                <Border
+                    Grid.Row="1"
+                    StrokeThickness="4"
+                    Background="{StaticResource Secondary}"
+                    StrokeShape="RoundRectangle 40,0,0,40"
+                    Padding="10"
+                    Stroke="{StaticResource Main1}">
+                    <CollectionView
+                        x:Name="AvailableCards"
+                        ItemsSource="{Binding AvailableCards}"
+                        SelectedItem="{Binding SelectedAvailableCard}"
+                        SelectionChangedCommand="{Binding AddCardToDeckCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedAvailableCard}"
+                        SelectionMode="Single"
+                        VerticalScrollBarVisibility="Never"
+                        IsEnabled="{Binding IsNotBusy}"
+                        >
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                Orientation="Vertical"
+                                Span="4"
+                                VerticalItemSpacing="10"
+                                HorizontalItemSpacing="5" />
+                        </CollectionView.ItemsLayout>
 
-            <!-- Selected Cards Collection -->
-            <Border
+                        <CollectionView.EmptyView>
+                            <Grid
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                RowDefinitions="*, 2*"
+                                RowSpacing="100">
+                                <Label
+                                    Grid.Row="0"
+                                    Text="Damn! You've used all the cards here!"
+                                    FontSize="Large"
+                                    FontFamily="CutOutsFLF"
+                                    TextColor="{StaticResource Main1}"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalOptions="Center"
+                                />
+
+                                <Image
+                                    Grid.Row="1"
+                                    Source="attack.png"
+                                    VerticalOptions="Center"
+                                >
+                                    <Image.Shadow>
+                                        <Shadow Brush="Black"
+                                                Offset="0, 0"
+                                                Radius="10"
+                                                Opacity="1" />
+                                    </Image.Shadow>
+                                </Image>
+                            </Grid>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </Border>
+            </Grid>
+
+            <Grid
                 Grid.Column="1"
-                StrokeThickness="4"
-                Background="{StaticResource Secondary}"
-                StrokeShape="RoundRectangle 0,40,40,0"
-                Padding="10"
-                Stroke="{StaticResource Main1}"
-                >
-                <CollectionView 
-                    ItemsSource="{Binding Deck}"
-                    SelectionMode="None"
-                    >
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            Orientation="Vertical"
-                            Span="2"
-                            VerticalItemSpacing="10"
-                            HorizontalItemSpacing="10"
-                        />
-                    </CollectionView.ItemsLayout>
+                RowDefinitions="60, *">
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <!-- Base Card Template here -->
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Border>
+                <Grid
+                      Grid.Row="0"
+                      ColumnDefinitions="*, 50, 100"
+                    >
+                    <Label
+                        Grid.Column="0"
+                        Text="Deck"
+                        FontSize="Large"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Main1}"
+                        TextTransform="Uppercase"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+    
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding DeckCardsCount}"
+                        FontSize="Large"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Secondary}"
+                        TextTransform="Uppercase"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Column="2"
+                        Text="/ 30"
+                        FontSize="Large"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Main1}"
+                        TextTransform="Uppercase"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+
+                </Grid>
+
+                <!-- Selected Cards Collection -->
+                <Border
+                    Grid.Row="1"
+                    StrokeThickness="4"
+                    Background="{StaticResource Secondary}"
+                    StrokeShape="RoundRectangle 0,40,40,0"
+                    Padding="10"
+                    Stroke="{StaticResource Main1}">
+                    <CollectionView
+                        x:Name="Deck"
+                        ItemsSource="{Binding Deck}"
+                        SelectedItem="{Binding SelectedDeckCard}"
+                        SelectionChangedCommand="{Binding RemoveCardFromDeckCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedDeckCard}"
+                        SelectionMode="Single"
+                        VerticalScrollBarVisibility="Never"
+                        IsEnabled="{Binding IsNotBusy}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                Orientation="Vertical"
+                                Span="2"
+                                VerticalItemSpacing="10"
+                                HorizontalItemSpacing="5" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.EmptyView>
+                            <Grid
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                RowDefinitions="*, 2*"
+                                RowSpacing="100">
+                                <Label
+                                    Grid.Row="0"
+                                    Text="Add cards to your Deck by clicking on one of the Available Cards!"
+                                    FontSize="Large"
+                                    FontFamily="CutOutsFLF"
+                                    TextColor="{StaticResource Main1}"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalOptions="Center"
+                                />
+
+                                <Image
+                                    Grid.Row="1"
+                                    Source="manacost.png"
+                                    VerticalOptions="Center"
+                                    >
+                                    <Image.Shadow>
+                                        <Shadow Brush="Black"
+                                                Offset="0, 0"
+                                                Radius="10"
+                                                Opacity="1" />
+                                    </Image.Shadow>
+                                </Image>
+                            </Grid>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </Border>
+            </Grid>
         </Grid>
 
-        <Button 
+        <Button
             Grid.Row="1"
             Text="Finish"
             Command="{Binding SaveDeckCommand}"
@@ -108,7 +234,6 @@
             BackgroundColor="{StaticResource Main1}"
             TextColor="{StaticResource Main2}"
             FontAttributes="Bold"
-            WidthRequest="300" 
-        />
+            WidthRequest="300" />
     </Grid>
 </view:BasePage>
