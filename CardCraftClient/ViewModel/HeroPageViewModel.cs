@@ -24,12 +24,20 @@ public partial class HeroPageViewModel : BaseViewModel
     {
         this._signalRService = signalRService;
         this.Heroes = new(gcr.Heroes);
+
+        // Check if the player has a hero already
+        if (this._signalRService.Player.Hero is not null)
+        {
+            this.SelectedHero = this._signalRService.Player.Hero;
+        }
     }
 
     [RelayCommand]
     private async Task BuildDeck()
     {
-        Shell.Current.GoToAsync(nameof(DeckPage));
+        this._signalRService.Player.Hero = this.SelectedHero;
+
+        await Shell.Current.GoToAsync(nameof(DeckPage));
     }
 
     [RelayCommand]
@@ -39,11 +47,14 @@ public partial class HeroPageViewModel : BaseViewModel
         {
             if (this._signalRService.Player.Deck!.IsEmpty())
             {
-                bool answer = await Shell.Current.DisplayAlert("Warning!", "You have not made a deck! If you continue a random deck will be generated for you!", "Continue", "No");
-                if (!answer)
-                {
-                    return;
-                }
+                // bool answer = await Shell.Current.DisplayAlert("Warning!", "You have not made a deck! If you continue a random deck will be generated for you!", "Continue", "No");
+                // if (!answer)
+                // {
+                //     return;
+                // }
+
+                await Shell.Current.DisplayAlert("Warning!", "You have not made a deck!", "Ok");
+                return;
             }
 
             this._signalRService.Player.Hero = this.SelectedHero;

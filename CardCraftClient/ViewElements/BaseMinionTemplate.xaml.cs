@@ -1,12 +1,21 @@
-﻿using System.Windows.Input;
-
-namespace CardCraftClient.ViewElements;
+﻿namespace CardCraftClient.ViewElements;
 
 public partial class BaseMinionTemplate : ContentView
 {
     public BaseMinionTemplate()
     {
         InitializeComponent();
+
+        // Hide the stats if they are empty
+        PropertyChanged += (sender, args) =>
+        {
+            if (args.PropertyName == nameof(Health) || args.PropertyName == nameof(Attack))
+            {
+                Stats.IsVisible = !string.IsNullOrEmpty(Health) || !string.IsNullOrEmpty(Attack);
+            }
+        };
+
+        Stats.IsVisible = !string.IsNullOrEmpty(Health) || !string.IsNullOrEmpty(Attack);
     }
 
     // Name of the card ========================================

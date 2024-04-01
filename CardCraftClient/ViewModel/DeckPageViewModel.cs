@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using CardCraftClient.Service;
+using CardCraftClient.View;
 using CardCraftShared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,6 +10,7 @@ namespace CardCraftClient.ViewModel;
 public partial class DeckPageViewModel : BaseViewModel
 {
     private SignalRService _signalRService;
+    private readonly object _lock = new object();
 
     [ObservableProperty] 
     private ObservableCollection<IBaseCard> _availableCards;
@@ -24,10 +25,13 @@ public partial class DeckPageViewModel : BaseViewModel
     private IBaseCard _selectedDeckCard;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsAvailableCardsEnabled))]
     private int _deckCardsCount;
 
-    public Action AvailableCardsCollectionChangedAction;
-    public Action DeckCollectionChangedAction;
+    public bool IsAvailableCardsEnabled => CanAddToDeck();
+
+    // public Action AvailableCardsCollectionChangedAction;
+    // public Action DeckCollectionChangedAction;
 
     public DeckPageViewModel(GameComponentsRegistration gcr, SignalRService signalRService)
     {
@@ -36,10 +40,24 @@ public partial class DeckPageViewModel : BaseViewModel
         AvailableCards = new ObservableCollection<IBaseCard>(gcr.Cards);
         Deck = new ObservableCollection<IBaseCard>();
 
+        // Check if the player has a deck already
+        if (this._signalRService.Player.Deck is not null)
+        {
+            Deck = new ObservableCollection<IBaseCard>(this._signalRService.Player.Deck.Cards);
+
+            this.DeckCardsCount = Deck.Count;
+
+            // Remove the cards from the available cards
+            foreach (IBaseCard card in Deck)
+            {
+                AvailableCards.Remove(card);
+            }
+        }
+
         this.DeckCardsCount = Deck.Count;
 
         // Reset the data template when the collection changes - prevents a bug where the data template is not applied
-        // This solution slows down the app A LOT, so it's commented out
+        // This solution slows down the app A LOT (check the CardTemplateSelector for more information)
 
         // AvailableCards.CollectionChanged += (sender, args) =>
         // {
@@ -57,16 +75,14 @@ public partial class DeckPageViewModel : BaseViewModel
     {
         IsBusy = true;
 
-        if (Deck.Count > 30)
+        lock (this._lock)
         {
-            Shell.Current.DisplayAlert("Error", "Deck is full!", "OK");
-
-            IsBusy = false;
-            // Show error message
-            return;
+            if (CanAddToDeck())
+            {
+                if (AvailableCards.Remove(card)) Deck.Add(card);
+            }
         }
 
-        if (AvailableCards.Remove(card)) Deck.Add(card);
         this.DeckCardsCount = Deck.Count;
 
         IsBusy = false;
@@ -77,7 +93,40 @@ public partial class DeckPageViewModel : BaseViewModel
     {
         IsBusy = true;
 
-        if (Deck.Remove(card)) AvailableCards.Add(card);
+        lock (this._lock)
+        {
+            if (Deck.Remove(card)) AvailableCards.Add(card);
+        }
+
+        this.DeckCardsCount = Deck.Count;
+
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task CompleteRandomDeck()
+    {
+        IsBusy = true;
+
+        var random = new Random();
+
+        if (!CanAddToDeck())
+        {
+            IsBusy = false;
+            return;
+        }
+
+        lock (this._lock)
+        {
+            // Add random cards to the rest of the deck
+            for (int i = DeckCardsCount; i < DeckPool.MAX_AMOUNT_CARDS; i++)
+            {
+                int randomIndex = random.Next(0, AvailableCards.Count);
+                Deck.Add(AvailableCards[randomIndex]);
+                AvailableCards.RemoveAt(randomIndex);
+            }
+        }
+
         this.DeckCardsCount = Deck.Count;
 
         IsBusy = false;
@@ -86,6 +135,8 @@ public partial class DeckPageViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveDeck()
     {
+        IsBusy = true;
+
         // Validate the deck
         if (Deck.Count < 10)
         {
@@ -97,8 +148,10 @@ public partial class DeckPageViewModel : BaseViewModel
         // Save the deck
         try
         {
-            // TODO: Create a deck object
-            this._signalRService.Player.Deck.AddDeck(this.Deck);
+            // Create a DeckPool from the deck
+            DeckPool deck = new(this.Deck);
+
+            this._signalRService.Player.Deck = deck;
         }
         catch (Exception e)
         {
@@ -107,9 +160,18 @@ public partial class DeckPageViewModel : BaseViewModel
             return;
         }
 
-        MainThread.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
-            Shell.Current.GoToAsync("..");
+            // Must navigate to the StartPage first to reset the navigation stack and then navigate to the HeroPage
+            // Otherwise, it will result in an error
+            await Shell.Current.GoToAsync($"///{nameof(StartPage)}/{nameof(HeroPage)}");
         });
+
+        IsBusy = false;
+    }
+
+    private bool CanAddToDeck()
+    {
+        return Deck.Count < DeckPool.MAX_AMOUNT_CARDS;
     }
 }

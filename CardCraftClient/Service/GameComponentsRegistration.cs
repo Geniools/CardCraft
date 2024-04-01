@@ -7,8 +7,8 @@ namespace CardCraftClient.Service;
 
 public class GameComponentsRegistration
 {
-    public List<BaseHero> Heroes { get; init; }
-    public List<IBaseCard> Cards { get; init; }
+    public IList<BaseHero> Heroes { get; init; }
+    public IList<IBaseCard> Cards { get; init; }
 
     public GameComponentsRegistration()
     {
@@ -42,38 +42,46 @@ public class GameComponentsRegistration
         cards.Add(new AlexCard());
         cards.Add(new AlexCard());
         cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
+
+        cards.Add(new TeoCard());
+        cards.Add(new TeoCard());
+        cards.Add(new TeoCard());
+
+        cards.Add(new EvaldCard());
+        cards.Add(new EvaldCard());
+        cards.Add(new EvaldCard());
+
+        cards.Add(new AndreiCard());
+        cards.Add(new AndreiCard());
+        cards.Add(new AndreiCard());
+
+        cards.Add(new RobCard());
+        cards.Add(new RobCard());
+        cards.Add(new RobCard());
+
+        cards.Add(new ArianCard());
+        cards.Add(new ArianCard());
+        cards.Add(new ArianCard());
+
+        cards.Add(new CorvinCard());
+        cards.Add(new CorvinCard());
+        cards.Add(new CorvinCard());
+
+        cards.Add(new JadynCard());
+        cards.Add(new JadynCard());
+        cards.Add(new JadynCard());
+
         cards.Add(new ResitSpell());
         cards.Add(new ResitSpell());
         cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
+
+        cards.Add(new AmogusSpell());
+        cards.Add(new AmogusSpell());
+        cards.Add(new AmogusSpell());
+
+        cards.Add(new TatedSpell());
+        cards.Add(new TatedSpell());
+        cards.Add(new TatedSpell());
 
         return cards;
     }

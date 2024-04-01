@@ -3,21 +3,21 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CardCraftClient.ViewElements.BaseMinionTemplate">
-
+    
     <ContentView.Content>
         <Border
             StrokeThickness="0">
             <Grid
                 BackgroundColor="{Binding Color}"
-                WidthRequest="220"
-                HeightRequest="350"
+                WidthRequest="200"
+                HeightRequest="300"
                 Padding="10"
                 >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="50" />
-                    <RowDefinition Height="80" />
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="150" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
 
                 <Image
@@ -25,6 +25,7 @@
                     Source="{Binding Image}"
                     Aspect="AspectFill"
                     HeightRequest="150" 
+                    WidthRequest="180"
                 />
 
                 <Grid
@@ -67,31 +68,41 @@
                 <Label
                     Grid.Row="1"
                     Text="{Binding Name}"
-                    FontSize="Large"
+                    FontSize="20"
                     FontFamily="CutOutsFLF"
                     TextColor="{Binding TextColor}"
                     HorizontalOptions="Center" 
                     VerticalOptions="Center"
                 />
-
-                <Label
+                
+                <Border
                     Grid.Row="2"
-                    Text="{Binding Description}"
-                    TextColor="{Binding TextColor}" 
-                    LineBreakMode="WordWrap"
-                    LineHeight="1.5"
-                />
+                    Padding="5"
+                    StrokeThickness="2"
+                    Stroke="{Binding TextColor}"
+                    StrokeShape="RoundRectangle 10,10,10,10"
+                    >
+                    <Label
+                        Text="{Binding Description}"
+                        FontSize="13"
+                        TextColor="{Binding TextColor}" 
+                        LineBreakMode="WordWrap"
+                        LineHeight="1.5"
+                    />
+                </Border>
 
                 <Grid
+                    x:Name="Stats"
                     Grid.Row="3"
-                    ColumnDefinitions="40, *, 40">
+                    ColumnDefinitions="40, *, 40"
+                    >
                     <Image
                         Grid.Column="0"
                         Source="attack.png"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
-                        WidthRequest="40"
-                        HeightRequest="40"
+                        WidthRequest="30"
+                        HeightRequest="30"
                         Margin="0,0,0,6"
                     >
                         <Image.Shadow>
@@ -108,7 +119,7 @@
                         TextColor="{StaticResource White}"
                         FontFamily="CutOutsFLF"
                         FontAttributes="Bold"
-                        FontSize="17"
+                        FontSize="13"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
                     />
@@ -118,8 +129,8 @@
                         Source="hearth.png" 
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
-                        WidthRequest="40"
-                        HeightRequest="40"
+                        WidthRequest="30"
+                        HeightRequest="30"
                     >
                         <Image.Shadow>
                             <Shadow Brush="Black"
@@ -134,7 +145,7 @@
                         Text="{Binding Health}"
                         TextColor="{StaticResource White}"
                         FontFamily="CutOutsFLF"
-                        FontSize="17"
+                        FontSize="13"
                         FontAttributes="Bold"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"

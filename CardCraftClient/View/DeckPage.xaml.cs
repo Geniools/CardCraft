@@ -23,10 +23,10 @@ public partial class DeckPage : BasePage
         this.Deck.ItemTemplate = this._itemTemplateSelector;
 
         // Reset the data template when the collection changes - prevents a bug where the data template is not applied
-        // https://stackoverflow.com/questions/74823748/datatemplateselector-is-not-executed-when-items-are-cleared-and-added-to-observa
+        // This solution slows down the app A LOT (check the CardTemplateSelector for more information)
 
-        vm.AvailableCardsCollectionChangedAction += this.ResetAvailableCardCollectionViewTemplate;
-        vm.DeckCollectionChangedAction += this.ResetDeckCollectionViewTemplate;
+        // vm.AvailableCardsCollectionChangedAction += this.ResetAvailableCardCollectionViewTemplate;
+        // vm.DeckCollectionChangedAction += this.ResetDeckCollectionViewTemplate;
     }
 
     private void ResetAvailableCardCollectionViewTemplate()

@@ -5,11 +5,18 @@ namespace CardCraftShared;
 public class DeckPool : ICardStatsManager
 {
     public Queue<IBaseCard> Cards { get; set; }
-    public int MaxCards = 30;
+    public const int MAX_AMOUNT_CARDS = 30;
 
     public DeckPool()
     {
         this.Cards = [];
+        this.Cards = new();
+    }
+
+    public DeckPool(IList<IBaseCard> cards)
+    {
+        if (cards.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
+        this.Cards = new(cards);
     }
     
     public void Shuffle()
@@ -38,12 +45,12 @@ public class DeckPool : ICardStatsManager
     
     public bool IsFull()
     {
-        return Cards.Count == MaxCards;
+        return Cards.Count == MAX_AMOUNT_CARDS;
     }
 
     public void AddDeck(IList<IBaseCard> deck)
     {
-        if (deck.Count > MaxCards) throw new Exception("Deck is too large");
+        if (deck.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
         foreach (var card in deck)
         {
             AddCard(card);

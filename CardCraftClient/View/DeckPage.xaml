@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="CardCraftClient.View.DeckPage"
@@ -21,7 +20,8 @@
                         TextColor="{Binding TextColor}"
                         ManaCost="{Binding ManaCost}"
                         Attack="{Binding Attack}"
-                        Health="{Binding Health}" />
+                        Health="{Binding Health}" 
+                        />
                 </Grid>
             </DataTemplate>
 
@@ -33,7 +33,8 @@
                         Description="{Binding Description}"
                         Color="{Binding Color}"
                         TextColor="{Binding TextColor}"
-                        ManaCost="{Binding ManaCost}" />
+                        ManaCost="{Binding ManaCost}"
+                        />
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -70,7 +71,8 @@
                     Background="{StaticResource Secondary}"
                     StrokeShape="RoundRectangle 40,0,0,40"
                     Padding="10"
-                    Stroke="{StaticResource Main1}">
+                    Stroke="{StaticResource Main1}"
+                    >
                     <CollectionView
                         x:Name="AvailableCards"
                         ItemsSource="{Binding AvailableCards}"
@@ -79,7 +81,7 @@
                         SelectionChangedCommandParameter="{Binding SelectedAvailableCard}"
                         SelectionMode="Single"
                         VerticalScrollBarVisibility="Never"
-                        IsEnabled="{Binding IsNotBusy}"
+                        IsEnabled="{Binding IsAvailableCardsEnabled}"
                         >
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout
@@ -108,7 +110,7 @@
 
                                 <Image
                                     Grid.Row="1"
-                                    Source="attack.png"
+                                    Source="attack2.png"
                                     VerticalOptions="Center"
                                 >
                                     <Image.Shadow>
@@ -126,7 +128,8 @@
 
             <Grid
                 Grid.Column="1"
-                RowDefinitions="60, *">
+                RowDefinitions="60, *"
+                >
 
                 <Grid
                       Grid.Row="0"
@@ -171,7 +174,8 @@
                     Background="{StaticResource Secondary}"
                     StrokeShape="RoundRectangle 0,40,40,0"
                     Padding="10"
-                    Stroke="{StaticResource Main1}">
+                    Stroke="{StaticResource Main1}"
+                    >
                     <CollectionView
                         x:Name="Deck"
                         ItemsSource="{Binding Deck}"
@@ -225,15 +229,35 @@
             </Grid>
         </Grid>
 
-        <Button
-            Grid.Row="1"
-            Text="Finish"
-            Command="{Binding SaveDeckCommand}"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            BackgroundColor="{StaticResource Main1}"
-            TextColor="{StaticResource Main2}"
-            FontAttributes="Bold"
-            WidthRequest="300" />
+        <Grid
+              Grid.Row="1"
+              ColumnDefinitions="*, *"
+            >
+            <Button
+                Grid.Column="0"
+                Text="Complete Random Deck"
+                Command="{Binding CompleteRandomDeckCommand}"
+                IsEnabled="{Binding IsAvailableCardsEnabled}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BackgroundColor="{StaticResource Main2}"
+                TextColor="{StaticResource Main1}"
+                FontAttributes="Bold"
+                WidthRequest="300" 
+            />
+
+            <Button
+                Grid.Column="1"
+                Text="Finish"
+                Command="{Binding SaveDeckCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BackgroundColor="{StaticResource Main1}"
+                TextColor="{StaticResource Main2}"
+                FontAttributes="Bold"
+                WidthRequest="300"
+            />
+        </Grid>
     </Grid>
 </view:BasePage>

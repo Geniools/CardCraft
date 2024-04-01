@@ -12,6 +12,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\AlexHero.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\ChrisHero.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\MiroHero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AndreiCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\ArianCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\CorvinCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\EvaldCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\JadynCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\RobCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\TeoCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\AmogusSpell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\TatedSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\IBaseCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseMinion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseSpell.cs" />
