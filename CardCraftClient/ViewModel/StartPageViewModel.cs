@@ -1,4 +1,5 @@
 ﻿using CardCraftClient.Service;
+using CardCraftClient.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -105,5 +106,11 @@ public partial class StartPageViewModel : BaseViewModel
         await this._signalRService.JoinGame(this.LobbyCode, this.Username);
 
         this.IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task ChooseHero()
+    {
+        await Shell.Current.GoToAsync(nameof(HeroPage));
     }
 }

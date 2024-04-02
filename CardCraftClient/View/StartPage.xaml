@@ -57,7 +57,7 @@
 				    Text="{Binding GameName}"
 				    FontSize="50"
 				    TextColor="WhiteSmoke"
-					FontFamily="GermanicaBold"
+					FontFamily="CutOutsFLF"
 					FontAttributes="Bold"
 				    HorizontalTextAlignment="Center"
 					VerticalTextAlignment="Center"
@@ -138,7 +138,7 @@
                         BackgroundColor="#FBB969"
                         TextColor="#525252"
                         FontAttributes="Bold"
-                        Clicked="ChooseHeroButton_OnClicked"
+						Command="{Binding ChooseHeroCommand}"
                         />
 			    </Grid>
 		    </Grid>

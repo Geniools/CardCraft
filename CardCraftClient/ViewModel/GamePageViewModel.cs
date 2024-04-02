@@ -5,55 +5,49 @@ using CardCraftClient.Model;
 using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Core.Interfaces;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CardCraftClient.ViewModel;
 
 public partial class GamePageViewModel : BaseViewModel
 {
+    [ObservableProperty] 
+    private int _timer;
+
+    [ObservableProperty] 
+    private int _availableMana;
+
     [ObservableProperty]
     private Player _currentPlayer;
 
     [ObservableProperty]
     private Player _enemyPlayer;
-    
-    [ObservableProperty]
-    private int _manaCost;
 
     [ObservableProperty]
-    private int _attack;
+    private ObservableCollection<IBaseCard> _currentPlayerHand;
 
     [ObservableProperty]
-    private int _health;
+    private ObservableCollection<IBaseCard> _enemyPlayerHand;
 
-    [ObservableProperty] 
-    private string _description;
+    [ObservableProperty]
+    private ObservableCollection<IBaseCard> _currentPlayerBoard;
 
-    [ObservableProperty] private int _id;
-
-    public ObservableCollection<IBaseCard> PlayerHand { get; set; }
+    [ObservableProperty]
+    private ObservableCollection<IBaseCard> _enemyPlayerBoard;
 
     public GamePageViewModel(GameManager gm)
     {
         this.Title = "Game";
+
         this.CurrentPlayer = gm.CurrentPlayer;
         this.EnemyPlayer = gm.EnemyPlayer;
-        this.Attack = 5;
-        this.Health = 10;
-        this.ManaCost = 3;
-        this.Description = "nice";
-        this.Id = 1;
-        DeckPool deck = new();
-        BaseHero hero = new AlexHero();
-        Player player = new();
 
-        IMinion minion = new AlexCard();
-        IMinion minion2 = new AlexCard();
+        this._timer = GameManager.TURN_TIME;
+    }
 
-        // Initialize PlayerHand property
-        PlayerHand = new ObservableCollection<IBaseCard>();
+    [RelayCommand]
+    private async Task EndTurn()
+    {
 
-        // Add items to PlayerHand
-        PlayerHand.Add(minion);
-        PlayerHand.Add(minion2);
     }
 }

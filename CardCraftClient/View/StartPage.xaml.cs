@@ -8,9 +8,4 @@ public partial class StartPage : BasePage
     {
         InitializeComponent();
     }
-
-    private void ChooseHeroButton_OnClicked(object? sender, EventArgs e)
-    {
-        Shell.Current.GoToAsync(nameof(HeroPage));
-    }
 }

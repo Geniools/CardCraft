@@ -2,12 +2,14 @@
 
 public class Player
 {
-    public Player() { }
+    public const int MAX_MANA = 10;
 
-    public Player(string name)
+    public Player()
     {
         this.Hand = new Hand();
-        this.Name = name;
+        this.Deck = new DeckPool();
+        this.PlayerSignalRDetails = new PlayerSignalRDetails();
+        this.Mana = 1;
     }
 
     // Connection-related properties
@@ -16,6 +18,10 @@ public class Player
 
     public string Name { get; set; }
 
+    // This property contains details that need to be sent via SignalR
+    // Because of SignalR limitations,  the whole Player object cannot be sent
+    public PlayerSignalRDetails PlayerSignalRDetails { get; set; }
+
     // Game-related properties
 
     public BaseHero? Hero { get; set; }
@@ -23,11 +29,11 @@ public class Player
     public DeckPool Deck { get; set; }
 
     public Hand Hand { get; set; }
+    public int Mana { get; set; }
 
-    public void PlayCard(IBaseCard card, Board board)
+    public IBaseCard PlayCard(IBaseCard card)
     {
-        Hand.Remove(card);
-        board.AddCard(card, this);
+        return this.Hand.Remove(card);
     }
 
     public void DrawCard()
@@ -36,6 +42,14 @@ public class Player
         {
             IBaseCard card = Deck.DrawCard();
             Hand.Add(card);
+        }
+    }
+
+    public void IncreaseMana()
+    {
+        if (this.Mana < MAX_MANA)
+        {
+            this.Mana++;
         }
     }
 }

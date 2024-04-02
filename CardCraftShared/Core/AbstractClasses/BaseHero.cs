@@ -2,6 +2,7 @@
 
 namespace CardCraftShared;
 
+[Serializable]
 public abstract class BaseHero
 {
     protected const int DefaultHealth = 30;
@@ -40,6 +41,11 @@ public abstract class BaseHero
     }
 
     public int Health { get; set; }
+
+    public BaseHero()
+    {
+
+    }
 
     protected BaseHero(ColorEnum color, string image, string name, string description)
     {

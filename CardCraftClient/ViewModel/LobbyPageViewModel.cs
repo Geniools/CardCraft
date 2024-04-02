@@ -33,11 +33,11 @@ public partial class LobbyPageViewModel : BaseViewModel
         this._gm = gm;
         this.TimerText = "Waiting for players";
         this.LobbyCode = signalRService.LobbyCode;
+
         this.ActivityIndicatorRunning = true;
 
-        signalRService.OnGameStartedEvent += async () =>
+        this._gm.OnGameStartedEvent += async () =>
         {
-            gm.IsGameStarted = true;
             await this.StartGame();
         };
 
@@ -100,13 +100,14 @@ public partial class LobbyPageViewModel : BaseViewModel
                 break;
             }
 
-            if (this.TimerText.Substring(this.TimerText.Length - 4).Equals("...."))
+            if (this.TimerText.Substring(this.TimerText.Length - 3).Equals("..."))
             {
                 this.TimerText = "Waiting for players";
+                await Task.Delay(1000);
             }
 
-            await Task.Delay(1000);
             this.TimerText += ".";
+            await Task.Delay(1000);
         }
     }
 
@@ -118,8 +119,6 @@ public partial class LobbyPageViewModel : BaseViewModel
     [RelayCommand]
     private async Task ReturnToStartPage()
     {
-        Shell.Current.GoToAsync("..");
-
         await this._gm.EndGame();
     }
 }

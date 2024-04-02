@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CardCraftClient.Service;
 using CardCraftClient.View;
 using CardCraftShared;
@@ -26,10 +27,22 @@ public partial class HeroPageViewModel : BaseViewModel
         this.Heroes = new(gcr.Heroes);
 
         // Check if the player has a hero already
-        if (this._signalRService.Player.Hero is not null)
+
+        // This is a workaround to set the selected hero after the page is loaded
+        // https://stackoverflow.com/questions/75593079/programmatically-setting-the-selecteditem-of-a-collectionview-is-not-working-on/75598722#75598722
+        _ = Task.Run(async () =>
         {
-            this.SelectedHero = this._signalRService.Player.Hero;
-        }
+            await Task.Delay(100);
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                if (this._signalRService.Player.Hero is not null)
+                {
+                    this.SelectedHero = this._signalRService.Player.Hero;
+                    Trace.WriteLine($"Player has a hero already: {this.SelectedHero.Name}");
+                }
+            });
+        });
     }
 
     [RelayCommand]
@@ -45,21 +58,18 @@ public partial class HeroPageViewModel : BaseViewModel
     {
         if (this.SelectedHero is not null)
         {
-            if (this._signalRService.Player.Deck!.IsEmpty())
-            {
-                // bool answer = await Shell.Current.DisplayAlert("Warning!", "You have not made a deck! If you continue a random deck will be generated for you!", "Continue", "No");
-                // if (!answer)
-                // {
-                //     return;
-                // }
-
-                await Shell.Current.DisplayAlert("Warning!", "You have not made a deck!", "Ok");
-                return;
-            }
-
             this._signalRService.Player.Hero = this.SelectedHero;
 
-            await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
+            if (this._signalRService.Player.Deck is not null)
+            {
+                if (!this._signalRService.Player.Deck.IsEmpty())
+                {
+                    await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
+                    return;
+                }
+            }
+
+            await Shell.Current.DisplayAlert("Warning!", "You have not made a deck!", "Ok");
         }
         else
         {

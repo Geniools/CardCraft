@@ -48,6 +48,10 @@ public class GameHub : Hub
 
         // Remove the player from the game
         this._onlineGameManagerDatabase.RemovePlayer(this.Context.ConnectionId);
+
+        // Remove the player from the group
+        string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+        await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, lobbyCode);
     }
 
     public override Task OnDisconnectedAsync(Exception? exception)

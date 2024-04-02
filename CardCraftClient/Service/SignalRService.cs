@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using CardCraftClient.Core.Interfaces;
+using CardCraftClient.View;
 using CardCraftShared;
 using CardCraftShared.Core.Other;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -8,6 +10,8 @@ namespace CardCraftClient.Service;
 
 public class SignalRService
 {
+    private IList<ISignalRObserver> _observers = new List<ISignalRObserver>();
+
     private const string CONNECTION_URL = "https://cardcraftserver.azurewebsites.net/gameHub";
     // Used for local testing (debugging) - requires the server to be running locally
     private const string CONNECTION_URL_LOCAL = "http://localhost:5228/gameHub";
@@ -17,11 +21,6 @@ public class SignalRService
 
     private readonly HubConnection _hubConnection;
     public HubConnection HubConnection => this._hubConnection;
-
-    public event Action? OnConnectionError;
-    public event Action? OnGameStartedEvent;
-    public event Action<Player, Player?>? OnGameJoinedEvent;
-    public event Action<Player?>? OnGameLeftEvent;
 
     public SignalRService()
     {
@@ -66,29 +65,68 @@ public class SignalRService
         });
 
         // Called when a player joins the game
-        this._hubConnection.On<string, Player, Player?>(ServerCallbacks.GameJoined, (lobbyCode, player, otherPlayer) =>
+        this._hubConnection.On<string, Player, Player?>(ServerCallbacks.GameJoined, async (lobbyCode, player, otherPlayer) =>
         {
-            Trace.WriteLine("==================================================================");
-            Trace.WriteLine($"Player {player.Name} joined the game with lobby code {lobbyCode}!");
-            Trace.WriteLine("==================================================================");
 
-            this.OnGameJoinedEvent?.Invoke(player, otherPlayer);
+            await this.NotifyObserversGameJoined(player, otherPlayer);
         });
 
         // Called when a player leaves the game
-        this._hubConnection.On<Player?>(ServerCallbacks.GameLeft, (player) =>
+        this._hubConnection.On<Player?>(ServerCallbacks.GameLeft, async (player) =>
         {
-            this.OnGameLeftEvent?.Invoke(player);
+            await this.NotifyObserversGameLeft(player);
         });
 
         // Called when the game is started
-        this._hubConnection.On<string>(ServerCallbacks.GameStarted, (lobbyCode) =>
+        this._hubConnection.On<string>(ServerCallbacks.GameStarted, async (lobbyCode) =>
         {
-            this.OnGameStartedEvent?.Invoke();
+            await this.NotifyObserversGameStarted();
         });
 
         // Start the connection to the server
         this.StartConnection();
+    }
+
+    public void AddObserver(ISignalRObserver observer)
+    {
+        this._observers.Add(observer);
+    }
+
+    public void RemoveObserver(ISignalRObserver observer)
+    {
+        this._observers.Remove(observer);
+    }
+
+    private async Task NotifyObserversGameJoined(Player player, Player? otherPlayer)
+    {
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnGameJoined(player, otherPlayer);
+        }
+    }
+
+    private async Task NotifyObserversGameLeft(Player player)
+    {
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnGameLeft(player);
+        }
+    }
+
+    private async Task NotifyObserversGameStarted()
+    {
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnGameStarted();
+        }
+    }
+
+    private async Task NotifyObserversGameEnded()
+    {
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnGameEnded();
+        }
     }
 
     public Task StartConnection()
@@ -111,12 +149,18 @@ public class SignalRService
         Player player = new Player();
         player.Name = playerName;
 
+        Trace.WriteLine($"{this.Player.Hero.Image}|{this.Player.Hero.Health}");
+
+        player.PlayerSignalRDetails.HeroImage = this.Player.Hero.Image;
+        player.PlayerSignalRDetails.HeroHealth = this.Player.Hero.Health;
+        player.PlayerSignalRDetails.DeckCount = this.Player.Deck.Cards.Count;
+        player.PlayerSignalRDetails.HandCount = this.Player.Hand.Cards.Count;
+
         try
         {
             // The navigation must happen before the HubConnection call
             // Otherwise, the LobbyPageViewModel will not be able to handle the event
-            // await Shell.Current.GoToAsync(nameof(LobbyPage));
-            await Shell.Current.GoToAsync("LobbyPage");
+            await Shell.Current.GoToAsync(nameof(LobbyPage));
             await this.HubConnection.InvokeAsync(ServerCallbacks.JoinGame, player, lobbyCode);
         }
         catch (Exception e)
@@ -125,6 +169,7 @@ public class SignalRService
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
+                Shell.Current.GoToAsync("..");
                 await Shell.Current.DisplayAlert("Error", e.Message, "Ok");
             });
         }

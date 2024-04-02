@@ -4,7 +4,7 @@ namespace CardCraftShared;
 
 public class Hand : ICardStatsManager
 {
-    private List<IBaseCard> Cards { get; init; }
+    public List<IBaseCard> Cards { get; init; }
 
     public Hand()
     {

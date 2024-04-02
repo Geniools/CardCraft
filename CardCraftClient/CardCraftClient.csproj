@@ -93,6 +93,7 @@
 	  <None Remove="Resources\Images\Cards\Spells\resitspell.jpeg" />
 	  <None Remove="Resources\Images\Cards\Spells\tatedspell.jpg" />
 	  <None Remove="Resources\Images\chrishero.jpeg" />
+	  <None Remove="Resources\Images\deck.jpg" />
 	  <None Remove="Resources\Images\hearth.png" />
 	  <None Remove="Resources\Images\manacost.png" />
 	  <None Remove="Resources\Images\mirohero.jpeg" />

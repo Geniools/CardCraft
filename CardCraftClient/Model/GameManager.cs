@@ -1,23 +1,22 @@
 ﻿using System.Diagnostics;
+using CardCraftClient.Core.Interfaces;
 using CardCraftClient.Service;
 using CardCraftClient.View;
 using CardCraftShared;
-using CardCraftShared.Cards.Heroes;
-using CardCraftShared.Cards.Minions;
-using CardCraftShared.Cards.Spells;
-using CardCraftShared.Core.Decorators;
-using CardCraftShared.Core.Interfaces;
 using CardCraftShared.Core.Other;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CardCraftClient.Model;
 
-public class GameManager
+public class GameManager : ISignalRObserver
 {
+    public const int TURN_TIME = 30;
     public bool IsGameStarted { get; set; }
+    public Action? OnGameStartedEvent;
 
     private readonly SignalRService _signalRService;
 
+    // Players
     private Player? _currentPlayer;
     public Player? CurrentPlayer
     {
@@ -50,55 +49,40 @@ public class GameManager
     }
     public Action<Player?>? EnemyPlayerChanged;
 
+    // Game elements
     private Board Board { get; set; }
     private Graveyard Graveyard { get; set; }
 
     public GameManager(SignalRService signalRService)
     {
         this._signalRService = signalRService;
+        // Register the observer
+        this._signalRService.AddObserver(this);
+
+        // Reset the game state
         this.Reset();
-
-        signalRService.OnGameJoinedEvent += async (player, otherPlayer) =>
-        {
-            Trace.WriteLine("==================================================================");
-            Trace.WriteLine($"PLAYER: {player.Name} should be updated in the ViewModel rn");
-            Trace.WriteLine("==================================================================");
-
-            Trace.WriteLine("==================================================================");
-            Trace.WriteLine($"OTHER PLAYER: {otherPlayer?.Name} should be updated in the ViewModel rn");
-            Trace.WriteLine("==================================================================");
-
-            // The other player must be updated first
-            // to avoid the player being overwritten
-            if (otherPlayer is not null)
-            {
-                await this.AddPlayer(otherPlayer);
-            }
-
-            await this.AddPlayer(player);
-        };
-
-        signalRService.OnGameLeftEvent += async (player) =>
-        {
-            await this.RemovePlayer(player);
-        };
     }
 
-    public async Task StartGame()
+    public async Task NextTurn()
     {
-        // await this._signalRService.StartConnection();
+        // TODO: Implement the next turn logic
 
-        TestStuff();
+        // Start the timer
+        this.StartTurnTimer();
+    }
+
+    private async Task StartTurnTimer()
+    {
+        
     }
 
     public async Task EndGame()
     {
-        Trace.WriteLine("GAME ENDED!!!");
-        
         // Reset the players
         this.Reset();
 
         Shell.Current.GoToAsync("///" + nameof(StartPage));
+        // Will notify the server to remove the current player from the game online (so the player can connect to other games without issues)
         await this._signalRService.HubConnection.InvokeAsync(ServerCallbacks.LeaveGame);
     }
 
@@ -106,7 +90,7 @@ public class GameManager
     {
         if (this._signalRService.Player.ConnectionId.Equals(player.ConnectionId))
         {
-            this.CurrentPlayer = player;
+            this.CurrentPlayer = this._signalRService.Player;
         }
         else
         {
@@ -166,48 +150,33 @@ public class GameManager
         return Task.CompletedTask;
     }
 
-    public void TestStuff()
+    public async Task OnGameJoined(Player player, Player otherPlayer)
     {
-        DeckPool deck = new();
-        BaseHero hero = new AlexHero();
-        Player player = new();
-        player.Hero = hero;
-        player.Deck = deck;
-        player.Hand = new Hand();
-        player.Name = "Player";
-        
-        Board board = new();
+        // The other player must be updated first
+        // to avoid the player being overwritten
+        if (otherPlayer is not null)
+        {
+            await this.AddPlayer(otherPlayer);
+        }
 
-        IMinion minion = new AlexCard();
-        IMinion minion2 = new AlexCard();
-        ResitSpell spell = new();
+        await this.AddPlayer(player);
+    }
 
-        deck.AddCard(minion);
-        deck.AddCard(minion2);
-        deck.AddCard(spell);
-        deck.Shuffle();
+    public async Task OnGameLeft(Player player)
+    {
+        await this.RemovePlayer(player);
+    }
 
-        Player player1 = new();
-        Player player2 = new();
-        AddPlayer(player1);
-        AddPlayer(player2);
+    public async Task OnGameStarted()
+    {
+        this.IsGameStarted = true;
+        this.OnGameStartedEvent?.Invoke();
 
-        player1.DrawCard();
-        player2.DrawCard();
+        this.CurrentPlayer.Deck.Shuffle();
+    }
 
-        player1.PlayCard(minion, board);
-        player2.PlayCard(minion, board);
-
-        Trace.WriteLine(board.EnemySide.Count);
-        Trace.WriteLine(board.FriendlySide.Count);
-
-        Trace.WriteLine(deck);
-        minion = new DivineShield(minion);
-        minion2 = new TauntDecorator(minion2);
-        Trace.WriteLine(minion.Health);
-        minion2.AttackMinion(minion);
-        Trace.WriteLine(minion.Health);
-        minion2.AttackMinion(minion);
-        Trace.WriteLine(minion.Health);
+    public async Task OnGameEnded()
+    {
+        await this.EndGame();
     }
 }
