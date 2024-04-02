@@ -83,6 +83,26 @@ public class GameComponentsRegistration
         cards.Add(new TatedSpell());
         cards.Add(new TatedSpell());
 
+        cards.Add(new TerryCard());
+
+        cards.Add(new MiroCard());
+
+        cards.Add(new BelastingdienstSpell());
+
+        cards.Add(new MathewCard());
+        cards.Add(new ITRelationshipSpell());
+
+        cards.Add(new LandlordVisitSpell());
+        cards.Add(new CorridorCoffeeSpell());
+        cards.Add(new ChrisCard());
+
+        cards.Add(new AlcoholismSpell());
+        cards.Add(new DutchHousing());
+
+        cards.Add(new InfoManagementSpell());
+
+        cards.Add(new SixOneProjectResitSpell());
+
         return cards;
     }
 }
