@@ -7,7 +7,7 @@ public class JadynCard : BaseMinion
         8,
         8,
         "Jadyn",
-        "Jadyn is a strong minion",
+        "Ticklish af",
         CardRarityEnum.EPIC,
         "jadyncard.jpg"
     ) { }
