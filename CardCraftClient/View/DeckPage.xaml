@@ -11,7 +11,10 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Name="BaseMinionTemplate" x:Key="BaseMinionTemplate" x:DataType="{x:Type model:BaseMinion}">
-                <Grid>
+                <Grid
+                    WidthRequest="200"
+                    HeightRequest="300"
+                    >
                     <viewElements:BaseMinionTemplate
                         Name="{Binding Name}"
                         Image="{Binding Image}"
@@ -21,7 +24,7 @@
                         ManaCost="{Binding ManaCost}"
                         Attack="{Binding Attack}"
                         Health="{Binding Health}" 
-                        />
+                    />
                 </Grid>
             </DataTemplate>
 

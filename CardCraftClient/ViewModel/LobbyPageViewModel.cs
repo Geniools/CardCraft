@@ -36,7 +36,6 @@ public partial class LobbyPageViewModel : BaseViewModel
             await this.StartTimer();
         };
 
-
         this.OnTimerCompletedAction = async () =>
         {
             await this._gm.NavigateToGamePage();
@@ -71,18 +70,15 @@ public partial class LobbyPageViewModel : BaseViewModel
                 this.TimerText = "Waiting for players";
             }
 
+            // If the timer is complete, start the game
             if (i == 0)
             {
                 this.TimerText = "Game starting";
                 this.OnTimerCompletedAction?.Invoke();
-
-                // return Task.CompletedTask;
             }
 
             await Task.Delay(1000);
         }
-
-        // return Task.CompletedTask;
     }
 
     private async Task PlayWaitingPlayersAnimation()

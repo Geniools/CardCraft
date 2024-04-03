@@ -29,6 +29,7 @@ public class DeckPool : ICardStatsManager
     public IBaseCard DrawCard() 
     {
         if (IsEmpty()) throw new Exception("Deck is empty");
+
         var card = Cards.Dequeue();
         return card;
     }

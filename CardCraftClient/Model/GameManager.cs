@@ -66,8 +66,8 @@ public class GameManager : ISignalRObserver
     public Action<Player?>? EnemyPlayerChanged;
 
     // Game elements
-    private Board Board { get; set; }
-    private Graveyard Graveyard { get; set; }
+    public Board Board { get; set; }
+    public Graveyard Graveyard { get; set; }
 
     public GameManager(SignalRService signalRService)
     {
@@ -145,8 +145,6 @@ public class GameManager : ISignalRObserver
         {
             if (this.CurrentPlayer is not null && this.EnemyPlayer is not null)
             {
-                Trace.WriteLine(nameof(Shell.Current.CurrentPage));
-
                 // Check if the current page is not already the GamePage
                 if (Shell.Current.CurrentPage is GamePage)
                 {
@@ -216,7 +214,7 @@ public class GameManager : ISignalRObserver
         // Draw the initial cards
         for (int i = 0; i < 3; i++)
         {
-            this.CurrentPlayer.Deck.DrawCard();
+            this.CurrentPlayer.DrawCard();
         }
 
         // TODO: Inform the server to choose a player to start the turn

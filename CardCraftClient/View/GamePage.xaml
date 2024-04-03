@@ -12,8 +12,27 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Name="BaseMinionTemplate" x:Key="BaseMinionTemplate" x:DataType="{x:Type model:BaseMinion}">
-                <Grid>
+            <DataTemplate x:Name="BaseMinionTemplateHand" x:Key="BaseMinionTemplateHand" x:DataType="{x:Type model:BaseMinion}">
+                <Grid
+                    WidthRequest="120"
+                    >
+                    <viewElements:BaseMinionTemplate
+                        Name="{Binding Name}"
+                        Image="{Binding Image}"
+                        Description="{Binding Description}"
+                        Color="{Binding Color}"
+                        TextColor="{Binding TextColor}"
+                        ManaCost="{Binding ManaCost}"
+                        Attack="{Binding Attack}"
+                        Health="{Binding Health}"
+                    />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Name="BaseMinionTemplateBoard" x:Key="BaseMinionTemplateBoard" x:DataType="{x:Type model:BaseMinion}">
+                <Grid
+                    WidthRequest="170"
+                    >
                     <viewElements:BaseMinionTemplate
                         Name="{Binding Name}"
                         Image="{Binding Image}"
@@ -23,19 +42,6 @@
                         ManaCost="{Binding ManaCost}"
                         Attack="{Binding Attack}"
                         Health="{Binding Health}" 
-                    />
-                </Grid>
-            </DataTemplate>
-
-            <DataTemplate x:Name="BaseSpellTemplate" x:Key="BaseSpellTemplate" x:DataType="{x:Type model:BaseSpell}">
-                <Grid>
-                    <viewElements:BaseSpellTemplate
-                        Name="{Binding Name}"
-                        Image="{Binding Image}"
-                        Description="{Binding Description}"
-                        Color="{Binding Color}"
-                        TextColor="{Binding TextColor}"
-                        ManaCost="{Binding ManaCost}"
                     />
                 </Grid>
             </DataTemplate>
@@ -106,8 +112,9 @@
                 <CollectionView
                     x:Name="EnemyHand"
                     ItemsSource="{Binding EnemyPlayerHand}"
+                    HorizontalOptions="Center"
                     SelectionMode="None"
-                    >
+                >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             Orientation="Horizontal"
@@ -130,7 +137,7 @@
                     />
 
                     <Label
-                        Text="{Binding EnemyPlayer.PlayerSignalRDetails.DeckCount}"
+                        Text="{Binding EnemyPlayerDeckCardCount}"
                         FontFamily="CutOutsFLF"
                         TextColor="{StaticResource Secondary}"
                         FontSize="50"
@@ -171,6 +178,7 @@
                         BackgroundColor="YellowGreen"
                         FontFamily="CutOutsFLF"
                         VerticalOptions="Center"
+                        Command="{Binding AttackHeroCommand}"
                     />
 
                     <Button
@@ -179,6 +187,7 @@
                         BackgroundColor="CornflowerBlue"
                         FontFamily="CutOutsFLF"
                         VerticalOptions="Center"
+                        Command="{Binding AttackMinionCommand}"
                     />
 
                     <Button
@@ -189,6 +198,7 @@
                         FontSize="17"
                         FontFamily="CutOutsFLF"
                         VerticalOptions="Center"
+                        Command="{Binding PlayCardCommand}"
                     />
                 </Grid>
 
@@ -199,6 +209,11 @@
                     <CollectionView
                         x:Name="EnemyBoardSide"
                         ItemsSource="{Binding EnemyPlayerBoard}"
+                        ItemTemplate="{StaticResource BaseMinionTemplateBoard}"
+                        SelectedItem="{Binding SelectedEnemyBoardCard}"
+                        SelectionMode="Single"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalOptions="Center"
                         >
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout
@@ -222,6 +237,11 @@
                     <CollectionView
                         x:Name="CurrentPlayerBoardSide"
                         ItemsSource="{Binding CurrentPlayerBoard}"
+                        ItemTemplate="{StaticResource BaseMinionTemplateBoard}"
+                        SelectedItem="{Binding SelectedFriendlyBoardCard}"
+                        SelectionMode="Single"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalOptions="Center"
                         >
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout
@@ -351,7 +371,10 @@
                 <CollectionView
                     x:Name="CurrentPlayerHand"
                     ItemsSource="{Binding CurrentPlayerHand}"
-                    SelectionMode="None"
+                    ItemTemplate="{StaticResource BaseMinionTemplateHand}"
+                    SelectedItem="{Binding SelectedHandCard}"
+                    HorizontalOptions="Center"
+                    SelectionMode="Single"
                 >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
@@ -375,7 +398,7 @@
                     />
 
                     <Label
-                        Text="{Binding CurrentPlayer.Deck.Cards.Count}"
+                        Text="{Binding CurrentPlayerDeckCardCount}"
                         FontFamily="CutOutsFLF"
                         TextColor="{StaticResource Secondary}"
                         FontSize="50"

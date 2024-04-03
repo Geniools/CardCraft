@@ -37,7 +37,7 @@ public partial class DeckPageViewModel : BaseViewModel
     {
         this._signalRService = signalRService;
 
-        AvailableCards = new ObservableCollection<IBaseCard>(gcr.Cards);
+        AvailableCards = new ObservableCollection<IBaseCard>(gcr.Cards.OrderBy(c => c.ManaCost));
         Deck = new ObservableCollection<IBaseCard>();
 
         // Check if the player has a deck already
@@ -55,6 +55,23 @@ public partial class DeckPageViewModel : BaseViewModel
         }
 
         this.DeckCardsCount = Deck.Count;
+
+        // Every time the available cards or the deck collection changes, sort the collections
+        AvailableCards.CollectionChanged += (sender, args) =>
+        {
+            if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                AvailableCards = new ObservableCollection<IBaseCard>(AvailableCards.OrderBy(c => c.ManaCost));
+            }
+        };
+
+        Deck.CollectionChanged += (sender, args) =>
+        {
+            if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                Deck = new ObservableCollection<IBaseCard>(Deck.OrderBy(c => c.ManaCost));
+            }
+        };
 
         // Reset the data template when the collection changes - prevents a bug where the data template is not applied
         // This solution slows down the app A LOT (check the CardTemplateSelector for more information)

@@ -1,10 +1,11 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using System.Collections.ObjectModel;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
 public class Hand : ICardStatsManager
 {
-    public List<IBaseCard> Cards { get; init; }
+    public ObservableCollection<IBaseCard> Cards { get; init; }
 
     public Hand()
     {

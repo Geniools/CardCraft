@@ -9,34 +9,32 @@
             StrokeThickness="0">
             <Grid
                 BackgroundColor="{Binding Color}"
-                WidthRequest="200"
-                HeightRequest="300"
-                Padding="10"
+                Padding="5"
                 >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="150" />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="2*" />
                     <RowDefinition Height="30" />
-                    <RowDefinition Height="70" />
-                    <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
 
                 <Image
                     Grid.Row="0"
                     Source="{Binding Image}"
                     Aspect="AspectFill"
-                    HeightRequest="150" 
-                    WidthRequest="180"
                 />
 
-                <Grid
-                    ColumnDefinitions="40"
-                    Grid.Row="0">
+                <AbsoluteLayout
+                    Grid.Row="0"
+                    >
 
                     <Image
                         Source="manacost2.png"
                         WidthRequest="40"
-                        HeightRequest="40"
+                        HeightRequest="30"
                         VerticalOptions="Start"
+                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                        Opacity="0.7"
                     >
                         <Image.Shadow>
                             <Shadow Brush="Black"
@@ -52,9 +50,10 @@
                         Padding="5"
                         FontFamily="CutOutsFLF"
                         FontAttributes="Bold"
-                        FontSize="23"
+                        FontSize="17"
                         HorizontalOptions="Center"
                         VerticalOptions="Start"
+                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
                     >
                         <Label.Shadow>
                             <Shadow Brush="White"
@@ -63,93 +62,119 @@
                                     Opacity="1" />
                         </Label.Shadow>
                     </Label>
-                </Grid>
+                </AbsoluteLayout>
 
-                <Label
+                <Grid
                     Grid.Row="1"
-                    Text="{Binding Name}"
-                    FontSize="20"
-                    FontFamily="CutOutsFLF"
-                    TextColor="{Binding TextColor}"
-                    HorizontalOptions="Center" 
-                    VerticalOptions="Center"
-                />
-                
-                <Border
-                    Grid.Row="2"
-                    Padding="5"
-                    StrokeThickness="2"
-                    Stroke="{Binding TextColor}"
-                    StrokeShape="RoundRectangle 10,10,10,10"
+                    Grid.RowSpan="2"
+                    RowDefinitions="*, 2*"
                     >
                     <Label
-                        Text="{Binding Description}"
-                        FontSize="13"
-                        TextColor="{Binding TextColor}" 
-                        LineBreakMode="WordWrap"
-                        LineHeight="1.5"
+                        Grid.Row="0"
+                        Text="{Binding Name}"
+                        FontSize="15"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{Binding TextColor}"
+                        HorizontalOptions="Center" 
+                        Margin="0,2,0,0"
                     />
-                </Border>
+
+                    <ScrollView
+                        Grid.Row="1"
+                        VerticalScrollBarVisibility="Never"
+                        >
+                        <Border
+                            Padding="5"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10,10,10,10"
+                            Margin="30, 0"
+                        >
+                            <Label
+                                Text="{Binding Description}"
+                                FontSize="10"
+                                TextColor="{Binding TextColor}" 
+                                LineBreakMode="WordWrap"
+                                LineHeight="1"
+                            />
+                        </Border>
+                    </ScrollView>
+                </Grid>
 
                 <Grid
                     x:Name="Stats"
                     Grid.Row="3"
-                    ColumnDefinitions="40, *, 40"
+                    ColumnDefinitions="30, *, 30"
                     >
-                    <Image
+                    <Grid
+                        ColumnDefinitions="30"
                         Grid.Column="0"
-                        Source="attack.png"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        WidthRequest="30"
-                        HeightRequest="30"
-                        Margin="0,0,0,6"
-                    >
-                        <Image.Shadow>
-                            <Shadow Brush="Black"
+                        >
+                        <Image
+                            Grid.Column="0"
+                            Source="attack.png"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            Margin="0,0,0,0"
+                        >
+                            <Image.Shadow>
+                                <Shadow Brush="Black"
+                                        Offset="0, 0"
+                                        Radius="10"
+                                        Opacity="1" />
+                            </Image.Shadow>
+                        </Image>
+
+                        <Label
+                            Grid.Column="0"
+                            Text="{Binding Attack}"
+                            TextColor="{StaticResource White}"
+                            FontFamily="CutOutsFLF"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                        />
+                    </Grid>
+
+                    <Grid
+                        ColumnDefinitions="30"
+                        Grid.Column="2"
+                        >
+                        <Image
+                            Source="hearth.png" 
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            >
+                            <Image.Shadow>
+                                <Shadow Brush="Black"
                                     Offset="0, 0"
                                     Radius="10"
                                     Opacity="1" />
-                        </Image.Shadow>
-                    </Image>
+                            </Image.Shadow>
+                        </Image>
 
-                    <Label
-                        Grid.Column="0"
-                        Text="{Binding Attack}"
-                        TextColor="{StaticResource White}"
-                        FontFamily="CutOutsFLF"
-                        FontAttributes="Bold"
-                        FontSize="13"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                    />
-
-                    <Image
-                        Grid.Column="2"
-                        Source="hearth.png" 
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        WidthRequest="30"
-                        HeightRequest="30"
-                    >
-                        <Image.Shadow>
-                            <Shadow Brush="Black"
-                                    Offset="0, 0"
+                        <Label
+                            Text="{Binding Health}"
+                            TextColor="{StaticResource White}"
+                            FontFamily="CutOutsFLF"
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                        >
+                            <Label.Shadow>
+                                <Shadow
+                                    Brush="Black"
                                     Radius="10"
-                                    Opacity="1" />
-                        </Image.Shadow>
-                    </Image>
-
-                    <Label
-                        Grid.Column="2"
-                        Text="{Binding Health}"
-                        TextColor="{StaticResource White}"
-                        FontFamily="CutOutsFLF"
-                        FontSize="13"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                    />
+                                    Opacity="1"
+                                    />
+                            </Label.Shadow>
+                        </Label>
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>

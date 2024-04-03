@@ -1,11 +1,12 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using System.Collections.ObjectModel;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
 public class Board : ICardStatsManager
 {
-    public List<IBaseCard> FriendlySide { get; set; }
-    public List<IBaseCard> EnemySide { get; set; }
+    public ObservableCollection<IBaseCard> FriendlySide { get; set; }
+    public ObservableCollection<IBaseCard> EnemySide { get; set; }
 
     
     public Board()
@@ -14,17 +15,14 @@ public class Board : ICardStatsManager
         EnemySide = new();
     }
 
-    public void AddCard(IBaseCard card, Player player)
+    public void PlayMinionFriendlySide(IBaseCard card)
     {
-        // TODO: Add a card to the correct side of the board
-        // if (player == ayer1)
-        // {
-        //     FriendlySide.Add(card);
-        // }
-        // else
-        // {
-        //     EnemySide.Add(card);
-        // }
+        this.FriendlySide.Add(card);
+    }
+
+    public void PlayMinionEnemySide(IBaseCard card)
+    {
+        this.EnemySide.Add(card);
     }
 
     public void KillMinion(IBaseCard minion)

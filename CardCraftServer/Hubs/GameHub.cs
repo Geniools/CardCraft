@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using CardCraftShared;
 using CardCraftShared.Core.Other;
-using System.Numerics;
 
 namespace CardCraftServer.Hubs;
 

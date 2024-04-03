@@ -1,6 +1,6 @@
 ﻿namespace CardCraftShared;
 
-public class Player
+public class Player : ICloneable
 {
     public const int MAX_MANA = 10;
 
@@ -51,5 +51,19 @@ public class Player
         {
             this.Mana++;
         }
+    }
+
+    public object Clone()
+    {
+        return new Player
+        {
+            ConnectionId = this.ConnectionId,
+            Name = this.Name,
+            PlayerSignalRDetails = this.PlayerSignalRDetails,
+            Hero = this.Hero,
+            Deck = this.Deck,
+            Hand = this.Hand,
+            Mana = this.Mana
+        };
     }
 }
