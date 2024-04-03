@@ -44,7 +44,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\SevenSevenThreeSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\SixOneProjectResitSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\TatedSpell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\WomanCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\ChargeDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\PoisonDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\RushDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\IAttackable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\IBaseCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseMinion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseSpell.cs" />

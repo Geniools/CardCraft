@@ -2,7 +2,7 @@
 
 namespace CardCraftShared;
 
-public abstract class BaseMinion : IMinion
+public abstract class BaseMinion : IMinion, IAttackable
 {
     private int _health;
     private int _attack;
@@ -61,6 +61,22 @@ public abstract class BaseMinion : IMinion
         throw new NotImplementedException();
     }
 
+    public void AttackTarget(IAttackable target)
+    {
+        switch (target)
+        {
+            case IMinion minion:
+                AttackMinion(minion);
+                break;
+            case BaseHero hero:
+                AttackHero(hero);
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+
+        CanAttack = false;
+    }
     public void AttackMinion(IMinion minion)
     {
         minion.Damage(_attack);
