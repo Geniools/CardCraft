@@ -1,16 +1,14 @@
-﻿using CardCraftShared.Core.Other;
+﻿using CardCraftShared.Core.Interfaces;
+using CardCraftShared.Core.Other;
 
 namespace CardCraftShared;
-
-[Serializable]
-public abstract class BaseHero
+public abstract class BaseHero : IAttackable
 {
     protected const int DefaultHealth = 30;
     // UI properties for the hero
     public string Color { get; init; }
     public string TextColor { get; init; }
     public string Image { get; init; }
-
     private string _name;
     public string Name {
         get => this._name;
@@ -42,11 +40,6 @@ public abstract class BaseHero
 
     public int Health { get; set; }
 
-    public BaseHero()
-    {
-
-    }
-
     protected BaseHero(ColorEnum color, string image, string name, string description)
     {
         this.Health = DefaultHealth;
@@ -58,6 +51,11 @@ public abstract class BaseHero
         this.Description = description;
     }
 
+    public void AttackTarget(IAttackable target)
+    {
+        throw new NotImplementedException();
+    }
+    
     public void TriggerHeroPower()
     {
         throw new NotImplementedException();
