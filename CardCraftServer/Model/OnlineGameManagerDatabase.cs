@@ -7,6 +7,8 @@ public class OnlineGameManagerDatabase
     private readonly ILogger<OnlineGameManagerDatabase> _logger;
     private readonly List<OnlineGameManager> _onlineGames;
 
+    public Action<string>? OnGameEnd;
+
     public OnlineGameManagerDatabase(ILogger<OnlineGameManagerDatabase> logger)
     {
         this._onlineGames = new();
@@ -110,7 +112,7 @@ public class OnlineGameManagerDatabase
         {
             foreach (Player player in game.Players)
             {
-                this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}. ConnectionID: {connectionId}");
+                // this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}.");
                 if (connectionId.Equals(player.ConnectionId))
                 {
                     return game.LobbyCode;
@@ -127,7 +129,7 @@ public class OnlineGameManagerDatabase
         {
             foreach (Player player in game.Players)
             {
-                this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}. ConnectionID: {connectionId}");
+                // this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}.");
                 if (connectionId.Equals(player.ConnectionId))
                 {
                     return player;

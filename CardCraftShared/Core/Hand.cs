@@ -8,7 +8,7 @@ public class Hand : ICardStatsManager
 
     public Hand()
     {
-        this.Cards = [];
+        this.Cards = new();
     }
 
     public void Add(IBaseCard card)

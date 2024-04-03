@@ -71,16 +71,16 @@ public class SignalRService
             await this.NotifyObserversGameJoined(player, otherPlayer);
         });
 
-        // Called when a player leaves the game
-        this._hubConnection.On<Player?>(ServerCallbacks.GameLeft, async (player) =>
-        {
-            await this.NotifyObserversGameLeft(player);
-        });
-
         // Called when the game is started
         this._hubConnection.On<string>(ServerCallbacks.GameStarted, async (lobbyCode) =>
         {
             await this.NotifyObserversGameStarted();
+        });
+
+        // Called when the game is ended
+        this._hubConnection.On(ServerCallbacks.GameEnded, async () =>
+        {
+            await this.NotifyObserversGameEnded();
         });
 
         // Start the connection to the server
@@ -102,14 +102,6 @@ public class SignalRService
         foreach (ISignalRObserver observer in this._observers)
         {
             await observer.OnGameJoined(player, otherPlayer);
-        }
-    }
-
-    private async Task NotifyObserversGameLeft(Player player)
-    {
-        foreach (ISignalRObserver observer in this._observers)
-        {
-            await observer.OnGameLeft(player);
         }
     }
 
@@ -148,8 +140,6 @@ public class SignalRService
     {
         Player player = new Player();
         player.Name = playerName;
-
-        Trace.WriteLine($"{this.Player.Hero.Image}|{this.Player.Hero.Health}");
 
         player.PlayerSignalRDetails.HeroImage = this.Player.Hero.Image;
         player.PlayerSignalRDetails.HeroHealth = this.Player.Hero.Health;

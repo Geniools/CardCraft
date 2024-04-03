@@ -236,6 +236,7 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     Text="{Binding Timer}"
+                    TextColor="{StaticResource Main1}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     FontFamily="CutOutsFLF"
@@ -263,9 +264,10 @@
                     <Label
                         Text="{Binding AvailableMana}"
                         FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Main1}"
                         FontSize="30"
                         HorizontalOptions="Center"
-                        VerticalOptions="Center"
+                        VerticalOptions="End"
                     />
 
                     <Image
@@ -280,9 +282,10 @@
                         Grid.Row="2"
                         Text="10"
                         FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Main1}"
                         FontSize="30"
                         HorizontalOptions="Center"
-                        VerticalOptions="Center"
+                        VerticalOptions="Start"
                     />
 
                 </Grid>

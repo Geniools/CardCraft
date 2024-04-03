@@ -11,7 +11,23 @@ namespace CardCraftClient.Model;
 public class GameManager : ISignalRObserver
 {
     public const int TURN_TIME = 30;
-    public bool IsGameStarted { get; set; }
+    public int TurnTimer { get; set; }
+
+    private bool _isGameStarted;
+    public bool IsGameStarted
+    {
+        get => this._isGameStarted;
+        set
+        {
+            this._isGameStarted = value;
+
+            if (this._isGameStarted)
+            {
+                this.OnGameStartedEvent?.Invoke();
+            }
+        }
+    }
+
     public Action? OnGameStartedEvent;
 
     private readonly SignalRService _signalRService;
@@ -65,62 +81,61 @@ public class GameManager : ISignalRObserver
 
     public async Task NextTurn()
     {
-        // TODO: Implement the next turn logic
-
         // Start the timer
         this.StartTurnTimer();
+
+        // Draw a card
+        this.CurrentPlayer?.DrawCard();
+
+        // Increase the mana
+        this.CurrentPlayer?.IncreaseMana();
     }
 
     private async Task StartTurnTimer()
     {
-        
+        this.TurnTimer = TURN_TIME;
+
+        while (this.TurnTimer > 0)
+        {
+            await Task.Delay(1000);
+            this.TurnTimer--;
+        }
+
+        // End the turn
+        await this.EndTurn();
+    }
+
+    private async Task EndTurn()
+    {
+        // TODO: Disable the buttons and selections
+        // TODO: Send the end turn signal to the server
     }
 
     public async Task EndGame()
     {
         // Reset the players
-        this.Reset();
+        await this.Reset();
 
-        Shell.Current.GoToAsync("///" + nameof(StartPage));
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            Shell.Current.GoToAsync($"///{nameof(StartPage)}");
+        });
+
         // Will notify the server to remove the current player from the game online (so the player can connect to other games without issues)
         await this._signalRService.HubConnection.InvokeAsync(ServerCallbacks.LeaveGame);
     }
 
     public async Task AddPlayer(Player player)
     {
+        Trace.WriteLine($"Player {player.Name} adding to the game! SignalR: {this._signalRService.Player.Name}");
+
         if (this._signalRService.Player.ConnectionId.Equals(player.ConnectionId))
         {
-            this.CurrentPlayer = this._signalRService.Player;
+            this.CurrentPlayer ??= this._signalRService.Player;
         }
         else
         {
             this.EnemyPlayer = player;
-        }
-    }
-
-    public async Task RemovePlayer(Player? player)
-    {
-        if (player is null)
-        {
-            return;
-        }
-
-        if (this.CurrentPlayer?.ConnectionId == player.ConnectionId)
-        {
-            this.CurrentPlayer = null;
-        }
-        else if (this.EnemyPlayer?.ConnectionId == player.ConnectionId)
-        {
-            this.EnemyPlayer = null;
-        }
-
-        // If one of the players leaves the game, end the game
-        if (this.CurrentPlayer is null || this.EnemyPlayer is null)
-        {
-            if (IsGameStarted)
-            {
-                await this.EndGame();
-            }
         }
     }
 
@@ -130,7 +145,15 @@ public class GameManager : ISignalRObserver
         {
             if (this.CurrentPlayer is not null && this.EnemyPlayer is not null)
             {
-                Shell.Current.GoToAsync(nameof(GamePage));
+                Trace.WriteLine(nameof(Shell.Current.CurrentPage));
+
+                // Check if the current page is not already the GamePage
+                if (Shell.Current.CurrentPage is GamePage)
+                {
+                    return;
+                }
+
+                await Shell.Current.GoToAsync(nameof(GamePage));
             }
         });
     }
@@ -150,7 +173,7 @@ public class GameManager : ISignalRObserver
         return Task.CompletedTask;
     }
 
-    public async Task OnGameJoined(Player player, Player otherPlayer)
+    public async Task OnGameJoined(Player player, Player? otherPlayer)
     {
         // The other player must be updated first
         // to avoid the player being overwritten
@@ -162,17 +185,41 @@ public class GameManager : ISignalRObserver
         await this.AddPlayer(player);
     }
 
-    public async Task OnGameLeft(Player player)
-    {
-        await this.RemovePlayer(player);
-    }
-
     public async Task OnGameStarted()
     {
         this.IsGameStarted = true;
-        this.OnGameStartedEvent?.Invoke();
+
+        // Check if the current player is instantiated, otherwise, try waiting for 3 times, then end the game
+        for (int i = 0; i < 3; i++)
+        {
+            if (this.CurrentPlayer is not null)
+            {
+                break;
+            }
+
+            await Task.Delay(1000);
+        }
+
+        if (this.CurrentPlayer is null)
+        {
+            await this.EndGame();
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                this.IsGameStarted = false;
+                await Shell.Current.DisplayAlert("Error", "Could not start the game! Try again!", "Ok");
+            });
+            return;
+        }
 
         this.CurrentPlayer.Deck.Shuffle();
+
+        // Draw the initial cards
+        for (int i = 0; i < 3; i++)
+        {
+            this.CurrentPlayer.Deck.DrawCard();
+        }
+
+        // TODO: Inform the server to choose a player to start the turn
     }
 
     public async Task OnGameEnded()

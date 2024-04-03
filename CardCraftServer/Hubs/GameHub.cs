@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using CardCraftShared;
 using CardCraftShared.Core.Other;
+using System.Numerics;
 
 namespace CardCraftServer.Hubs;
 
@@ -12,6 +13,11 @@ public class GameHub : Hub
     public GameHub(OnlineGameManagerDatabase onlineGameManagerDatabase)
     {
         this._onlineGameManagerDatabase = onlineGameManagerDatabase;
+
+        this._onlineGameManagerDatabase.OnGameEnd += (lobbyCode) =>
+        {
+            _ = this.EndGame(lobbyCode);
+        };
     }
 
     public async Task JoinGame(Player player, string lobbyCode)
@@ -46,35 +52,44 @@ public class GameHub : Hub
     {
         this._onlineGameManagerDatabase.LogString("Leave Game triggered: " + this.Context.ConnectionId);
 
+        // Remove the player from the group
+        Player? player = this._onlineGameManagerDatabase.GetPlayerFromConnectionId(this.Context.ConnectionId);
+        string? lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+
         // Remove the player from the game
         this._onlineGameManagerDatabase.RemovePlayer(this.Context.ConnectionId);
 
-        // Remove the player from the group
-        string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+        if (player is null || lobbyCode is null)
+        {
+            return;
+        }
+
+        await this.Clients.GroupExcept(lobbyCode, this.Context.ConnectionId).SendAsync(ServerCallbacks.GameEnded);
+        await this.Clients.GroupExcept(lobbyCode, this.Context.ConnectionId).SendAsync(ServerCallbacks.ErrorMessage, $"{player.Name} left the game!");
+
         await this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, lobbyCode);
+
+        if (player is not null)
+        {
+            this._onlineGameManagerDatabase.LogString($"Player {player.Name} left the game with lobby code {lobbyCode}!");
+        }
+    }
+
+    public async Task EndGame(string lobbyCode)
+    {
+        await this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.GameEnded);
     }
 
     public override Task OnDisconnectedAsync(Exception? exception)
     {
-        // Remove the player from the game
-        string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
-        Player? player = this._onlineGameManagerDatabase.GetPlayerFromConnectionId(this.Context.ConnectionId);
-
         try
         {
-            if (player is not null)
-            {
-                this._onlineGameManagerDatabase.LogString($"Player {player.Name} left the game with lobby code {lobbyCode}!");
-            }
-
-            this.LeaveGame();
-
-            this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.GameLeft, player);
-            this.Clients.Group(lobbyCode).SendAsync(ServerCallbacks.ErrorMessage, $"{player.Name} left the game!");
+            _ = LeaveGame();
         }
         catch (Exception e)
         {
-            this._onlineGameManagerDatabase.LogString(e.Message);
+            string message = $"=========Error on disconnect==========\n {e.Message} \n =================================";
+            this._onlineGameManagerDatabase.LogString(message);
         }
 
         return base.OnDisconnectedAsync(exception);

@@ -7,8 +7,8 @@ public static class ServerCallbacks
     public const string LeaveGame = "LeaveGame";
 
     // Callbacks coming from the server
-    public const string GameLeft = "GameLeft";
     public const string GameJoined = "GameJoined";
     public const string GameStarted = "GameStarted";
+    public const string GameEnded = "GameEnded";
     public const string ErrorMessage = "ErrorMessage";
 }
