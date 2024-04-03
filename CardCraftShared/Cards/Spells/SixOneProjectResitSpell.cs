@@ -3,10 +3,10 @@
 public class SixOneProjectResitSpell : BaseSpell
 {
     public SixOneProjectResitSpell() : base(
-        8,
+        4,
         "Project6.1 Resit",
-        "Dear students,We regret to inform you that the resit did not result in a pass for project 6.1. For more information on the results obtained, please refer to the attached document.",
-        CardRarityEnum.LEGENDARY,
+        "Dear students, We regret to inform you that the resit did not result in a pass for project 6.1",
+        CardRarityEnum.COMMON,
         "sixoneprojectresitspell.png"
     ) { }
 

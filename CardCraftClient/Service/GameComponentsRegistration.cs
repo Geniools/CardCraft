@@ -103,6 +103,10 @@ public class GameComponentsRegistration
 
         cards.Add(new SixOneProjectResitSpell());
 
+        cards.Add(new WomanCard());
+
+        cards.Add(new ITRelationshipSpellUpgraded());
+
         return cards;
     }
-}
+}   

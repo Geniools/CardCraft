@@ -3,10 +3,10 @@
 public class LandlordVisitSpell : BaseSpell
 {
     public LandlordVisitSpell(): base(
-        9,
+        8,
         "Landlord visit",
         "Sorry, but you need to pay 10.000$ for your gas bill",
-        CardRarityEnum.LEGENDARY,
+        CardRarityEnum.EPIC,
         "landlordvisitspell.png"
     ) { }
 

@@ -3,10 +3,10 @@
 public class AlcoholismSpell : BaseSpell
 {
     public AlcoholismSpell() : base(
-        2,
+        6,
         "Alcoholism",
         "Casual Tuesday, gain 2 health",
-        CardRarityEnum.COMMON,
+        CardRarityEnum.RARE,
         "alcoholismspell.jpg"
     ) { }
 

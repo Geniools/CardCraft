@@ -4,10 +4,10 @@ public class AmogusSpell : BaseSpell
 {
     public AmogusSpell() : base
         (
-            4,
+            5,
             "Amogus", 
             "Get control over an enemy minion",
-            CardRarityEnum.LEGENDARY, 
+            CardRarityEnum.RARE, 
             "amogusspell.jpg"
         ) { }
 

@@ -6,7 +6,7 @@ public class BelastingdienstSpell : BaseSpell
         5,
         "Belastingdienst",
         "Demand 50% of the players mana",
-        CardRarityEnum.LEGENDARY,
+        CardRarityEnum.RARE,
         "belastingdienstspell.jpeg"
     ) { }
 

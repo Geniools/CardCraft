@@ -3,10 +3,10 @@
 public class ITRelationshipSpell : BaseSpell
 {
     public ITRelationshipSpell(): base(
-        8,
+        3,
         "IT Relationship",
-        "LGBTQ",
-        CardRarityEnum.LEGENDARY,
+        "OI",
+        CardRarityEnum.COMMON,
         "itrelationshipspell.jpg"
     )
     { }

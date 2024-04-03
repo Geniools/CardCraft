@@ -4,7 +4,7 @@ public class TatedSpell : BaseSpell
 {
     public TatedSpell() : base
     (
-        4,
+        9,
         "Tated",
         "You have been 'Tated'! Don't leave your laptop open!",
         CardRarityEnum.EPIC,

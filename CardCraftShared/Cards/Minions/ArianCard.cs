@@ -7,7 +7,7 @@ public class ArianCard : BaseMinion
         8,
         8,
         "Arian",
-        "Rob is a strong minion",
+        "OI",
         CardRarityEnum.COMMON,
         "ariancard.jpg"
     ) { }

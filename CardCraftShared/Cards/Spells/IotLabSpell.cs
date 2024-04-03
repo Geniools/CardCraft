@@ -1,13 +1,13 @@
 ﻿namespace CardCraftShared.Cards.Spells;
 
-public class DutchHousing : BaseSpell
+public class IotLabSpell : BaseSpell
 {
-    public DutchHousing(): base(
+    public IotLabSpell() : base(
         3,
-        "Dutch housing",
-        "No sleep for you, hero takes 2 damage",
+        "IoT Lab",
+        "Increased productivity, 2 extra mana to the hero",
         CardRarityEnum.COMMON,
-        "rentedroomspell.jpg"
+        "iotlabspell.jpg"
     ) { }
 
     public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
