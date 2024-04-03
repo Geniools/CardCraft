@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\RobCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\TeoCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\TerryCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\WomanCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\AlcoholismSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\AmogusSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\BelastingdienstSpell.cs" />
