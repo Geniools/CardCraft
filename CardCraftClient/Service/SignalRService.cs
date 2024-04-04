@@ -30,12 +30,12 @@ public class SignalRService
         this._hubConnection = new HubConnectionBuilder()
             .WithUrl(CONNECTION_URL) // Change to CONNECTION_URL for the online server
             .WithAutomaticReconnect()
-            .ConfigureLogging(logging =>
-            {
-                logging.AddDebug();
-                // This will set ALL logging to Debug level
-                logging.SetMinimumLevel(LogLevel.Debug);
-            })
+            // .ConfigureLogging(logging =>
+            // {
+            //     logging.AddDebug();
+            //     // This will set ALL logging to Debug level
+            //     logging.SetMinimumLevel(LogLevel.Debug);
+            // })
             .Build();
 
         // Define connection events
@@ -54,9 +54,6 @@ public class SignalRService
         // Called when an error occurs
         this._hubConnection.On<string>(ServerCallbacks.ErrorMessage, async (message) =>
         {
-            Trace.WriteLine("\nError: ================== ");
-            Trace.WriteLine(message);
-
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 Shell.Current.GoToAsync("..");
@@ -118,8 +115,15 @@ public class SignalRService
             await this.NotifyObserversEnemyPlayerUpdated(message);
         });
 
+        // Called when the turn starts
+        this._hubConnection.On<bool>(ServerCallbacks.StartTurn, async (isFirstTurn) =>
+        {
+            Trace.WriteLine($"Received StartTurn. PLAYER {this.Player.Name}");
+            await this.NotifyObserversTurnStarted(isFirstTurn);
+        });
+
         // Start the connection to the server
-        this.StartConnection();
+        _ = this.StartConnection();
     }
 
     public void AddObserver(ISignalRObserver observer)
@@ -172,19 +176,22 @@ public class SignalRService
         }
     }
 
-    public Task StartConnection()
+    private async Task NotifyObserversTurnStarted(bool isFirstTurn = false)
+    {
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnTurnStarted(isFirstTurn);
+        }
+    }
+
+    public async Task StartConnection()
     {
         if (this._hubConnection.State == HubConnectionState.Disconnected)
         { 
-            return Task.Run(async () =>
-            {
-                await this._hubConnection.StartAsync();
+            await this._hubConnection.StartAsync();
 
-                this.Player.ConnectionId = this._hubConnection.ConnectionId;
-            });
+            this.Player.ConnectionId = this._hubConnection.ConnectionId;
         }
-
-        return Task.CompletedTask;
     }
 
     public async Task JoinGame(string lobbyCode, string playerName)
@@ -236,8 +243,18 @@ public class SignalRService
         await this.HubConnection.InvokeAsync(ServerCallbacks.UpdateEnemyPlayer, message);
     }
 
-    public Task StopConnection()
+    public async Task SendPickRandomPlayerToStartTurn()
     {
-        return this._hubConnection.StopAsync();
+        await this.HubConnection.InvokeAsync(ServerCallbacks.PickRandomPlayerToStartTurn);
+    }
+
+    public async Task SendEndTurn()
+    {
+        await this.HubConnection.InvokeAsync(ServerCallbacks.EndTurn);
+    }
+
+    public async Task StopConnection()
+    {
+        await this._hubConnection.StopAsync();
     }
 }

@@ -39,6 +39,7 @@ internal abstract class MinionEffectDecorator : IMinion
         this.Rarity = minion.Rarity;
         this.CanAttack = minion.CanAttack;
         this.Image = minion.Image;
+
         if (minion is BaseMinion baseMinion)
         {
             this.TextColor = baseMinion.TextColor;
@@ -78,7 +79,7 @@ internal abstract class MinionEffectDecorator : IMinion
 
     public virtual string UpdateDescription(string description)
     {
-        return "Special effect:" + description + "\n" +this._minion.Description;
+        return "Special effect:" + description + "\n" + this._minion.Description;
     }
 
     public void UnaliveSelf()

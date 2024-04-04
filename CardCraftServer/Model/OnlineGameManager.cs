@@ -8,6 +8,8 @@ public class OnlineGameManager
     private readonly List<Player> _players;
     public List<Player> Players => this._players;
     public string LobbyCode { get; init; }
+    public bool GameStarted { get; set; }
+
 
     public OnlineGameManager(string lobbyCode)
     {
@@ -16,7 +18,6 @@ public class OnlineGameManager
         this.GameStarted = false;
     }
 
-    private bool GameStarted { get; set; }
 
     public void AddPlayer(Player player)
     {
