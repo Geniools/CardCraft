@@ -1,4 +1,5 @@
-﻿using CardCraftShared;
+﻿using Android.Icu.Text;
+using CardCraftShared;
 using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Cards.Spells;
@@ -40,72 +41,149 @@ public class GameComponentsRegistration
         List<IBaseCard> cards = new();
 
         cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-        cards.Add(new AlexCard());
-
-        cards.Add(new TeoCard());
-        cards.Add(new TeoCard());
-        cards.Add(new TeoCard());
-
-        cards.Add(new EvaldCard());
-        cards.Add(new EvaldCard());
-        cards.Add(new EvaldCard());
 
         cards.Add(new AndreiCard());
         cards.Add(new AndreiCard());
         cards.Add(new AndreiCard());
-
-        cards.Add(new RobCard());
-        cards.Add(new RobCard());
-        cards.Add(new RobCard());
+        cards.Add(new AndreiCard());
 
         cards.Add(new ArianCard());
         cards.Add(new ArianCard());
         cards.Add(new ArianCard());
+        cards.Add(new ArianCard());
 
+        cards.Add(new BakiTeoCard());
+        cards.Add(new BakiTeoCard());
+        cards.Add(new BakiTeoCard());
+
+        cards.Add(new BuffJadynCard());
+        cards.Add(new BuffJadynCard());
+        cards.Add(new BuffJadynCard());
+
+        cards.Add(new ChrisCard()); 
+        cards.Add(new ChrisCard());
+        
         cards.Add(new CorvinCard());
         cards.Add(new CorvinCard());
         cards.Add(new CorvinCard());
+        cards.Add(new CorvinCard());
+
+        cards.Add(new CrackedUpMathewCard());
+        cards.Add(new CrackedUpMathewCard());
+        cards.Add(new CrackedUpMathewCard());
+
+        cards.Add(new DimitriCard());
+        cards.Add(new DimitriCard());
+        cards.Add(new DimitriCard());
+
+        cards.Add(new EvaldCard());
+        cards.Add(new EvaldCard());
+        cards.Add(new EvaldCard());
+        cards.Add(new EvaldCard());
 
         cards.Add(new JadynCard());
         cards.Add(new JadynCard());
         cards.Add(new JadynCard());
-
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-        cards.Add(new ResitSpell());
-
-        cards.Add(new AmogusSpell());
-        cards.Add(new AmogusSpell());
-        cards.Add(new AmogusSpell());
-
-        cards.Add(new TatedSpell());
-        cards.Add(new TatedSpell());
-        cards.Add(new TatedSpell());
-
-        cards.Add(new TerryCard());
-
-        cards.Add(new MiroCard());
-
-        cards.Add(new BelastingdienstSpell());
+        cards.Add(new JadynCard());
 
         cards.Add(new MathewCard());
-        cards.Add(new ITRelationshipSpell());
+        cards.Add(new MathewCard());
+        cards.Add(new MathewCard());
+        cards.Add(new MathewCard());
 
-        cards.Add(new LandlordVisitSpell());
-        cards.Add(new CorridorCoffeeSpell());
-        cards.Add(new ChrisCard());
+        cards.Add(new MiroCard());
+        cards.Add(new MiroCard());
 
-        cards.Add(new AlcoholismSpell());
-        cards.Add(new DutchHousing());
+        cards.Add(new NathanCard());
+        cards.Add(new NathanCard());
+        cards.Add(new NathanCard());
+        cards.Add(new NathanCard());
 
-        cards.Add(new InfoManagementSpell());
+        cards.Add(new RobCard());
+        cards.Add(new RobCard());
+        cards.Add(new RobCard());
+        cards.Add(new RobCard());
 
-        cards.Add(new SixOneProjectResitSpell());
+        cards.Add(new SecurityGuyCard());
+        cards.Add(new SecurityGuyCard());
+        cards.Add(new SecurityGuyCard());
+
+        cards.Add(new TeacherCard());
+        cards.Add(new TeacherCard());
+
+        cards.Add(new TeoCard());
+        cards.Add(new TeoCard());
+        cards.Add(new TeoCard());
+        cards.Add(new TeoCard());
+
+        cards.Add(new TerryCard());
+        cards.Add(new TerryCard());
+        cards.Add(new TerryCard());
+        cards.Add(new TerryCard());
 
         cards.Add(new WomanCard());
+        cards.Add(new WomanCard());
+
+
+        cards.Add(new AlcoholismSpell());
+        cards.Add(new AlcoholismSpell());
+
+        cards.Add(new AmogusSpell());
+        cards.Add(new AmogusSpell());
+
+        cards.Add(new BelastingdienstSpell());
+        cards.Add(new BelastingdienstSpell());
+
+        cards.Add(new CodingBugSpell());
+        cards.Add(new CodingBugSpell());
+
+        cards.Add(new CorridorCoffeeSpell());
+        cards.Add(new CorridorCoffeeSpell());
+
+        cards.Add(new DutchHousing());
+        cards.Add(new DutchHousing());
+
+        cards.Add(new ExamSpell());
+        cards.Add(new ExamSpell());
+
+        cards.Add(new GymSpell());
+        cards.Add(new GymSpell());
+
+        cards.Add(new InfoManagementSpell());
+        cards.Add(new InfoManagementSpell());
+
+        cards.Add(new IotLabSpell());
+        cards.Add(new IotLabSpell());
+
+        cards.Add(new ITRelationshipSpell());
+        cards.Add(new ITRelationshipSpell());
 
         cards.Add(new ITRelationshipSpellUpgraded());
+        cards.Add(new ITRelationshipSpellUpgraded());
+
+        cards.Add(new LandlordVisitSpell());
+        cards.Add(new LandlordVisitSpell());
+
+        cards.Add(new LoremIpsumSpell());
+        cards.Add(new LoremIpsumSpell());
+
+        cards.Add(new NiceArgumentSpell());
+        cards.Add(new NiceArgumentSpell());
+
+        cards.Add(new PraySpell());
+        cards.Add(new PraySpell());
+
+        cards.Add(new ResitSpell());
+        cards.Add(new ResitSpell());
+
+        cards.Add(new SevenSevenThreeSpell());
+        cards.Add(new SevenSevenThreeSpell());
+
+        cards.Add(new SixOneProjectResitSpell());
+        cards.Add(new SixOneProjectResitSpell());
+
+        cards.Add(new TatedSpell());
+        cards.Add(new TatedSpell());
 
         return cards;
     }
