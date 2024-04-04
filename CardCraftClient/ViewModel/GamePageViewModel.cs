@@ -3,10 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using CardCraftClient.Model;
-using CardCraftShared.Cards.Heroes;
-using CardCraftShared.Cards.Minions;
-using CardCraftShared.Core.Interfaces;
-using CommunityToolkit.Maui.Core.Extensions;
+using CardCraftClient.Service;
 using CommunityToolkit.Mvvm.Input;
 
 namespace CardCraftClient.ViewModel;
@@ -14,6 +11,7 @@ namespace CardCraftClient.ViewModel;
 public partial class GamePageViewModel : BaseViewModel
 {
     private GameManager _gameManager;
+    private SignalRService _signalRService;
 
     [ObservableProperty] private int _timer;
 
@@ -35,9 +33,11 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private ObservableCollection<IBaseCard> _enemyPlayerBoard;
     [ObservableProperty] private IBaseCard _selectedEnemyBoardCard;
 
-    public GamePageViewModel(GameManager gm)
+    public GamePageViewModel(GameManager gm, SignalRService signalRService)
     {
         this._gameManager = gm;
+        this._signalRService = signalRService;
+
         this.Title = "Game";
 
         this.CurrentPlayer = gm.CurrentPlayer;
@@ -48,12 +48,24 @@ public partial class GamePageViewModel : BaseViewModel
         {
             this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
             this.CurrentPlayerDeckCardCount = gm.CurrentPlayer.Deck.Cards.Count;
+
+            // Make the message to be sent to the enemy player
+            // Notify the server
+            this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
+            {
+                HeroHealth = this.CurrentPlayerHeroHealth,
+                PlayerHandCardAmount = this.CurrentPlayerHand.Count,
+                PlayerDeckCardAmount = this.CurrentPlayerDeckCardCount
+            });
         };
 
         gm.EnemyPlayer.Hand.Cards.CollectionChanged += (sender, e) =>
         {
+            Trace.WriteLine("ENEMY HAND UPDATED!");
             this.EnemyPlayerHand = gm.EnemyPlayer.Hand.Cards;
             this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
+
+            this.LogAvailableCollections();
         };
 
         gm.Board.FriendlySide.CollectionChanged += (sender, e) =>
@@ -76,10 +88,18 @@ public partial class GamePageViewModel : BaseViewModel
         this.AvailableMana = gm.CurrentPlayer.Mana;
 
         this.CurrentPlayerHeroHealth = gm.CurrentPlayer.Hero.Health;
-        // this.EnemyPlayerHeroHealth = gm.EnemyPlayer.Hero.Health;
+        this.EnemyPlayerHeroHealth = gm.EnemyPlayer.Hero.Health;
 
         this.CurrentPlayerDeckCardCount = gm.CurrentPlayer.Deck.Cards.Count;
-        // this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
+        this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
+
+        // Send initial values to the server
+        this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
+        {
+            HeroHealth = this.CurrentPlayerHeroHealth,
+            PlayerHandCardAmount = this.CurrentPlayerHand.Count,
+            PlayerDeckCardAmount = this.CurrentPlayerDeckCardCount
+        });
 
         this.Timer = gm.TurnTimer;
     }
@@ -93,13 +113,33 @@ public partial class GamePageViewModel : BaseViewModel
     [RelayCommand]
     private async Task PlayCard()
     {
+        IBaseCard card = this.SelectedHandCard;
+
+        // Check if there is a card to be played
         if (this.SelectedHandCard is null)
         {
             await Shell.Current.DisplayAlert("Error", "No card to be played selected", "OK");
             return;
         }
 
-        this._gameManager.Board.PlayMinionFriendlySide(this.SelectedHandCard);
+        // Check if the player has enough mana to play the card
+        // if (this.AvailableMana < this.SelectedHandCard.ManaCost)
+        // {
+        //     await Shell.Current.DisplayAlert("Error", "Not enough mana to play the card", "OK");
+        //     return;
+        // }
+
+        // Remove the card from the player's hand
+        this._gameManager.CurrentPlayer.Hand.Remove(card);
+
+        // Decrease the player's mana
+        // this.AvailableMana -= this.SelectedHandCard.ManaCost;
+
+        // Play the card
+        this._gameManager.Board.PlayMinionFriendlySide(card);
+
+        // Notify the server
+        await this._signalRService.SendPlayedCardToEnemyPlayer(card);
     }
 
     [RelayCommand]
@@ -122,12 +162,12 @@ public partial class GamePageViewModel : BaseViewModel
         {
             Trace.WriteLine(card.Name);
         }
-        //
-        // Trace.WriteLine("Enemy Player Hand:");
-        // foreach (var card in this.EnemyPlayerHand)
-        // {
-        //     Trace.WriteLine(card.Name);
-        // }
+        
+        Trace.WriteLine("Enemy Player Hand:");
+        foreach (var card in this.EnemyPlayerHand)
+        {
+            Trace.WriteLine(card.Name);
+        }
 
         Trace.WriteLine("Current Player Board:");
         foreach (var card in this.CurrentPlayerBoard)
@@ -135,10 +175,10 @@ public partial class GamePageViewModel : BaseViewModel
             Trace.WriteLine(card.Name);
         }
 
-        // Trace.WriteLine("Enemy Player Board:");
-        // foreach (var card in this.EnemyPlayerBoard)
-        // {
-        //     Trace.WriteLine(card.Name);
-        // }
+        Trace.WriteLine("Enemy Player Board:");
+        foreach (var card in this.EnemyPlayerBoard)
+        {
+            Trace.WriteLine(card.Name);
+        }
     }
 }

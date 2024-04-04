@@ -5,7 +5,7 @@ namespace CardCraftShared;
 
 public class Hand : ICardStatsManager
 {
-    public ObservableCollection<IBaseCard> Cards { get; init; }
+    public ObservableCollection<IBaseCard> Cards { get; set; }
 
     public Hand()
     {
@@ -21,6 +21,16 @@ public class Hand : ICardStatsManager
     {
         Cards.Remove(card);
         return card;
+    }
+
+    public void Update(IList<IBaseCard> cards)
+    {
+        this.Cards.Clear();
+
+        foreach (IBaseCard card in cards)
+        {
+            this.Cards.Add(card);
+        }
     }
 
     public void DamageAllMinions(int damage)

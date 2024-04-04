@@ -19,6 +19,34 @@ public class GameHub : Hub
         };
     }
 
+    public async Task UpdateEnemyPlayer(EnemyPlayerUpdateMessage message)
+    {
+        try
+        {
+            string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+
+            await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.EnemyPlayerUpdated, message);
+        }
+        catch (Exception e)
+        {
+            await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
+        }
+    }
+
+    public async Task PlayCard(CardMessage cardMessage)
+    {
+        try
+        {
+            string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+
+            await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.CardPlayed, cardMessage);
+        }
+        catch (Exception e)
+        {
+            await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
+        }
+    }
+
     public async Task JoinGame(Player player, string lobbyCode)
     {
         try

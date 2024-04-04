@@ -7,6 +7,7 @@
                xmlns:view="clr-namespace:CardCraftClient.View"
                xmlns:model="clr-namespace:CardCraftShared"
                xmlns:viewElements="clr-namespace:CardCraftClient.ViewElements"
+               xmlns:other="clr-namespace:CardCraftShared.Core.Other"
                x:DataType="viewmodel:GamePageViewModel"
                >
 
@@ -45,6 +46,19 @@
                     />
                 </Grid>
             </DataTemplate>
+
+            <DataTemplate x:Name="JunkCard" x:Key="JunkCard" x:DataType="{x:Type other:JunkCard}">
+                <Grid
+                    WidthRequest="120"
+                >
+                    <Image
+                        Source="{Binding Image}"
+                    />
+                    <Label
+                        Text="{Binding Name}"
+                    />
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -68,7 +82,7 @@
                 >
                 <Image
                     Grid.Row="0"
-                    Source="{Binding EnemyPlayer.PlayerSignalRDetails.HeroImage}"
+                    Source="{Binding EnemyPlayer.Hero.Image}"
                     WidthRequest="100"
                     HeightRequest="100"
                     HorizontalOptions="Center"
@@ -95,7 +109,7 @@
 
                     <Label
                         Grid.Column="2"
-                        Text="{Binding EnemyPlayer.PlayerSignalRDetails.HeroHealth}"
+                        Text="{Binding EnemyPlayer.Hero.Health}"
                         TextColor="{StaticResource Secondary}"
                         FontFamily="CutOutsFLF"
                         FontSize="20"
@@ -112,6 +126,7 @@
                 <CollectionView
                     x:Name="EnemyHand"
                     ItemsSource="{Binding EnemyPlayerHand}"
+                    ItemTemplate="{StaticResource JunkCard}"
                     HorizontalOptions="Center"
                     SelectionMode="None"
                 >

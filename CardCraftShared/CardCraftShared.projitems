@@ -49,9 +49,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\ColorEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\ISignalRObserver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Other\JunkCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ServerCallbacks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ViewCardColor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\PlayerSignalRDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\BaseMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\CardMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\EnemyPlayerUpdateMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\PlayerSignalRDetails.cs" />
     <Compile Include="..\CardCraftShared\Core\DeckPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graveyard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\BaseHero.cs" />

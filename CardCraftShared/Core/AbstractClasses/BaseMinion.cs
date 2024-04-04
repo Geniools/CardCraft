@@ -19,7 +19,7 @@ public abstract class BaseMinion : IMinion
         set => _health = Math.Max(value, 0);
     }
     public int ManaCost { get ; set; }
-    public CardRarityEnum Rarity { get; set; }
+    public CardRarityEnum Rarity { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
     public string Image { get; init; }

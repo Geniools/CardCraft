@@ -4,8 +4,9 @@ namespace CardCraftShared;
 
 public class DeckPool : ICardStatsManager
 {
-    public Queue<IBaseCard> Cards { get; set; }
     public const int MAX_AMOUNT_CARDS = 30;
+
+    public Queue<IBaseCard> Cards { get; set; }
 
     public DeckPool()
     {
@@ -30,8 +31,7 @@ public class DeckPool : ICardStatsManager
     {
         if (IsEmpty()) throw new Exception("Deck is empty");
 
-        var card = Cards.Dequeue();
-        return card;
+        return Cards.Dequeue();
     }
     
     public void AddCard(IBaseCard card)
@@ -46,7 +46,7 @@ public class DeckPool : ICardStatsManager
     
     public bool IsFull()
     {
-        return Cards.Count == MAX_AMOUNT_CARDS;
+        return Cards.Count >= MAX_AMOUNT_CARDS;
     }
 
     public void AddDeck(IList<IBaseCard> deck)

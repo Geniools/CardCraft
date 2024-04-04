@@ -2,7 +2,9 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CardCraftClient.ViewElements.BaseMinionTemplate">
+             x:Class="CardCraftClient.ViewElements.BaseMinionTemplate"
+             xmlns:model="clr-namespace:CardCraftShared"
+             x:DataType="model:BaseMinion">
     
     <ContentView.Content>
         <Border
@@ -76,7 +78,7 @@
                         FontFamily="CutOutsFLF"
                         TextColor="{Binding TextColor}"
                         HorizontalOptions="Center" 
-                        Margin="0,2,0,0"
+                        Margin="0,1,0,0"
                     />
 
                     <ScrollView
@@ -86,8 +88,7 @@
                         <Border
                             Padding="5"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 10,10,10,10"
-                            Margin="30, 0"
+                            StrokeShape="RoundRectangle 10, 10, 10, 10"
                         >
                             <Label
                                 Text="{Binding Description}"

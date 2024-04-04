@@ -19,7 +19,7 @@ internal abstract class MinionEffectDecorator : IMinion
     }
 
     public int ManaCost { get; set; }
-    public CardRarityEnum Rarity { get; set; }
+    public CardRarityEnum Rarity { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
     public bool CanAttack { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CardCraftClient.Core.Interfaces;
 using CardCraftClient.Service;
 using CardCraftClient.View;
@@ -64,6 +65,7 @@ public class GameManager : ISignalRObserver
         }
     }
     public Action<Player?>? EnemyPlayerChanged;
+    public Action OnEnemyPlayerChanged;
 
     // Game elements
     public Board Board { get; set; }
@@ -136,6 +138,9 @@ public class GameManager : ISignalRObserver
         else
         {
             this.EnemyPlayer = player;
+
+            // Instantiate the enemy's hero from the received type
+            this.EnemyPlayer.Hero = (BaseHero)Activator.CreateInstance(Type.GetType(player.PlayerSignalRDetails.HeroType) ?? throw new Exception("Hero type not found!"));
         }
     }
 
@@ -143,16 +148,23 @@ public class GameManager : ISignalRObserver
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (this.CurrentPlayer is not null && this.EnemyPlayer is not null)
+            if (this.CurrentPlayer is null || this.EnemyPlayer is null)
             {
-                // Check if the current page is not already the GamePage
-                if (Shell.Current.CurrentPage is GamePage)
-                {
-                    return;
-                }
-
-                await Shell.Current.GoToAsync(nameof(GamePage));
+                return;
             }
+
+            // Check if the current page is not already the GamePage
+            if (Shell.Current.CurrentPage is GamePage)
+            {
+                return;
+            }
+
+            if (!this.IsGameStarted)
+            {
+                return;
+            }
+
+            await Shell.Current.GoToAsync(nameof(GamePage));
         });
     }
 
@@ -169,6 +181,32 @@ public class GameManager : ISignalRObserver
         this.Graveyard = new();
 
         return Task.CompletedTask;
+    }
+
+    public async Task OnEnemyPlayerUpdated(EnemyPlayerUpdateMessage message)
+    {
+        this.EnemyPlayer.Hero.Health = message.HeroHealth;
+
+        // Add junk cards to the enemy player's hand to update the deck count
+        DeckPool deckPool = new();
+        for (int i = 0; i < message.PlayerDeckCardAmount; i++)
+        {
+            deckPool.AddCard(new JunkCard{Image = "deck.jpg"});
+        }
+        this.EnemyPlayer.Deck = deckPool;
+
+        // Add junk cards to the enemy player's hand to update the hand count
+        ObservableCollection<IBaseCard> updatedHandCards = new();
+        for (int i = 0; i < message.PlayerHandCardAmount; i++)
+        {
+            updatedHandCards.Add(new JunkCard { Image = "hand.jpg", Name = "JunkCard"});
+        }
+        this.EnemyPlayer.Hand.Update(updatedHandCards);
+    }
+
+    public async Task OnCardPlayed(IBaseCard card)
+    {
+        this.Board.PlayMinionEnemySide(card);
     }
 
     public async Task OnGameJoined(Player player, Player? otherPlayer)
