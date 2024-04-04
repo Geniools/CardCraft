@@ -12,7 +12,7 @@ public class TerryCard : BaseMinion
         CardRarityEnum.COMMON,
         "terrycard.jpg"
     ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

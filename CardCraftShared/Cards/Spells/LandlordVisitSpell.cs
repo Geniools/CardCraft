@@ -10,7 +10,7 @@ public class LandlordVisitSpell : BaseSpell
         "landlordvisitspell.png"
     ) { }
 
-    public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
         throw new NotImplementedException();
     }

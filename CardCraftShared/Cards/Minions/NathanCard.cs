@@ -11,7 +11,7 @@ public class NathanCard : BaseMinion
         CardRarityEnum.COMMON,
         "nathancard2.jpg"
     ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

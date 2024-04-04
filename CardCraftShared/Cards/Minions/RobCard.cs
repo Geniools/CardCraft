@@ -11,7 +11,7 @@ public class RobCard : BaseMinion
         CardRarityEnum.COMMON,
         "robcard.jpg"
     ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

@@ -35,5 +35,5 @@ public abstract class BaseSpell : IBaseCard
         this.Rarity = rarity;
         this.Image = image;
     }
-    public abstract void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero);
+    public abstract void TriggerEffect(Player player, Player enemyPlayer, Board board);
 }

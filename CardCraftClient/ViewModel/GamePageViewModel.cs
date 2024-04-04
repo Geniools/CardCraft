@@ -134,6 +134,7 @@ public partial class GamePageViewModel : BaseViewModel
 
         // Play the card
         this._gameManager.Board.PlayMinionFriendlySide(card);
+        card.TriggerEffect(_gameManager.CurrentPlayer, _gameManager.EnemyPlayer, _gameManager.Board);
 
         // Notify the server
         await this._signalRService.SendPlayedCardToEnemyPlayer(card);

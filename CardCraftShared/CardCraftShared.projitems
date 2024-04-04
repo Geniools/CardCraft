@@ -36,7 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\BelastingdienstSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\CodingBugSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\CorridorCoffeeSpell.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\DutchHousing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\DutchHousingSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ExamSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\GymSpell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\InfoManagementSpell.cs" />

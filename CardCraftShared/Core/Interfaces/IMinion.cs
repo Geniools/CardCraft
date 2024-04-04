@@ -6,7 +6,6 @@ public interface IMinion : IBaseCard, IAttackable
     public int Attack { get; set; }
     public bool CanAttack { get; set; }
     public event EventHandler OnDeath;
-    public void TriggerEffect();
     public void TakeDamage(int damage);
     public void AttackMinion(IMinion minion);
     public void AttackHero(BaseHero hero);

@@ -58,7 +58,7 @@ public abstract class BaseMinion : IMinion
         Image = image;
     }
 
-    public abstract void TriggerEffect();
+    public abstract void TriggerEffect(Player player, Player enemyPlayer, Board board);
 
     public void AttackTarget(IAttackable target)
     {
