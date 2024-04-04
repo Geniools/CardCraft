@@ -14,4 +14,9 @@ internal class ChargeDecorator(IMinion minion) : MinionEffectDecorator(minion)
         }
         base.TriggerEffect();
     }
+
+    public override string UpdateDescription(string description)
+    {
+        return base.UpdateDescription("Charge");
+    }
 }

@@ -11,4 +11,7 @@ public class ArianCard : BaseMinion
         CardRarityEnum.COMMON,
         "ariancard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

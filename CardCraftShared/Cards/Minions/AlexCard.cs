@@ -7,10 +7,15 @@ public class AlexCard : BaseMinion
         10,
         10,
         10,
-        "Alex", 
+        "Alex",
         "Solo army",
-        CardRarityEnum.LEGENDARY, 
+        CardRarityEnum.LEGENDARY,
         "alexcard.jpg"
-        ) { }
+    )
+    { }
+    public override void TriggerEffect()
+    {
+    }
+
 }
 

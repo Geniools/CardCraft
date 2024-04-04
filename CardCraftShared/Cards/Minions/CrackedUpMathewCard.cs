@@ -11,4 +11,7 @@ public class CrackedUpMathewCard : BaseMinion
         CardRarityEnum.RARE,
         "crackedupmathewcard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

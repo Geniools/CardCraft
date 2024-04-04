@@ -11,4 +11,7 @@ public class BakiTeoCard : BaseMinion
         CardRarityEnum.RARE,
         "bakiteocard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

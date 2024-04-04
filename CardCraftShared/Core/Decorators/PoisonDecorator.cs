@@ -8,5 +8,12 @@ namespace CardCraftShared.Core.Decorators
         {
             base.Damage(9000);
         }
+
+        public override string UpdateDescription(string description)
+        {
+            return base.UpdateDescription("Charge");
+        }
     }
+
+
 }

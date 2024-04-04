@@ -2,7 +2,7 @@
 
 namespace CardCraftShared;
 
-public class DeckPool : ICardStatsManager
+public class DeckPool
 {
     public const int MAX_AMOUNT_CARDS = 30;
 
@@ -56,25 +56,5 @@ public class DeckPool : ICardStatsManager
         {
             AddCard(card);
         }
-    }
-
-    public void DamageAllMinions(int damage)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HealAllMinions(int heal)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DamageMinion(IBaseCard minion, int damage)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HealMinion(IBaseCard minion, int heal)
-    {
-        throw new NotImplementedException();
     }
 }

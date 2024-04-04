@@ -33,4 +33,9 @@ internal class RushDecorator(IMinion minion) : MinionEffectDecorator(minion)
             base.AttackTarget(target);
         }
     }
+    public override string UpdateDescription(string description)
+    {
+        return base.UpdateDescription("Rush");
+    }
+
 }

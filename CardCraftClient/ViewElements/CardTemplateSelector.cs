@@ -21,7 +21,7 @@ public class CardTemplateSelector : DataTemplateSelector
             BaseMinion => BaseMinionTemplate,
             // BaseSpell => BaseSpellTemplate,
             BaseSpell => BaseMinionTemplate,
-            _ => throw new NotImplementedException()
+            _ => BaseMinionTemplate
         };
     }
 }

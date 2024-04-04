@@ -262,6 +262,14 @@ public class GameManager : ISignalRObserver
         // TODO: Inform the server to choose a player to start the turn
     }
 
+    public void OnCardUnalive(object sender, EventArgs e)
+    {
+        if (sender is IBaseCard card)
+        {
+            this.Graveyard.AddCard(card);
+        }
+    }
+
     public async Task OnGameEnded()
     {
         await this.EndGame();

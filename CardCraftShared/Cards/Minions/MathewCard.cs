@@ -11,4 +11,7 @@ public class MathewCard : BaseMinion
         CardRarityEnum.COMMON,
         "mathewcard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }
