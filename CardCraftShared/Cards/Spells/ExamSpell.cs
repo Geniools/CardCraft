@@ -7,7 +7,7 @@ public class ExamSpell : BaseSpell
         "Exam",
         "Ay blayt",
         CardRarityEnum.COMMON,
-        "examspell.png"
+        "examspell.jpeg"
     )
     { }
 

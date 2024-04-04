@@ -6,7 +6,7 @@ public class MiroCard : BaseMinion
         9,
         9,
         9,
-        "MiroCard",
+        "Miro",
         "I hate XAML",
         CardRarityEnum.EPIC,
         "mirocard.jpg"
