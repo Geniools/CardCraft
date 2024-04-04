@@ -139,8 +139,8 @@ public class GameComponentsRegistration
         cards.Add(new CorridorCoffeeSpell());
         cards.Add(new CorridorCoffeeSpell());
 
-        cards.Add(new DutchHousing());
-        cards.Add(new DutchHousing());
+        cards.Add(new DutchHousingSpell());
+        cards.Add(new DutchHousingSpell());
 
         cards.Add(new ExamSpell());
         cards.Add(new ExamSpell());

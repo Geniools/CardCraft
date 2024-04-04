@@ -25,7 +25,7 @@ internal abstract class MinionEffectDecorator : IMinion
     public string Name { get; init; }
     public string Description { get; set; }
     public bool CanAttack { get; set; }
-    public string Image { get; init; }
+    public string Image { get; set; }
     public string TextColor { get; set; }
     public string Color { get; set; }
 
@@ -57,11 +57,6 @@ internal abstract class MinionEffectDecorator : IMinion
         this._minion.AttackHero(hero);
     }
 
-    public virtual void TriggerEffect()
-    {
-        this._minion.TriggerEffect();
-    }
-
     public virtual void Damage(int damage)
     {
         this._minion.Damage(damage);
@@ -85,5 +80,10 @@ internal abstract class MinionEffectDecorator : IMinion
     public void UnaliveSelf()
     {
         this._minion.UnaliveSelf();
+    }
+
+    public virtual void TriggerEffect(Player player, Player enemyPlayer, Board board)
+    {
+        this._minion.TriggerEffect(player, enemyPlayer, board);
     }
 }
