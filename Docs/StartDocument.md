@@ -40,7 +40,31 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 * Card game
 * 2D view point
 * Multiplayer mode only 
-* To start, it will require  **2 people**
+* To start, it will require **2 people**
+
+### Installation Guide
+
+.exe file containing the game will be provided alongside the GitHub link to the repository
+
+Step 1: Run an exe file. 
+Step 2: Start playing the game by following the `Play Guide`.
+
+### Playing Guide
+
+#### Phase 1
+1. User inputs the username that he would like to be represented with. Needs to be at least 2 characters and not match the other player's username.
+2. Player then needs to, choose a Hero, and then move on to complete his Playing deck. There is an option to select each card individually or by random. Press Finish to save the deck.
+3. Player needs to go back by pressing Select Hero. Then press Start game with the Username and LobbyCode not being empty.
+4. Player either joins an existing lobby, by inputting a lobby code, or creates a new one. 
+5. He then is moved to a lobby that is either empty (waiting for a new player), or already with exisiting enemy player.
+6. When 2 players are present in the lobby, the game is automatically started after 5 seconds.
+
+#### Phase 2
+1. The game is being played in Turns
+2. Player selects cards to be placed on the board
+3. The choice is between minions or spells. They can attack other minions or Hero.
+4. The player has a limited amount of mana to play the card, since each of them has their own cost.
+5. The game is concluded/won by depleting the another hero health to 0 or lost if your health reaches 0.
 
 ### Class Diagram
 
@@ -64,10 +88,6 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 ![Game](./Assets/Card_Craft_Board.png)
 
-## Input & Output
-
-*The section below is yet to be updated*
-
 ### MoSCoW Analysis
 
 |  Priority   |                                                      Task                                                      |
@@ -78,23 +98,18 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 |  Wont have  |                                                Player Chat<br/>                                                |
 
 
+## Input & Output
+
 ### Input
 
 |        Case         |   Type   | Conditions |
 |:-------------------:|:--------:|:----------:|
-| Example exampleName | `String` | not empty  |
+| String Name | `String` | not empty, more than 2 characters, cannot match other player's name |
+| String LobbyCode | `String` | not empty, more than 3 characters | 
 
 ### Output
 
-|  Case   |   Type   |
-|:-------:|:--------:|
-| Example | `String` |
-
-### Calculations
-
-|  Case   |    Calculation    |
-|:-------:|:-----------------:|
-| Example | `Example*Example` |
+There are no outputs except objects present in the game.
 
 ### Remarks
 
@@ -104,8 +119,15 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 ## Design Patterns used
 
-*To be updated*
+* Observer Pattern
+* Object Pool Pattern
+* Decorator Pattern
 
+## Threading used
 
+* Async
+* (Multi)Threading
+* Task
+* Lock 
 
 
