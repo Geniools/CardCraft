@@ -6,12 +6,12 @@ public class MiroCard : BaseMinion
         9,
         9,
         9,
-        "MiroCard",
+        "Miro",
         "I hate XAML",
         CardRarityEnum.EPIC,
         "mirocard.jpg"
     ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

@@ -11,7 +11,7 @@ public class CorvinCard : BaseMinion
     CardRarityEnum.COMMON,
     "corvincard.jpg"
     ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

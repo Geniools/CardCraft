@@ -1,4 +1,6 @@
-﻿namespace CardCraftShared.Cards.Spells;
+﻿using CardCraftShared.Core.Interfaces;
+
+namespace CardCraftShared.Cards.Spells;
 
 public class AlcoholismSpell : BaseSpell
 {
@@ -10,8 +12,14 @@ public class AlcoholismSpell : BaseSpell
         "alcoholismspell.jpg"
     ) { }
 
-    public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        foreach (IBaseCard card in player.Hand.Cards)
+        {
+            if (card is IMinion minion)
+            {
+                minion.Attack += 2;
+            }
+        }
     }
 }

@@ -24,7 +24,7 @@ public abstract class BaseMinion : IMinion
     public CardRarityEnum Rarity { get; init; }
     public string Name { get; init; }
     public string Description { get; set; }
-    public string Image { get; init; }
+    public string Image { get; set; }
     public bool CanAttack { get; set; }
 
     // Color and TextColor properties are used to determine the color of the card based on its rarity
@@ -58,7 +58,7 @@ public abstract class BaseMinion : IMinion
         Image = image;
     }
 
-    public abstract void TriggerEffect();
+    public abstract void TriggerEffect(Player player, Player enemyPlayer, Board board);
 
     public void AttackTarget(IAttackable target)
     {
@@ -84,7 +84,7 @@ public abstract class BaseMinion : IMinion
 
     public void AttackHero(BaseHero hero)
     {
-        hero.Health -= _attack;
+        hero.TakeDamage(_attack);
     }
 
     public void Damage(int damage)

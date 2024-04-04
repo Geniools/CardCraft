@@ -11,7 +11,7 @@ public class TeoCard : BaseMinion
         CardRarityEnum.COMMON, 
         "teocard2.jpg"
         ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

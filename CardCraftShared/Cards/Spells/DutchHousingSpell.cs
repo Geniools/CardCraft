@@ -1,13 +1,13 @@
 ﻿namespace CardCraftShared.Cards.Spells;
 
-public class GymSpell : BaseSpell
+public class DutchHousingSpell : BaseSpell
 {
-    public GymSpell() : base(
+    public DutchHousingSpell(): base(
         3,
-        "Gym",
-        "What am i doing today? Chest and back",
+        "Dutch housing",
+        "No sleep for you, hero takes 2 damage",
         CardRarityEnum.COMMON,
-        "gymspell.jpg"
+        "rentedroomspell.jpg"
     ) { }
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)

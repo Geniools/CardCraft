@@ -10,8 +10,11 @@ public class NiceArgumentSpell : BaseSpell
         "goodargumentspell2.jpg"
     ) { }
 
-    public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        if (board.EnemySide.Count > 0)
+        {
+            board.EnemySide.RemoveAt(0);
+        }
     }
 }

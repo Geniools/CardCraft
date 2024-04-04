@@ -11,7 +11,7 @@ public class ChrisCard : BaseMinion
         CardRarityEnum.EPIC,
         "chriscard.jpg"
     ) { }
-    public override void TriggerEffect()
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 }

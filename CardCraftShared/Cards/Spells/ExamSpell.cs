@@ -7,12 +7,12 @@ public class ExamSpell : BaseSpell
         "Exam",
         "Ay blayt",
         CardRarityEnum.COMMON,
-        "examspell.png"
+        "examspell.jpeg"
     )
     { }
 
-    public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        enemyPlayer.RemoveMana(2);
     }
 }
