@@ -12,6 +12,6 @@ public class LandlordVisitSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        enemyPlayer.RemoveMana(6);
     }
 }

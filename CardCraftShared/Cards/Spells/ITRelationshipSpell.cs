@@ -13,6 +13,6 @@ public class ITRelationshipSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        player.GiveHealth(2);
     }
 }

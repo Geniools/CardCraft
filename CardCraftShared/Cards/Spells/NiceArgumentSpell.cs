@@ -12,6 +12,9 @@ public class NiceArgumentSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        if (board.EnemySide.Count > 0)
+        {
+            board.EnemySide.RemoveAt(0);
+        }
     }
 }

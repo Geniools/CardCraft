@@ -12,6 +12,6 @@ public class IotLabSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        player.Mana += 2;
     }
 }

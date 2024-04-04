@@ -12,6 +12,6 @@ public class CorridorCoffeeSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        player.GiveMana(2);
     }
 }

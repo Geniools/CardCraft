@@ -12,6 +12,6 @@ public class LoremIpsumSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        player.GiveMana(1);
     }
 }

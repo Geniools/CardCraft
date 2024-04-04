@@ -3,7 +3,7 @@
 public interface IBaseCard
 {
     public int ManaCost { get; set; }
-    public string Image { get; init; }
+    public string Image { get; set; }
 
     public CardRarityEnum Rarity { get; init; }
 

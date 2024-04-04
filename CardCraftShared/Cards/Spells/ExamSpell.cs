@@ -13,6 +13,6 @@ public class ExamSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        enemyPlayer.RemoveMana(2);
     }
 }

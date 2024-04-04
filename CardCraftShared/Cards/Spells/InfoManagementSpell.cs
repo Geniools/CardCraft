@@ -1,4 +1,6 @@
-﻿namespace CardCraftShared.Cards.Spells;
+﻿using CardCraftShared.Core.Interfaces;
+
+namespace CardCraftShared.Cards.Spells;
 
 public class InfoManagementSpell : BaseSpell
 {
@@ -12,6 +14,12 @@ public class InfoManagementSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        foreach (IBaseCard card in enemyPlayer.Hand.Cards)
+        {
+            if (card is IMinion minion)
+            {
+                minion.Attack -= 2;
+            }
+        }
     }
 }

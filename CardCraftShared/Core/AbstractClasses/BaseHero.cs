@@ -61,4 +61,10 @@ public abstract class BaseHero : IAttackable
     {
         throw new NotImplementedException();
     }
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+    }
+
 }

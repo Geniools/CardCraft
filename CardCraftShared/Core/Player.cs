@@ -66,4 +66,19 @@ public class Player : ICloneable
             Mana = this.Mana
         };
     }
+
+    public void GiveHealth(int health)
+    {
+        Hero.Health += health;
+    }
+
+    public void GiveMana(int amount)
+    {
+        this.Mana += amount;
+    }
+
+    public void RemoveMana(int amount)
+    {
+        this.Mana -= amount;
+    }
 }

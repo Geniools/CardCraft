@@ -6,7 +6,7 @@ public abstract class BaseSpell : IBaseCard
     public CardRarityEnum Rarity { get; init; }
     public string Name { get; init; }
     public string Description { get; set; }
-    public string Image { get; init; }
+    public string Image { get; set; }
 
     // Color and TextColor properties are used to determine the color of the card based on its rarity
     public string Color => Rarity switch

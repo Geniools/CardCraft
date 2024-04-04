@@ -12,6 +12,6 @@ public class CodingBugSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        enemyPlayer.Hero.TakeDamage(1);
     }
 }

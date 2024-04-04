@@ -1,4 +1,6 @@
-﻿namespace CardCraftShared.Cards.Spells;
+﻿using CardCraftShared.Core.Interfaces;
+
+namespace CardCraftShared.Cards.Spells;
 
 public class AmogusSpell : BaseSpell
 {
@@ -13,6 +15,17 @@ public class AmogusSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        if (enemyPlayer.Hand.Cards.Count > 0)
+        {
+            Random random = new Random();
+            int randomIndex = random.Next(0, enemyPlayer.Hand.Cards.Count);
+
+            IBaseCard randomCard = enemyPlayer.Hand.Cards[randomIndex];
+            
+            if (randomCard is IMinion minion)
+            {
+                enemyPlayer.Hand.Remove(minion);
+            }
+        }
     }
 }
