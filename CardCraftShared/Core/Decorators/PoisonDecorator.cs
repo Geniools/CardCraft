@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CardCraftShared.Core.Interfaces;
+﻿using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared.Core.Decorators
 {
@@ -9,8 +6,7 @@ namespace CardCraftShared.Core.Decorators
     {
         public override void Damage(int damage)
         {
-            minion.Attack = 9000;
-            base.Damage(damage);
+            base.Damage(9000);
         }
     }
 }

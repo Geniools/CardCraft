@@ -1,14 +1,15 @@
 ﻿namespace CardCraftShared.Cards.Spells;
 
-public class DutchHousing : BaseSpell
+public class ExamSpell : BaseSpell
 {
-    public DutchHousing(): base(
+    public ExamSpell() : base(
         3,
-        "Dutch housing",
-        "No sleep for you, hero takes 2 damage",
+        "Exam",
+        "Ay blayt",
         CardRarityEnum.COMMON,
-        "rentedroomspell.jpg"
-    ) { }
+        "examspell.png"
+    )
+    { }
 
     public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
     {

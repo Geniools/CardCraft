@@ -1,13 +1,13 @@
 ﻿namespace CardCraftShared.Cards.Spells;
 
-public class GymSpell : BaseSpell
+public class ITRelationshipSpellUpgraded : BaseSpell
 {
-    public GymSpell() : base(
-        3,
-        "Gym",
-        "What am i doing today? Chest and back",
-        CardRarityEnum.COMMON,
-        "gymspell.jpg"
+    public ITRelationshipSpellUpgraded() : base(
+        6,
+        "IT Relationship",
+        "OI",
+        CardRarityEnum.RARE,
+        "itrelationshipspellupgraded.jpg"
     ) { }
 
     public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero,

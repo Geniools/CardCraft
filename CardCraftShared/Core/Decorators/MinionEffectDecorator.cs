@@ -57,14 +57,13 @@ internal abstract class MinionEffectDecorator : IMinion
         this._minion.Damage(damage);
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         this._minion.TakeDamage(damage);
     }
-    
-    protected virtual void DoSomethingForIBla()
-    {
-        
-    }
 
+    public virtual void AttackTarget(IAttackable target)
+    {
+        this._minion.AttackTarget(target);
+    }
 }

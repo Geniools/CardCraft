@@ -3,7 +3,7 @@
 public class CorridorCoffeeSpell : BaseSpell
 {
     public CorridorCoffeeSpell() : base(
-        3,
+        1,
         "Corridor Coffee",
         "Sanity Restored",
         CardRarityEnum.COMMON,

@@ -3,7 +3,7 @@
 public class PraySpell : BaseSpell
 {
     public PraySpell(): base(
-        3,
+        2,
         "Pray",
         "Lord give me strength",
         CardRarityEnum.COMMON,

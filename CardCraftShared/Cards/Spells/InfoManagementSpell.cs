@@ -3,10 +3,10 @@
 public class InfoManagementSpell : BaseSpell
 {
     public InfoManagementSpell() : base(
-        7,
+        6,
         "InfoManagement",
         "3ECs",
-        CardRarityEnum.COMMON,
+        CardRarityEnum.RARE,
         "infomanagementspell.jpeg"
     ) { }
 
