@@ -54,9 +54,6 @@
                     <Image
                         Source="{Binding Image}"
                     />
-                    <Label
-                        Text="{Binding Name}"
-                    />
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>

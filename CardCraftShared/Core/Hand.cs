@@ -27,6 +27,8 @@ public class Hand : ICardStatsManager
     {
         this.Cards.Clear();
 
+        Task.Delay(50).Wait();
+
         foreach (IBaseCard card in cards)
         {
             this.Cards.Add(card);

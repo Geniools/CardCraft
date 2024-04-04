@@ -11,6 +11,7 @@ namespace CardCraftClient.Model;
 
 public class GameManager : ISignalRObserver
 {
+    private object _lock = new();
     public const int TURN_TIME = 30;
     public int TurnTimer { get; set; }
 
@@ -191,7 +192,7 @@ public class GameManager : ISignalRObserver
         DeckPool deckPool = new();
         for (int i = 0; i < message.PlayerDeckCardAmount; i++)
         {
-            deckPool.AddCard(new JunkCard{Image = "deck.jpg"});
+            deckPool.AddCard(new JunkCard{Image = "deck.jpg", Name = "JunkCard" });
         }
         this.EnemyPlayer.Deck = deckPool;
 
@@ -199,8 +200,11 @@ public class GameManager : ISignalRObserver
         ObservableCollection<IBaseCard> updatedHandCards = new();
         for (int i = 0; i < message.PlayerHandCardAmount; i++)
         {
-            updatedHandCards.Add(new JunkCard { Image = "hand.jpg", Name = "JunkCard"});
+            updatedHandCards.Add(new JunkCard { Image = "deck.jpg", Name = "JunkCard"});
         }
+
+        Trace.WriteLine($"I was be updated with {updatedHandCards.Count} cards. Player: {this.CurrentPlayer.Name}");
+
         this.EnemyPlayer.Hand.Update(updatedHandCards);
     }
 

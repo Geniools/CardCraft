@@ -44,14 +44,14 @@ public partial class GamePageViewModel : BaseViewModel
         this.EnemyPlayer = gm.EnemyPlayer;
 
         // Subscribe to game manager events
-        gm.CurrentPlayer.Hand.Cards.CollectionChanged += (sender, e) =>
+        gm.CurrentPlayer.Hand.Cards.CollectionChanged += async (sender, e) =>
         {
             this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
             this.CurrentPlayerDeckCardCount = gm.CurrentPlayer.Deck.Cards.Count;
 
             // Make the message to be sent to the enemy player
             // Notify the server
-            this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
+            await this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
             {
                 HeroHealth = this.CurrentPlayerHeroHealth,
                 PlayerHandCardAmount = this.CurrentPlayerHand.Count,
@@ -61,14 +61,11 @@ public partial class GamePageViewModel : BaseViewModel
 
         gm.EnemyPlayer.Hand.Cards.CollectionChanged += (sender, e) =>
         {
-            Trace.WriteLine("ENEMY HAND UPDATED!");
             this.EnemyPlayerHand = gm.EnemyPlayer.Hand.Cards;
             this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
-
-            this.LogAvailableCollections();
         };
 
-        gm.Board.FriendlySide.CollectionChanged += (sender, e) =>
+        gm.Board.FriendlySide.CollectionChanged += async (sender, e) =>
         {
             this.CurrentPlayerBoard = gm.Board.FriendlySide;
         };
@@ -107,7 +104,7 @@ public partial class GamePageViewModel : BaseViewModel
     [RelayCommand]
     private async Task EndTurn()
     {
-
+        this.CurrentPlayer.DrawCard();
     }
 
     [RelayCommand]

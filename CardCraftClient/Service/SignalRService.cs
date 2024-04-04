@@ -28,7 +28,7 @@ public class SignalRService
         this.Player = new();
 
         this._hubConnection = new HubConnectionBuilder()
-            .WithUrl(CONNECTION_URL_LOCAL) // Change to CONNECTION_URL for the online server
+            .WithUrl(CONNECTION_URL) // Change to CONNECTION_URL for the online server
             .WithAutomaticReconnect()
             .ConfigureLogging(logging =>
             {
