@@ -3,12 +3,12 @@
 public class ChrisCard : BaseMinion
 {
     public ChrisCard(): base(
-        5,
-        5,
-        5,
+        9,
+        9,
+        9,
         "Chris",
         "Removes one card from the enemy board that is less than 5 mana",
-        CardRarityEnum.LEGENDARY,
+        CardRarityEnum.EPIC,
         "chriscard.jpg"
     ) { }
 }

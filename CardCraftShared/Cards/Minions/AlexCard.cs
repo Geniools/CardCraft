@@ -4,11 +4,11 @@ namespace CardCraftShared.Cards.Minions;
 public class AlexCard : BaseMinion
 {
     public AlexCard() : base(
-        8,
-        8,
-        8,
+        10,
+        10,
+        10,
         "Alex", 
-        "Alex is a strong minion",
+        "Solo army",
         CardRarityEnum.LEGENDARY, 
         "alexcard.jpg"
         ) { }

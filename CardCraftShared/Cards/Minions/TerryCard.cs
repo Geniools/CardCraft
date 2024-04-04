@@ -6,7 +6,7 @@ public class TerryCard : BaseMinion
     public TerryCard():base(
         3,
         3,
-        6,
+        5,
         "Terry",
         "50% chance of attacking a random character",
         CardRarityEnum.COMMON,

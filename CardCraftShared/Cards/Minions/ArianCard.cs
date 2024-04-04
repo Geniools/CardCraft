@@ -3,9 +3,9 @@
 public class ArianCard : BaseMinion
 {
     public ArianCard() : base(
-        8,
-        8,
-        8,
+        3,
+        2,
+        1,
         "Arian",
         "OI",
         CardRarityEnum.COMMON,

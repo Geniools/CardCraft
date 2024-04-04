@@ -3,12 +3,12 @@
 public class JadynCard : BaseMinion
 {
     public JadynCard() : base(
-        8,
-        8,
-        8,
+        4,
+        4,
+        5,
         "Jadyn",
         "Ticklish af",
-        CardRarityEnum.EPIC,
+        CardRarityEnum.COMMON,
         "jadyncard.jpg"
     ) { }
 }

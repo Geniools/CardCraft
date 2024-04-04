@@ -3,12 +3,12 @@
 public class EvaldCard : BaseMinion
 {
     public EvaldCard() : base(
-        5, 
-        5,
-        5, 
+        4, 
+        3,
+        4, 
         "Evald",
         "Evald is a very powerful card",
-        CardRarityEnum.RARE, 
+        CardRarityEnum.COMMON, 
         "evaldcard.jpg"
         ) { }
 }

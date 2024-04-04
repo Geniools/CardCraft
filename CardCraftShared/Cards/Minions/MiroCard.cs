@@ -3,12 +3,12 @@
 public class MiroCard : BaseMinion
 {
     public MiroCard() : base(
-        7,
-        7,
-        7,
+        9,
+        9,
+        9,
         "MiroCard",
         "I hate XAML",
-        CardRarityEnum.LEGENDARY,
+        CardRarityEnum.EPIC,
         "mirocard.jpg"
     ) { }
 }

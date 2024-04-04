@@ -14,8 +14,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Heroes\MiroHero.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AndreiCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\ArianCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\BakiTeoCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\BuffJadynCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\ChrisCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\CorvinCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\CrackedUpMathewCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\DimitriCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\EvaldCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\JadynCard.cs" />
@@ -23,6 +26,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\MiroCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\NathanCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\RobCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\SecurityGuyCard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\TeacherCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\TeoCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\TerryCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\WomanCard.cs" />

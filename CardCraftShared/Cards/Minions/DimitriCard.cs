@@ -3,11 +3,11 @@
 public class DimitriCard : BaseMinion
 {
     public DimitriCard() : base(
-        4,
-        3,
-        4,
+        5,
+        5,
+        7,
         "Dimitri",
-        "Guesses your location 5 seconds",
+        "Guesses your location 2 seconds",
         CardRarityEnum.RARE,
         "dimitricard.jpg"
     ) { }
