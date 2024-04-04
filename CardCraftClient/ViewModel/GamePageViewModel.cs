@@ -14,6 +14,7 @@ public partial class GamePageViewModel : BaseViewModel
     private SignalRService _signalRService;
 
     [ObservableProperty] private int _timer;
+    [ObservableProperty] private string _statusMessage;
 
     // Current Player
     [ObservableProperty] private int _availableMana;
@@ -98,13 +99,37 @@ public partial class GamePageViewModel : BaseViewModel
             PlayerDeckCardAmount = this.CurrentPlayerDeckCardCount
         });
 
+        gm.OnTurnTimerChanged += async (int newTimer) =>
+        {
+            this.Timer = newTimer;
+        };
+
+        gm.OnCurrentTurnChanged += async (bool isCurrentTurn) =>
+        {
+            Trace.WriteLine($"TURN CHANGED: {isCurrentTurn}. PLAYER: {this._signalRService.Player.Name}");
+            if (isCurrentTurn)
+            {
+                this.StatusMessage = "Your Turn";
+            }
+            else
+            {
+                this.StatusMessage = "Enemy Turn";
+            }
+        };
+
         this.Timer = gm.TurnTimer;
+        this.StatusMessage = gm.IsCurrentTurn ? "Your Turn" : "Enemy Turn";
+
+        if (gm.IsCurrentTurn)
+        {
+            _ = gm.NextTurn();
+        }
     }
 
     [RelayCommand]
     private async Task EndTurn()
     {
-        this.CurrentPlayer.DrawCard();
+        await this._gameManager.EndTurn();
     }
 
     [RelayCommand]

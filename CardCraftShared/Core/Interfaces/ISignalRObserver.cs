@@ -9,4 +9,5 @@ public interface ISignalRObserver
     public Task OnGameEnded();
     public Task OnCardPlayed(IBaseCard card);
     public Task OnEnemyPlayerUpdated(EnemyPlayerUpdateMessage message);
+    public Task OnTurnStarted(bool isFirstTurn);
 }

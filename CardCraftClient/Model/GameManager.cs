@@ -12,8 +12,36 @@ namespace CardCraftClient.Model;
 public class GameManager : ISignalRObserver
 {
     private object _lock = new();
-    public const int TURN_TIME = 30;
-    public int TurnTimer { get; set; }
+    public const int DEFAULT_TURN_TIME = 30;
+
+    private int _turnTimer;
+    public int TurnTimer
+    {
+        get => this._turnTimer;
+        set
+        {
+            if (value >= 0)
+            {
+                this._turnTimer = value;
+                this.OnTurnTimerChanged?.Invoke(this._turnTimer);
+            }
+        }
+    }
+    public Action<int> OnTurnTimerChanged;
+
+    private bool _isCurrentTurn;
+
+    public bool IsCurrentTurn
+    {
+        get => this._isCurrentTurn;
+        set
+        {
+            this._isCurrentTurn = value;
+            
+            this.OnCurrentTurnChanged?.Invoke(this._isCurrentTurn);
+        }
+    }
+    public Action<bool> OnCurrentTurnChanged;
 
     private bool _isGameStarted;
     public bool IsGameStarted
@@ -66,7 +94,6 @@ public class GameManager : ISignalRObserver
         }
     }
     public Action<Player?>? EnemyPlayerChanged;
-    public Action OnEnemyPlayerChanged;
 
     // Game elements
     public Board Board { get; set; }
@@ -82,38 +109,6 @@ public class GameManager : ISignalRObserver
         this.Reset();
     }
 
-    public async Task NextTurn()
-    {
-        // Start the timer
-        this.StartTurnTimer();
-
-        // Draw a card
-        this.CurrentPlayer?.DrawCard();
-
-        // Increase the mana
-        this.CurrentPlayer?.IncreaseMana();
-    }
-
-    private async Task StartTurnTimer()
-    {
-        this.TurnTimer = TURN_TIME;
-
-        while (this.TurnTimer > 0)
-        {
-            await Task.Delay(1000);
-            this.TurnTimer--;
-        }
-
-        // End the turn
-        await this.EndTurn();
-    }
-
-    private async Task EndTurn()
-    {
-        // TODO: Disable the buttons and selections
-        // TODO: Send the end turn signal to the server
-    }
-
     public async Task EndGame()
     {
         // Reset the players
@@ -121,7 +116,7 @@ public class GameManager : ISignalRObserver
 
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            Shell.Current.GoToAsync($"///{nameof(StartPage)}");
+            await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
         });
 
         // Will notify the server to remove the current player from the game online (so the player can connect to other games without issues)
@@ -173,6 +168,9 @@ public class GameManager : ISignalRObserver
     {
         // Reset the game state
         this.IsGameStarted = false;
+        // Reset the turn timer
+        this.TurnTimer = 30;
+        this.IsCurrentTurn = false;
         // Reset the players
         this.CurrentPlayer = null;
         this.EnemyPlayer = null;
@@ -182,6 +180,56 @@ public class GameManager : ISignalRObserver
         this.Graveyard = new();
 
         return Task.CompletedTask;
+    }
+
+    private async Task StartTurnTimer()
+    {
+        this.TurnTimer = DEFAULT_TURN_TIME;
+
+        while (this.TurnTimer > 0)
+        {
+            await Task.Delay(1000);
+            this.TurnTimer--;
+        }
+    }
+
+    public async Task NextTurn()
+    {
+        // Draw a card
+        this.CurrentPlayer?.DrawCard();
+
+        // Increase the mana
+        this.CurrentPlayer?.IncreaseMana();
+
+        Trace.WriteLine($"Starting Turn Timer! PLAYER: {this._signalRService.Player.Name}");
+        // Start the timer
+        await this.StartTurnTimer();
+
+        // After the timer ends, the turn will be ended
+        await this.EndTurn();
+    }
+
+    public async Task OnTurnStarted(bool isFirstTurn)
+    {
+        Trace.WriteLine($"Is first turn: {isFirstTurn}. Player Start Turn: {this._signalRService.Player.Name}");
+        this.IsCurrentTurn = true;
+
+        if (!isFirstTurn)
+        {
+            await NextTurn();
+        }
+    }
+
+    public async Task EndTurn()
+    {
+        this.IsCurrentTurn = false;
+
+        // Reset the timer
+        this.TurnTimer = DEFAULT_TURN_TIME;
+
+        Trace.WriteLine($"Turn ended! PLAYER: {this._signalRService.Player.Name}");
+        // Send the end turn signal to the server
+        await this._signalRService.SendEndTurn();
     }
 
     public async Task OnEnemyPlayerUpdated(EnemyPlayerUpdateMessage message)
@@ -202,8 +250,6 @@ public class GameManager : ISignalRObserver
         {
             updatedHandCards.Add(new JunkCard { Image = "deck.jpg", Name = "JunkCard"});
         }
-
-        Trace.WriteLine($"I was be updated with {updatedHandCards.Count} cards. Player: {this.CurrentPlayer.Name}");
 
         this.EnemyPlayer.Hand.Update(updatedHandCards);
     }
@@ -230,15 +276,7 @@ public class GameManager : ISignalRObserver
         this.IsGameStarted = true;
 
         // Check if the current player is instantiated, otherwise, try waiting for 3 times, then end the game
-        for (int i = 0; i < 3; i++)
-        {
-            if (this.CurrentPlayer is not null)
-            {
-                break;
-            }
-
-            await Task.Delay(1000);
-        }
+        await this.CheckCurrentPlayer();
 
         if (this.CurrentPlayer is null)
         {
@@ -246,6 +284,9 @@ public class GameManager : ISignalRObserver
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 this.IsGameStarted = false;
+
+                this.CurrentPlayer = null;
+                this.EnemyPlayer = null;
                 await Shell.Current.DisplayAlert("Error", "Could not start the game! Try again!", "Ok");
             });
             return;
@@ -259,7 +300,21 @@ public class GameManager : ISignalRObserver
             this.CurrentPlayer.DrawCard();
         }
 
-        // TODO: Inform the server to choose a player to start the turn
+        // Inform the server to choose a player to start the turn
+        await this._signalRService.SendPickRandomPlayerToStartTurn();
+    }
+
+    private async Task CheckCurrentPlayer()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (this.CurrentPlayer is not null)
+            {
+                break;
+            }
+
+            await Task.Delay(1000);
+        }
     }
 
     public void OnCardUnalive(object sender, EventArgs e)
