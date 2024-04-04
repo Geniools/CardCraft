@@ -1,5 +1,4 @@
-﻿using Android.Icu.Text;
-using CardCraftShared;
+﻿using CardCraftShared;
 using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Cards.Spells;
