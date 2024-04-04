@@ -4,11 +4,11 @@ public class MathewCard : BaseMinion
 {
     public MathewCard(): base(
         3,
-        7,
+        5,
         6,
         "Mathew",
         "Biertje?",
-        CardRarityEnum.RARE,
+        CardRarityEnum.COMMON,
         "mathewcard.jpg"
     ) { }
 }

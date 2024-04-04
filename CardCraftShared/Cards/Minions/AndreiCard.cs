@@ -5,10 +5,10 @@ public class AndreiCard : BaseMinion
     public AndreiCard() : base(
         5, 
         5,
-        5, 
+        4, 
         "Andrei",
-        "Andrei is a very powerful card",
-        CardRarityEnum.EPIC, 
+        "Guiness Forever",
+        CardRarityEnum.COMMON, 
         "andreicard.jpg"
         ) { }
 }

@@ -3,12 +3,12 @@
 public class RobCard : BaseMinion
 {
     public RobCard() : base(
-        8,
-        8,
-        8,
+        5,
+        5,
+        4,
         "Rob",
-        "Rob is a strong minion",
-        CardRarityEnum.LEGENDARY,
+        "Car + Lamp = Love",
+        CardRarityEnum.COMMON,
         "robcard.jpg"
     ) { }
 }

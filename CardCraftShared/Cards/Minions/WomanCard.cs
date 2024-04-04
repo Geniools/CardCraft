@@ -8,7 +8,7 @@ public class WomanCard : BaseMinion
         7,
         "A Woman",
         "Enemy hero cannot play any card this round",
-        CardRarityEnum.RARE,
+        CardRarityEnum.EPIC,
         "womancard.png"
     ) { }
 

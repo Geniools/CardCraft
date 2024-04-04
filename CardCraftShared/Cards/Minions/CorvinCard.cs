@@ -3,12 +3,12 @@
 public class CorvinCard : BaseMinion
 {
     public CorvinCard() : base(
-    8,
-    8,
-    8,
+    4,
+    4,
+    4,
     "Corvin",
-    "Corvin is a strong minion",
-    CardRarityEnum.RARE,
+    "German power!",
+    CardRarityEnum.COMMON,
     "corvincard.jpg"
     ) { }
 }

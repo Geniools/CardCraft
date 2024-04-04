@@ -4,7 +4,7 @@ public class NathanCard : BaseMinion
 {
     public NathanCard(): base(
         3,
-        2,
+        3,
         2,
         "Nathan",
         "Its big brain time",
