@@ -11,4 +11,7 @@ public class DimitriCard : BaseMinion
         CardRarityEnum.RARE,
         "dimitricard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

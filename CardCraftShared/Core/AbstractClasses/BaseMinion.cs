@@ -2,10 +2,12 @@
 
 namespace CardCraftShared;
 
-public abstract class BaseMinion : IMinion, IAttackable
+public abstract class BaseMinion : IMinion
 {
     private int _health;
     private int _attack;
+
+    public event EventHandler OnDeath;
 
     public int Attack
     {
@@ -21,7 +23,7 @@ public abstract class BaseMinion : IMinion, IAttackable
     public int ManaCost { get ; set; }
     public CardRarityEnum Rarity { get; init; }
     public string Name { get; init; }
-    public string Description { get; init; }
+    public string Description { get; set; }
     public string Image { get; init; }
     public bool CanAttack { get; set; }
 
@@ -56,10 +58,7 @@ public abstract class BaseMinion : IMinion, IAttackable
         Image = image;
     }
 
-    public void TriggerEffect()
-    {
-        throw new NotImplementedException();
-    }
+    public abstract void TriggerEffect();
 
     public void AttackTarget(IAttackable target)
     {
@@ -96,5 +95,10 @@ public abstract class BaseMinion : IMinion, IAttackable
     public void TakeDamage(int damage)
     {
         _health -= damage;
+    }
+
+    public void UnaliveSelf()
+    {
+        OnDeath?.Invoke(this, EventArgs.Empty);
     }
 }

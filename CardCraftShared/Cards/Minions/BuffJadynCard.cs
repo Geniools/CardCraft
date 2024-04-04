@@ -11,4 +11,7 @@ public class BuffJadynCard : BaseMinion
         CardRarityEnum.RARE,
         "buffedjadyncard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

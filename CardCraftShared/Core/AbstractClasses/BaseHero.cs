@@ -2,6 +2,7 @@
 using CardCraftShared.Core.Other;
 
 namespace CardCraftShared;
+
 public abstract class BaseHero : IAttackable
 {
     protected const int DefaultHealth = 30;

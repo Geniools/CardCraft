@@ -11,4 +11,7 @@ public class TeacherCard : BaseMinion
         CardRarityEnum.EPIC,
         "teachercard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

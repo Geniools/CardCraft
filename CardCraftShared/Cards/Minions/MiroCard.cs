@@ -11,4 +11,7 @@ public class MiroCard : BaseMinion
         CardRarityEnum.EPIC,
         "mirocard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

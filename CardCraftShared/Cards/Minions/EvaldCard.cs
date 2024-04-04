@@ -11,4 +11,7 @@ public class EvaldCard : BaseMinion
         CardRarityEnum.COMMON, 
         "evaldcard.jpg"
         ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

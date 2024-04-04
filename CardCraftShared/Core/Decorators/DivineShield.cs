@@ -17,4 +17,8 @@ internal class DivineShield(IMinion minion) : MinionEffectDecorator(minion)
             base.TakeDamage(damage);
         }
     }
+    public override string UpdateDescription(string description)
+    {
+        return base.UpdateDescription("Divine Shield");
+    }
 }

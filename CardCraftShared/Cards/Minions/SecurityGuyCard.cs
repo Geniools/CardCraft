@@ -11,4 +11,7 @@ public class SecurityGuyCard : BaseMinion
         CardRarityEnum.RARE,
         "securityguycard.jpg"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 }

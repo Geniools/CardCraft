@@ -11,5 +11,8 @@ public class WomanCard : BaseMinion
         CardRarityEnum.EPIC,
         "womancard.png"
     ) { }
+    public override void TriggerEffect()
+    {
+    }
 
 }

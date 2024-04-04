@@ -3,7 +3,7 @@ using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
-public class Board : ICardStatsManager
+public class Board
 {
     public ObservableCollection<IBaseCard> FriendlySide { get; set; }
     public ObservableCollection<IBaseCard> EnemySide { get; set; }
@@ -25,28 +25,13 @@ public class Board : ICardStatsManager
         this.EnemySide.Add(card);
     }
 
-    public void KillMinion(IBaseCard minion)
+    public void RemoveMinionFriendlySide(IBaseCard card)
     {
-        throw new NotImplementedException();
+        this.FriendlySide.Remove(card);
     }
 
-    public void DamageAllMinions(int damage)
+    public void RemoveMinionEnemySide(IBaseCard card)
     {
-        throw new NotImplementedException();
-    }
-
-    public void HealAllMinions(int heal)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DamageMinion(IBaseCard minion, int damage)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HealMinion(IBaseCard minion, int heal)
-    {
-        throw new NotImplementedException();
+        this.EnemySide.Remove(card);
     }
 }
