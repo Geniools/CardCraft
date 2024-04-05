@@ -49,14 +49,14 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 Step 1: Run an exe file. 
 Step 2: Start playing the game by following the `Play Guide`.
 
-### Playing Guide
+### Play Guide
 
 #### Phase 1
 1. User inputs the username that he would like to be represented with. Needs to be at least 2 characters and not match the other player's username.
 2. Player then needs to, choose a Hero, and then move on to complete his Playing deck. There is an option to select each card individually or by random. Press Finish to save the deck.
 3. Player needs to go back by pressing Select Hero. Then press Start game with the Username and LobbyCode not being empty.
 4. Player either joins an existing lobby, by inputting a lobby code, or creates a new one. 
-5. He then is moved to a lobby that is either empty (waiting for a new player), or already with exisiting enemy player.
+5. He then is moved to a lobby that is either empty (waiting for a new player), or already with existing enemy player.
 6. When 2 players are present in the lobby, the game is automatically started after 5 seconds.
 
 #### Phase 2
@@ -98,18 +98,33 @@ Step 2: Start playing the game by following the `Play Guide`.
 |  Wont have  |                                                Player Chat<br/>                                                |
 
 
-## Input & Output
+# Technical details
+This chapter will describe what are the technical specifications of this application, what was used and why.
+
+
+### * Using .NET MAUI Framework
+### * Using .NET version 8.0.0
+### * SignalR Server
 
 ### Input
 
-|        Case         |   Type   | Conditions |
-|:-------------------:|:--------:|:----------:|
-| String Name | `String` | not empty, more than 2 characters, cannot match other player's name |
-| String LobbyCode | `String` | not empty, more than 3 characters | 
+|       Case       |   Type   |                              Conditions                              |
+|:----------------:|:--------:|:--------------------------------------------------------------------:|
+|   String Name    | `String` | not empty, more than 2 characters, cannot match other player's name  |
+| String LobbyCode | `String` |                  not empty, more than 3 characters                   | 
 
 ### Output
 
-There are no outputs except objects present in the game.
+|       Case       |   Type   |                  Conditions                   |
+|:----------------:|:--------:|:---------------------------------------------:|
+|  Player Player1  | `Player` | If opponent's health reaches 0 first, you win |
+ 
+
+### Calculations 
+
+1. Determining a winner: If(Player1Hero Health = 0 ){ Player2Hero wins} elseif( Player2Hero Health = 0) {Player1Hero wins}
+2. Cards attacking: Cards can attack each other, reducing the enemy's card health by the amount of attack points assigned to that card.
+3. Mana Deduction: Cards and spells deduct their assigned (cost) Mana points from the available to the player pool (of mana). 
 
 ### Remarks
 
@@ -117,17 +132,67 @@ There are no outputs except objects present in the game.
 * Players with the same username cannot connect
 * Lobby can be created only once with the same code
 
-## Design Patterns used
+### Design Patterns used
 
-* Observer Pattern
-* Object Pool Pattern
-* Decorator Pattern
+* Observer Pattern - This patterns lets you notify objects, when a certain event occurs. In this project, the Game Manager is the subscriber, that gets informed about all the events so that it can update necessary methods. The SignalR server is the place that holds all the observers in a list. ISignalRObserver class is the publisher <br> <br>
+* Object Pool Pattern - Lets you reuse instances of classes and avoid instantiating them again. <br><br>
+* Decorator Pattern - This pattern was used to make the game expandable and flexible. Having this allows us to build on top of the base card by adding new funcitonalities etc.
 
-## Threading used
+### Threading used
 
-* Async
-* (Multi)Threading
-* Task
-* Lock 
+* Async - For server responses and methods. Allows background processes to continue functioning without slowing down or being stopped by methods.<br><br>
+* (Multi)Threading - Helps making the game run few processes/threads simultanously and the keep the GUI responsive.<br><br>
+* Task - For working with async inputs and outputs, managing concurrent actions and executing mutliple tasks.<br><br>
+* Lock - Locks an object that is used in the thread so that the other thread does not use it. Used in adding and removing cards to the deck. Present in few methods in DeckPageViewModel class.
 
+### Cards Spreadsheet
+
+#### *Cards*
+|       Name       |   Rarity    | ManaCost | Attack | Health |
+|:----------------:|:-----------:|:--------:|:------:|:-----:|
+|       Alex       | `LEGENDARY` |    10    |   10   |   10  |
+|       Miro       |   `EPIC`    |    9     |   9    |   9   | 
+|     Krystian     |   `EPIC`    |    9     |   9    |   9   |
+|      Evald       |  `COMMON`   |    2     |   3    |   4   |
+|      Mathew      |  `COMMON`   |    6     |   5    |   3   |
+|      Corvin      |  `COMMON`   |    4     |   4    |   4   |
+|     Dimitri      |   `RARE`    |    7     |   5    |   5   |
+|      Andrei      |  `COMMON`   |    5     |   5    |   5   |
+|       Rob        |  `COMMON`   |    4     |   5    |   5   |
+|      Jadyn       |  `COMMON`   |    5     |   4    |   4   |
+|      Nathan      |  `COMMON`   |    2     |   3    |   3   |
+|      Terry       |  `COMMON`   |    5     |   3    |   3   |
+|       Teo        |  `COMMON`   |    5     |   5    |   3   |
+|      Arian       |  `COMMON`   |    1     |   2    |   3   |
+|      Woman       |   `EPIC`    |    8     |   7    |   7   |
+|     Teacher      |   `EPIC`    |    8     |   8    |   8   |
+|   Security Guy   |    `RARE`    |    6     |   6    |   4   |
+|    Buff Jadyn    |     `RARE`        |  7       |   7    |   6   |
+| CrackedUp Mathew |      `RARE`       |    8     |  8     |   4   |
+|     BakiTeo      |     `RARE`        |    9     |   8    |  7    |
+
+
+#### *Spells*
+|           Name           |   Rarity    | ManaCost |                        Description                        |
+|:------------------------:|:-----------:|:--------:|:---------------------------------------------------------:|
+|          Resit           |   `EPIC`    |    7     |    Remove 2 Health from each minion in enemy Hero hand    |
+|           Exam           |  `COMMON`   |    3     |           Remove 2 Mana points from enemy Hero            | 
+|     Corridor Coffee      |  `COMMON`   |    1     |                  Adds 2 Mana to the Hero                  |
+|  Information Management  |   `RARE`    |    6     |   Remove 2 Attack points from each minion in enemy Hand   |
+|        Coding Bug        |  `COMMON`   |    1     |                Deal 1 damage to enemy Hero                |
+|      Dutch housing       |  `COMMON`   |    3     |                Deal 2 damage to enemy Hero                |
+|      Landlord visit      |   `EPIC`    |    8     |               Remove 6 Mana from enemy Hero               |
+|           773            | `LEGENDARY` |    10    |                Deal 8 damage to enemy Hero                |
+|     6.1 Projec Resit     |  `COMMON`   |    4     |               Remove 2 Mana from enemy Hero               |
+|      Nice Argument       |   `EPIC`    |    8     |         Remove 1 enemy minion Card from the Board         |
+|        Alcoholism        |   `RARE`    |    6     |    Give 2 Attack points to each minion in player hand     |
+|     IT Relationship      |  `COMMON`   |    3     |                   Give 2 Health to Hero                   |
+|          Tated           |   `EPIC`    |    9     | Tates 1 enemy minion, change their health and attack to 1 |
+|     Belastindgienst      |   `RARE`    |    5     |                Deal 4 Damage to enemy Hero                |
+|           Pray           |  `COMMON`   |    2     |             Add 1 health point to Player/Hero             |
+|           Gym            |  `COMMON`   |    3     |                Deal 2 damage to enemy Hero                |
+|          Amogus          |   `RARE`    |    5     |           Remove 1 minion from enemy Hero hand            |
+|       Lorem Ipsum        |  `COMMON`   |    2     |                    Give 1 Mana to Hero                    |
+| IT Relationship Upgraded |   `RARE`    |    6     |                   Give 4 Health to Hero                   |
+|         IoT Lab          |  `COMMON`   |    3     |                    Give 2 Mana to Hero                    |
 
