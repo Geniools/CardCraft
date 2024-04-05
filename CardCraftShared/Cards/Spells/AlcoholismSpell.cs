@@ -7,7 +7,7 @@ public class AlcoholismSpell : BaseSpell
     public AlcoholismSpell() : base(
         6,
         "Alcoholism",
-        "Casual Tuesday, gain 2 health",
+        "Give 2 Attack points to each minion in player hand",
         CardRarityEnum.RARE,
         "alcoholismspell.jpg"
     ) { }

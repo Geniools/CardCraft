@@ -5,7 +5,7 @@ public class ITRelationshipSpellUpgraded : BaseSpell
     public ITRelationshipSpellUpgraded() : base(
         6,
         "IT Relationship",
-        "OI",
+        "Give 4 Health to Hero",
         CardRarityEnum.RARE,
         "itrelationshipspellupgraded.jpg"
     ) { }

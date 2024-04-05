@@ -177,7 +177,7 @@ This chapter will describe what are the technical specifications of this applica
 |:------------------------:|:-----------:|:--------:|:---------------------------------------------------------:|
 |          Resit           |   `EPIC`    |    7     |    Remove 2 Health from each minion in enemy Hero hand    |
 |           Exam           |  `COMMON`   |    3     |           Remove 2 Mana points from enemy Hero            | 
-|     Corridor Coffee      |  `COMMON`   |    1     |                  Adds 2 Mana to the Hero                  |
+|     Corridor Coffee      |  `COMMON`   |    0     |                  Adds 2 Mana to the Hero                  |
 |  Information Management  |   `RARE`    |    6     |   Remove 2 Attack points from each minion in enemy Hand   |
 |        Coding Bug        |  `COMMON`   |    1     |                Deal 1 damage to enemy Hero                |
 |      Dutch housing       |  `COMMON`   |    3     |                Deal 2 damage to enemy Hero                |
@@ -192,7 +192,7 @@ This chapter will describe what are the technical specifications of this applica
 |           Pray           |  `COMMON`   |    2     |             Add 1 health point to Player/Hero             |
 |           Gym            |  `COMMON`   |    3     |                Deal 2 damage to enemy Hero                |
 |          Amogus          |   `RARE`    |    5     |           Remove 1 minion from enemy Hero hand            |
-|       Lorem Ipsum        |  `COMMON`   |    2     |                    Give 1 Mana to Hero                    |
+|       Lorem Ipsum        |  `COMMON`   |    0     |                    Give 1 Mana to Hero                    |
 | IT Relationship Upgraded |   `RARE`    |    6     |                   Give 4 Health to Hero                   |
-|         IoT Lab          |  `COMMON`   |    3     |                    Give 2 Mana to Hero                    |
+|         IoT Lab          |  `COMMON`   |    0     |                    Give 2 Mana to Hero                    |
 

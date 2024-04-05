@@ -5,7 +5,7 @@ public class DutchHousingSpell : BaseSpell
     public DutchHousingSpell(): base(
         3,
         "Dutch housing",
-        "No sleep for you, hero takes 2 damage",
+        "Deal 2 damage to enemy Hero",
         CardRarityEnum.COMMON,
         "rentedroomspell.jpg"
     ) { }

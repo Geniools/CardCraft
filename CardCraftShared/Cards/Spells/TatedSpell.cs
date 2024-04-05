@@ -8,7 +8,7 @@ public class TatedSpell : BaseSpell
     (
         9,
         "Tated",
-        "You have been 'Tated'! Don't leave your laptop open!",
+        "Tates 1 enemy minion, change their health and attack to 1",
         CardRarityEnum.EPIC,
         "tatedspell.jpg"
     ) { }

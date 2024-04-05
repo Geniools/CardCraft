@@ -4,8 +4,8 @@ public class NiceArgumentSpell : BaseSpell
 {
     public NiceArgumentSpell() : base(
         8,
-        "Nice Argument...",
-        "... However",
+        "Nice Argument",
+        "Remove 1 enemy minion Card from the Board",
         CardRarityEnum.EPIC,
         "goodargumentspell2.jpg"
     ) { }

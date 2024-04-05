@@ -3,9 +3,9 @@
 public class IotLabSpell : BaseSpell
 {
     public IotLabSpell() : base(
-        3,
+        0,
         "IoT Lab",
-        "Increased productivity, 2 extra mana to the hero",
+        "Give 2 Mana to Hero",
         CardRarityEnum.COMMON,
         "iotlabspell.jpg"
     ) { }

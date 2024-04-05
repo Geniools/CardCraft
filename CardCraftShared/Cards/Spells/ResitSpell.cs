@@ -6,8 +6,8 @@ public class ResitSpell : BaseSpell
 {
     public ResitSpell() : base(
         7,
-        "Resit", 
-        "Resit is a spell that destroys a student's sanity.", 
+        "Resit",
+        "Remove 2 Health from each minion in enemy Hero hand", 
         CardRarityEnum.EPIC,
         "resitspell.jpeg") { }
 
