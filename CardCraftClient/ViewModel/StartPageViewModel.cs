@@ -1,4 +1,5 @@
 ﻿using CardCraftClient.Service;
+using CardCraftClient.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -85,6 +86,13 @@ public partial class StartPageViewModel : BaseViewModel
             errorMessage += "Lobby code must only contain numbers or letters!\n";
         }
 
+        // Check for the player to have selected a hero
+        if (this._signalRService.Player.Hero is null)
+        {
+            isValid = false;
+            errorMessage = "Select a hero first!\n";
+        }
+
         if (!isValid)
         {
             this.IsBusy = false;
@@ -98,5 +106,11 @@ public partial class StartPageViewModel : BaseViewModel
         await this._signalRService.JoinGame(this.LobbyCode, this.Username);
 
         this.IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task ChooseHero()
+    {
+        await Shell.Current.GoToAsync(nameof(HeroPage));
     }
 }

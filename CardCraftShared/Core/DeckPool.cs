@@ -2,14 +2,22 @@
 
 namespace CardCraftShared;
 
-public class DeckPool : ICardStatsManager
+public class DeckPool
 {
+    public const int MAX_AMOUNT_CARDS = 30;
+
     public Queue<IBaseCard> Cards { get; set; }
-    public int MaxCards = 30;
 
     public DeckPool()
     {
         this.Cards = [];
+        this.Cards = new();
+    }
+
+    public DeckPool(IList<IBaseCard> cards)
+    {
+        if (cards.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
+        this.Cards = new(cards);
     }
     
     public void Shuffle()
@@ -22,8 +30,8 @@ public class DeckPool : ICardStatsManager
     public IBaseCard DrawCard() 
     {
         if (IsEmpty()) throw new Exception("Deck is empty");
-        var card = Cards.Dequeue();
-        return card;
+
+        return Cards.Dequeue();
     }
     
     public void AddCard(IBaseCard card)
@@ -38,26 +46,15 @@ public class DeckPool : ICardStatsManager
     
     public bool IsFull()
     {
-        return Cards.Count == MaxCards;
+        return Cards.Count >= MAX_AMOUNT_CARDS;
     }
 
-    public void DamageAllMinions(int damage)
+    public void AddDeck(IList<IBaseCard> deck)
     {
-        throw new NotImplementedException();
-    }
-
-    public void HealAllMinions(int heal)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DamageMinion(IBaseCard minion, int damage)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HealMinion(IBaseCard minion, int heal)
-    {
-        throw new NotImplementedException();
+        if (deck.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
+        foreach (var card in deck)
+        {
+            AddCard(card);
+        }
     }
 }

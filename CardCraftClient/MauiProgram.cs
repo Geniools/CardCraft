@@ -20,12 +20,15 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("CutOutsFLF.ttf", "CutOutsFLF");
+                fonts.AddFont("Progress.ttf", "Progress");
             })
             .Logging
             .AddDebug()
             .Services
             .RegisterViews()
             .RegisterViewModels()
+            .AddSingleton<GameComponentsRegistration>()
             .AddSingleton<GameManager>()
             .AddSingleton<SignalRService>();
         

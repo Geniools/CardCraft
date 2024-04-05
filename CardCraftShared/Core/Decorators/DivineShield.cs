@@ -6,7 +6,7 @@ internal class DivineShield(IMinion minion) : MinionEffectDecorator(minion)
 {
     private bool _hasDivineShield = true;
 
-    public override void Damage(int damage)
+    public override void TakeDamage(int damage)
     {
         if (_hasDivineShield)
         {
@@ -14,7 +14,11 @@ internal class DivineShield(IMinion minion) : MinionEffectDecorator(minion)
         }
         else
         {
-            base.Damage(damage);
+            base.TakeDamage(damage);
         }
+    }
+    public override string UpdateDescription(string description)
+    {
+        return base.UpdateDescription("Divine Shield");
     }
 }

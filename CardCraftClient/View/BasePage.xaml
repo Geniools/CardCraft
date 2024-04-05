@@ -5,6 +5,7 @@
              xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
              x:DataType="viewmodel:BaseViewModel"
              NavigationPage.HasBackButton="false"
+             BackgroundColor="{StaticResource PageBackground}"
              Title="{Binding Title}">
 
     <Shell.BackButtonBehavior>

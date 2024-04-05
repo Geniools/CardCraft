@@ -7,7 +7,7 @@ builder.Logging.AddConsole();
 
 builder.Services.AddSignalR(options =>
 {
-    options.EnableDetailedErrors = true;
+    // options.EnableDetailedErrors = true;
 }); 
 
 builder.Services.AddSingleton<OnlineGameManagerDatabase>();

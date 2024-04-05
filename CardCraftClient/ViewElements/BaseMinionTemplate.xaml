@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CardCraftClient.ViewElements.BaseMinionTemplate"
+             xmlns:model="clr-namespace:CardCraftShared"
+             x:DataType="model:BaseMinion">
+    
+    <ContentView.Content>
+        <Border
+            StrokeThickness="0">
+            <Grid
+                BackgroundColor="{Binding Color}"
+                Padding="5"
+                >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <Image
+                    Grid.Row="0"
+                    Source="{Binding Image}"
+                    Aspect="AspectFill"
+                />
+
+                <AbsoluteLayout
+                    Grid.Row="0"
+                    >
+
+                    <Image
+                        Source="manacost2.png"
+                        WidthRequest="40"
+                        HeightRequest="30"
+                        VerticalOptions="Start"
+                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                        Opacity="0.7"
+                    >
+                        <Image.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="0, 0"
+                                    Radius="10"
+                                    Opacity="1" />
+                        </Image.Shadow>
+                    </Image>
+
+                    <Label
+                        Text="{Binding ManaCost}"
+                        TextColor="{StaticResource White}"
+                        Padding="5"
+                        FontFamily="CutOutsFLF"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"
+                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                    >
+                        <Label.Shadow>
+                            <Shadow Brush="White"
+                                    Offset="5, 5"
+                                    Radius="100"
+                                    Opacity="1" />
+                        </Label.Shadow>
+                    </Label>
+                </AbsoluteLayout>
+
+                <Grid
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    RowDefinitions="*, 2*"
+                    >
+                    <Label
+                        Grid.Row="0"
+                        Text="{Binding Name}"
+                        FontSize="15"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{Binding TextColor}"
+                        HorizontalOptions="Center" 
+                        Margin="0,1,0,0"
+                    />
+
+                    <ScrollView
+                        Grid.Row="1"
+                        VerticalScrollBarVisibility="Never"
+                        >
+                        <Border
+                            Padding="5"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10, 10, 10, 10"
+                        >
+                            <Label
+                                Text="{Binding Description}"
+                                FontSize="10"
+                                TextColor="{Binding TextColor}" 
+                                LineBreakMode="WordWrap"
+                                LineHeight="1"
+                            />
+                        </Border>
+                    </ScrollView>
+                </Grid>
+
+                <Grid
+                    x:Name="Stats"
+                    Grid.Row="3"
+                    ColumnDefinitions="30, *, 30"
+                    >
+                    <Grid
+                        ColumnDefinitions="30"
+                        Grid.Column="0"
+                        >
+                        <Image
+                            Grid.Column="0"
+                            Source="attack.png"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            Margin="0,0,0,0"
+                        >
+                            <Image.Shadow>
+                                <Shadow Brush="Black"
+                                        Offset="0, 0"
+                                        Radius="10"
+                                        Opacity="1" />
+                            </Image.Shadow>
+                        </Image>
+
+                        <Label
+                            Grid.Column="0"
+                            Text="{Binding Attack}"
+                            TextColor="{StaticResource White}"
+                            FontFamily="CutOutsFLF"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                        />
+                    </Grid>
+
+                    <Grid
+                        ColumnDefinitions="30"
+                        Grid.Column="2"
+                        >
+                        <Image
+                            Source="hearth.png" 
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            >
+                            <Image.Shadow>
+                                <Shadow Brush="Black"
+                                    Offset="0, 0"
+                                    Radius="10"
+                                    Opacity="1" />
+                            </Image.Shadow>
+                        </Image>
+
+                        <Label
+                            Text="{Binding Health}"
+                            TextColor="{StaticResource White}"
+                            FontFamily="CutOutsFLF"
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                        >
+                            <Label.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Radius="10"
+                                    Opacity="1"
+                                    />
+                            </Label.Shadow>
+                        </Label>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </ContentView.Content>
+
+</ContentView>

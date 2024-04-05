@@ -1,4 +1,5 @@
 ﻿using CardCraftShared;
+using System.Collections.Generic;
 
 namespace CardCraftServer.Model;
 
@@ -6,6 +7,8 @@ public class OnlineGameManagerDatabase
 {
     private readonly ILogger<OnlineGameManagerDatabase> _logger;
     private readonly List<OnlineGameManager> _onlineGames;
+
+    public Action<string>? OnGameEnd;
 
     public OnlineGameManagerDatabase(ILogger<OnlineGameManagerDatabase> logger)
     {
@@ -110,7 +113,7 @@ public class OnlineGameManagerDatabase
         {
             foreach (Player player in game.Players)
             {
-                this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}. ConnectionID: {connectionId}");
+                // this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}.");
                 if (connectionId.Equals(player.ConnectionId))
                 {
                     return game.LobbyCode;
@@ -127,7 +130,7 @@ public class OnlineGameManagerDatabase
         {
             foreach (Player player in game.Players)
             {
-                this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}. ConnectionID: {connectionId}");
+                // this.LogString($"Player {player.Name} ConnectionID: {player.ConnectionId}.");
                 if (connectionId.Equals(player.ConnectionId))
                 {
                     return player;
@@ -136,6 +139,34 @@ public class OnlineGameManagerDatabase
         }
 
         return null;
+    }
+
+    public Player GetRandomPlayerFromConnectionId(string connectionId)
+    {
+        OnlineGameManager? game = this.GetGame(this.GetLobbyCodeFromConnectionId(connectionId));
+
+        if (game is null)
+        {
+            throw new Exception("Game not found!");
+        }
+
+        if (game.Players.Count < 2)
+        {
+            throw new Exception("Not enough players in the game!");
+        }
+
+        if (game.GameStarted)
+        {
+            throw new GameAlreadyStarted("Game started already!");
+        }
+
+        // Generate a random index within the range of the list
+        Random random = new Random();
+        int randomIndex = random.Next(0, game.Players.Count);
+
+        game.GameStarted = true;
+        // Get the player at the random index
+        return game.Players[randomIndex];
     }
 
 

@@ -6,128 +6,604 @@
                xmlns:viewmodel="clr-namespace:CardCraftClient.ViewModel"
                xmlns:view="clr-namespace:CardCraftClient.View"
                xmlns:model="clr-namespace:CardCraftShared"
+               xmlns:viewElements="clr-namespace:CardCraftClient.ViewElements"
+               xmlns:other="clr-namespace:CardCraftShared.Core.Other"
                x:DataType="viewmodel:GamePageViewModel"
-               BackgroundColor="#cab070">
+               >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Name="BaseMinionTemplateHand" x:Key="BaseMinionTemplateHand" x:DataType="{x:Type model:BaseMinion}">
+                <Grid
+                    WidthRequest="120"
+                    Padding="2"
+                    >
+                    <viewElements:BaseMinionTemplate
+                        Name="{Binding Name}"
+                        Image="{Binding Image}"
+                        Description="{Binding Description}"
+                        Color="{Binding Color}"
+                        TextColor="{Binding TextColor}"
+                        ManaCost="{Binding ManaCost}"
+                        Attack="{Binding Attack}"
+                        Health="{Binding Health}"
+                    />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Name="BaseMinionTemplateBoard" x:Key="BaseMinionTemplateBoard" x:DataType="{x:Type model:BaseMinion}">
+                <Grid
+                    WidthRequest="180"
+                    Padding="3"
+                    >
+                    <viewElements:BaseMinionTemplate
+                        Name="{Binding Name}"
+                        Image="{Binding Image}"
+                        Description="{Binding Description}"
+                        Color="{Binding Color}"
+                        TextColor="{Binding TextColor}"
+                        ManaCost="{Binding ManaCost}"
+                        Attack="{Binding Attack}"
+                        Health="{Binding Health}" 
+                    />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Name="JunkCard" x:Key="JunkCard" x:DataType="{x:Type other:JunkCard}">
+                <Grid
+                    WidthRequest="120"
+                >
+                    <Image
+                        Source="{Binding Image}"
+                    />
+                </Grid>
+            </DataTemplate>
+            
+            <!-- Change the color of a selected item in a collection view -->
+            <Style TargetType="Grid">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter 
+                                        Property="BackgroundColor"
+                                        Value="{StaticResource Main1}" 
+                                    />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Top Player Info -->
-        <StackLayout Grid.Row="0" Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="Start">
-            <Image Source="person.png" HorizontalOptions="Center" HeightRequest="50" WidthRequest="50" Margin="0,10,0,0"/>
-            <Label Text="{Binding EnemyPlayer.Name}" FontSize="18" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
-            <Label Text="Health: 30" FontSize="16" TextColor="White" VerticalOptions="Center" Margin="0,0,10,0" HorizontalOptions="Center"/>
-            <!-- Add more player info as needed -->
-        </StackLayout>
+        <!-- Enemy Player -->
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="150, *, 110"
+            ColumnSpacing="10"
+            >
+            <Grid
+                RowDefinitions="2*, *"
+                Grid.Column="0"
+                BackgroundColor="{StaticResource Main2}"
+                >
+                <Image
+                    Grid.Row="0"
+                    Source="{Binding EnemyPlayer.Hero.Image}"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                />
+                
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="3*, *, 60"
+                    >
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding EnemyPlayer.Name}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="25"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                    />
+                    
+                    <Image
+                        Grid.Column="2"
+                        Source="hearth.png"
+                    />
 
-        <!-- Player's Hand - Top -->
-        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Center">
-            <StackLayout Orientation="Horizontal">
-                <!-- Placeholder for player's cards -->
-                <Frame BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5">
-                    <StackLayout>
-                        <Label Text="{Binding ManaCost}" HorizontalOptions="Center" VerticalOptions="Start" TextColor="White"/>
-                        <Label Text="{Binding Attack}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" TextColor="White"/>
-                        <Label Text="{Binding Health}" HorizontalOptions="Center" VerticalOptions="End" TextColor="White"/>
-                    </StackLayout>
-                </Frame>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-            </StackLayout>
-        </ScrollView>
-
-        <!-- Game Board -->
-        <Frame Grid.Row="1" BackgroundColor="#35414A" Margin="10" Padding="5" BorderColor="#FFFFFF" HasShadow="False">
-            <Grid>
-                <!-- Opponent's Field -->
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <!-- Add opponent's minions and other elements -->
-                </StackLayout>
-
-                <!-- Middle Divider -->
-                <BoxView Color="White" HeightRequest="1" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
-
-                <!-- Your Field -->
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <!-- Add your minions and other elements -->
-                    <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Center">
-                        <StackLayout Orientation="Horizontal">
-                            <!-- Placeholder for player's cards -->
-                            <!--<CollectionView ItemsSource="{Binding PlayerHand}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
-                                        <Frame BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5">
-                                            <view:CardView BindingContext="{Binding .}" />
-                                        </Frame>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </CollectionView>-->
-                        </StackLayout>
-                    </ScrollView>
-                </StackLayout>
+                    <Label
+                        Grid.Column="2"
+                        Text="{Binding EnemyPlayer.Hero.Health}"
+                        TextColor="{StaticResource Secondary}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+                </Grid>
             </Grid>
-        </Frame>
 
-        <!-- Player's Hand - Bottom -->
-        <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center">
-            <StackLayout Orientation="Horizontal">
-                <!-- Placeholder for player's cards -->
-                <Frame BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5">
-                    <StackLayout>
-                        <Label HorizontalOptions="Center" VerticalOptions="Start" TextColor="White">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="M: " />
-                                <Span Text="{Binding ManaCost}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                        </Label>
-                        <Label Text="{Binding Attack}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" TextColor="White"/>
-                        <Label Text="{Binding Health}" HorizontalOptions="Center" VerticalOptions="End" TextColor="White"/>
-                    </StackLayout>
-                </Frame>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-                <BoxView BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
-            </StackLayout>
-        </ScrollView>
+            <Border
+                Grid.Column="1"
+                StrokeThickness="2"
+                >
+                <CollectionView
+                    x:Name="EnemyHand"
+                    ItemsSource="{Binding EnemyPlayerHand}"
+                    ItemTemplate="{StaticResource JunkCard}"
+                    HorizontalOptions="Center"
+                    SelectionMode="None"
+                >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            Orientation="Horizontal"
+                            HorizontalItemSpacing="5" 
+                        />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </Border>
+            
+            <Border
+                Grid.Column="2"
+                BackgroundColor="{StaticResource Main1}"
+                >
+                <Grid>
+                    <Image
+                        Source="deck.jpg"
+                        WidthRequest="110"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
 
-        <!-- Bottom Player Info -->
-        <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="Start" VerticalOptions="End">
-            <Image Source="person.png" HorizontalOptions="Center" HeightRequest="50" WidthRequest="50" Margin="0,10,0,0"/>
-            <Label Text="{Binding CurrentPlayer.Name}" FontSize="18" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
-            <Label Text="Health: 30" FontSize="16" TextColor="White" VerticalOptions="Center" Margin="0,0,10,0" HorizontalOptions="Center"/>
-            <!-- Add more player info as needed -->
-        </StackLayout>
+                    <Label
+                        Text="{Binding EnemyPlayerDeckCardCount}"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Secondary}"
+                        FontSize="50"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    >
+                        <Label.Shadow>
+                            <Shadow
+                                Brush="White"
+                                Radius="40"
+                            />
+                        </Label.Shadow>
+                    </Label>
+                </Grid>
+            </Border>
+        </Grid>
+        
 
+        <!-- Board -->
+        <Border
+            Grid.Row="1"
+            BackgroundColor="{StaticResource Secondary}"
+            >
+            <Grid
+                RowDefinitions="*, 5, *"
+                ColumnDefinitions="150, *, 110"
+                >
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                >
+                    <Label
+                        Text="{Binding StatusMessage}"
+                        TextColor="{StaticResource Main1}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+                </Grid>
 
-        <!-- End Turn Button -->
-        <Button Grid.Row="1" Text="End Turn" BackgroundColor="#E64343" TextColor="White"
-                HorizontalOptions="End" VerticalOptions="Center" WidthRequest="100" HeightRequest="100" Margin="10"
-                CornerRadius="50"/>
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    RowDefinitions="*, *, *"
+                    Padding="10"
+                    BackgroundColor="{StaticResource Main1}"
+                    >
+                    <Button
+                        Grid.Row="0"
+                        Text="Attack Hero"
+                        BackgroundColor="YellowGreen"
+                        FontFamily="CutOutsFLF"
+                        VerticalOptions="Center"
+                        Command="{Binding AttackHeroCommand}"
+                        IsEnabled="{Binding IsCurrentTurn}"
+                    />
 
+                    <Button
+                        Grid.Row="1"
+                        Text="Attack Minion"
+                        BackgroundColor="CornflowerBlue"
+                        FontFamily="CutOutsFLF"
+                        VerticalOptions="Center"
+                        Command="{Binding AttackMinionCommand}"
+                        IsEnabled="{Binding IsCurrentTurn}"
+                    />
 
-        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalOptions="End">
-            <Grid>
-                <!-- Placeholder for deck of cards -->
-                <BoxView Grid.Column="0" BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                    <Button
+                        Grid.Row="2"
+                        Text="Play Card"
+                        BackgroundColor="{StaticResource Main2}"
+                        TextColor="{StaticResource Main1}"
+                        FontSize="17"
+                        FontFamily="CutOutsFLF"
+                        VerticalOptions="Center"
+                        Command="{Binding PlayCardCommand}"
+                        IsEnabled="{Binding IsCurrentTurn}"
+                    />
+                </Grid>
+
+                <!-- Enemy side of the board -->
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    >
+                    <CollectionView
+                        x:Name="EnemyBoardSide"
+                        ItemsSource="{Binding EnemyPlayerBoard}"
+                        ItemTemplate="{StaticResource BaseMinionTemplateBoard}"
+                        SelectedItem="{Binding SelectedEnemyBoardCard}"
+                        SelectionMode="Single"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalOptions="Center"
+                        >
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                Orientation="Horizontal"
+                                HorizontalItemSpacing="5" 
+                            />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </Border>
+
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="Black"
+                    />
+
+                <!-- Friendly side of the board -->
+                <Border
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    >
+                    <CollectionView
+                        x:Name="CurrentPlayerBoardSide"
+                        ItemsSource="{Binding CurrentPlayerBoard}"
+                        ItemTemplate="{StaticResource BaseMinionTemplateBoard}"
+                        SelectedItem="{Binding SelectedFriendlyBoardCard}"
+                        SelectionMode="Single"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalOptions="Center"
+                        >
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                Orientation="Horizontal"
+                                HorizontalItemSpacing="5" 
+                            />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </Border>
+
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    RowDefinitions="*, *"
+                    >
+                    <Label
+                        Text="{Binding TurnStatus}"
+                        TextColor="{StaticResource Main1}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+
+                    <Label
+                        Grid.Row="1"
+                        Text="{Binding Timer}"
+                        TextColor="{StaticResource Main1}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"
+                        FontFamily="CutOutsFLF"
+                        FontSize="40"
+                    />
+                </Grid>
+
+                <Button
+                    Grid.Column="2"
+                    Grid.RowSpan="3"
+                    Text="End Turn"
+                    BackgroundColor="OrangeRed"
+                    TextColor="{StaticResource Secondary}"
+                    FontFamily="CutOutsFLF"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    CornerRadius="100"
+                    Command="{Binding EndTurnCommand}"
+                    IsEnabled="{Binding IsCurrentTurn}"
+                />
+
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    RowDefinitions="*, *, *"
+                    >
+                    <Label
+                        Text="{Binding AvailableMana}"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Main1}"
+                        FontSize="30"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End"
+                    />
+
+                    <Image
+                        Grid.Row="1"
+                        Source="manacost.png"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="100"
+                    />
+
+                    <Label
+                        Grid.Row="2"
+                        Text="10"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Main1}"
+                        FontSize="30"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"
+                    />
+                </Grid>
+
+                <!-- Display a spell in the center of the screen -->
+                <Border
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    Grid.Column="1"
+                    Padding="30"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    BackgroundColor="{StaticResource Main1}"
+                    Opacity="1"
+                    StrokeThickness="4"
+                    Stroke="{StaticResource Main2}"
+                    StrokeShape="RoundRectangle 0, 40, 40, 40"
+                    IsVisible="{Binding IsTemporaryCentredDisplayedCardVisible}"
+                    >
+                    <Grid
+                        WidthRequest="230"
+                        Opacity="1"
+                    >
+                        <Border
+                            StrokeThickness="0">
+                            <Grid
+                                BackgroundColor="{Binding TemporaryCentredDisplayedCard.Color}"
+                                Padding="5"
+                                >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*" />
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+
+                                <Image
+                                    Grid.Row="0"
+                                    Source="{Binding TemporaryCentredDisplayedCard.Image}"
+                                    Aspect="AspectFill"
+                                />
+
+                                <AbsoluteLayout
+                                    Grid.Row="0"
+                                    >
+
+                                    <Image
+                                        Source="manacost2.png"
+                                        WidthRequest="40"
+                                        HeightRequest="30"
+                                        VerticalOptions="Start"
+                                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                                        Opacity="0.7"
+                                        >
+                                        <Image.Shadow>
+                                            <Shadow Brush="Black"
+                                                Offset="0, 0"
+                                                Radius="10"
+                                                Opacity="1" 
+                                            />
+                                        </Image.Shadow>
+                                    </Image>
+
+                                    <Label
+                                        Text="{Binding TemporaryCentredDisplayedCard.ManaCost}"
+                                        TextColor="{StaticResource White}"
+                                        Padding="5"
+                                        FontFamily="CutOutsFLF"
+                                        FontAttributes="Bold"
+                                        FontSize="17"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Start"
+                                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                                        >
+                                        <Label.Shadow>
+                                            <Shadow Brush="White"
+                                                Offset="5, 5"
+                                                Radius="100"
+                                                Opacity="1" 
+                                            />
+                                        </Label.Shadow>
+                                    </Label>
+                                </AbsoluteLayout>
+
+                                <Grid
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    RowDefinitions="*, 2*"
+                                    >
+                                    <Label
+                                        Grid.Row="0"
+                                        Text="{Binding TemporaryCentredDisplayedCard.Name}"
+                                        FontSize="15"
+                                        FontFamily="CutOutsFLF"
+                                        TextColor="{Binding TemporaryCentredDisplayedCard.TextColor}"
+                                        HorizontalOptions="Center" 
+                                        Margin="0,1,0,0"
+                                    />
+
+                                    <ScrollView
+                                        Grid.Row="1"
+                                        VerticalScrollBarVisibility="Never"
+                                        >
+                                        <Border
+                                            Padding="5"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 10, 10, 10, 10"
+                                        >
+                                            <Label
+                                                Text="{Binding TemporaryCentredDisplayedCard.Description}"
+                                                FontSize="10"
+                                                TextColor="{Binding TemporaryCentredDisplayedCard.TextColor}" 
+                                                LineBreakMode="WordWrap"
+                                                LineHeight="1"
+                                            />
+                                        </Border>
+                                    </ScrollView>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
             </Grid>
-        </ScrollView>
+        </Border>
+        
+        <!-- Current Player -->
+        <Grid
+            Grid.Row="2"
+            ColumnDefinitions="150, *, 110"
+            ColumnSpacing="10"
+        >
+            <Grid
+                RowDefinitions="2*, *"
+                Grid.Column="0"
+                BackgroundColor="{StaticResource Main2}"
+            >
+                <Image
+                    Grid.Row="0"
+                    Source="{Binding CurrentPlayer.Hero.Image}"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                />
 
-        <!-- Deck of Cards (Beneath End Turn Button) -->
-        <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalOptions="End">
-            <Grid>
-                <!-- Placeholder for deck of cards -->
-                <BoxView Grid.Column="0" BackgroundColor="Gray" WidthRequest="100" HeightRequest="150" Margin="5"/>
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="3*, *, 60"
+                >
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding CurrentPlayer.Name}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="25"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                    />
+
+                    <Image
+                        Grid.Column="2"
+                        Source="hearth.png"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+
+                    <Label
+                        Grid.Column="2"
+                        Text="{Binding CurrentPlayer.Hero.Health}"
+                        TextColor="{StaticResource Secondary}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+                </Grid>
             </Grid>
-        </ScrollView>
+
+            <Border
+                Grid.Column="1"
+                StrokeThickness="2"
+            >
+                <CollectionView
+                    x:Name="CurrentPlayerHand"
+                    ItemsSource="{Binding CurrentPlayerHand}"
+                    ItemTemplate="{StaticResource BaseMinionTemplateHand}"
+                    SelectedItem="{Binding SelectedHandCard}"
+                    HorizontalOptions="Center"
+                    SelectionMode="Single"
+                >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            Orientation="Horizontal"
+                            HorizontalItemSpacing="5" 
+                        />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </Border>
+
+            <Border
+                Grid.Column="2"
+                BackgroundColor="{StaticResource Main1}"
+            >
+                <Grid>
+                    <Image
+                        Source="deck.jpg"
+                        WidthRequest="110"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+
+                    <Label
+                        Text="{Binding CurrentPlayerDeckCardCount}"
+                        FontFamily="CutOutsFLF"
+                        TextColor="{StaticResource Secondary}"
+                        FontSize="50"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    >
+                        <Label.Shadow>
+                            <Shadow
+                                Brush="White"
+                                Radius="40"
+                                />
+                        </Label.Shadow>
+                    </Label>
+                </Grid>
+            </Border>
+        </Grid>
+
     </Grid>
 
 </view:BasePage>

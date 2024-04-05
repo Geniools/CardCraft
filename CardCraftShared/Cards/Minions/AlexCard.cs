@@ -3,13 +3,19 @@ namespace CardCraftShared.Cards.Minions;
 
 public class AlexCard : BaseMinion
 {
-    public AlexCard() : base(8, 8, 8, "Alex", "Alex is a strong minion", CardRarityEnum.LEGENDARY, "person.png")
+    public AlexCard() : base(
+        10,
+        10,
+        10,
+        "Alex",
+        "Solo army",
+        CardRarityEnum.LEGENDARY,
+        "alexcard.jpg"
+    )
+    { }
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
     }
 
-    public void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
-    {
-        throw new NotImplementedException();
-    }
 }
 

@@ -37,6 +37,14 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>319C2F1A46EFC322815DDE0C2004F519EE0A801D</PackageCertificateThumbprint>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -64,10 +72,66 @@
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon.svg" />
 	  <None Remove="Resources\AppIcon\cardcraft_icon2.svg" />
-	  <None Remove="Resources\Fonts\Embossed Germanica.ttf" />
-	  <None Remove="Resources\Fonts\Fluted Germanica.ttf" />
-	  <None Remove="Resources\Fonts\Plain-Germanica.ttf" />
-	  <None Remove="Resources\Fonts\Shadowed-Germanica.ttf" />
+	  <None Remove="Resources\Fonts\CutOutsFLF.ttf" />
+	  <None Remove="Resources\Fonts\Progress.ttf" />
+	  <None Remove="Resources\Images\alexhero.jpeg" />
+	  <None Remove="Resources\Images\attack.png" />
+	  <None Remove="Resources\Images\Cards\Minions\alexcard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\andreicard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\ariancard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\bakiteocard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\buffedjadyncard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\chriscard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\corvincard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\crackedupmathewcard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\dimitricard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\evaldcard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\jadyncard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\mathewcard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\mirocard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\nathancard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\nathancard2.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\prayspell.png" />
+	  <None Remove="Resources\Images\Cards\Minions\robcard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\robcard2.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\securityguycard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\teachercard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\teocard.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\teocard2.jpg" />
+	  <None Remove="Resources\Images\Cards\Minions\terrycard.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\alcoholismspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\amogusspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\amogusspell2.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\amogusspell3.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\belastingdienstspell.jpeg" />
+	  <None Remove="Resources\Images\Cards\Spells\codingbugspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\corridorcoffeespell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\examspell.jpeg" />
+	  <None Remove="Resources\Images\Cards\Spells\goodargument3.jpeg" />
+	  <None Remove="Resources\Images\Cards\Spells\goodargumentspell.jpeg" />
+	  <None Remove="Resources\Images\Cards\Spells\goodargumentspell2.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\gymspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\infomanagementspell.jpeg" />
+	  <None Remove="Resources\Images\Cards\Spells\iotlabspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\itrelationshipspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\itrelationshipspell2.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\itrelationshipspellupgraded.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\landlordvisitspell.png" />
+	  <None Remove="Resources\Images\Cards\Spells\loremipsumspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\presentationspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\rentedroomspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\reportspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\resitspell.jpeg" />
+	  <None Remove="Resources\Images\Cards\Spells\sevenseventhreespell.png" />
+	  <None Remove="Resources\Images\Cards\Spells\sixoneprojectresitspell.png" />
+	  <None Remove="Resources\Images\Cards\Spells\tatedspell.jpg" />
+	  <None Remove="Resources\Images\Cards\Spells\womancard.png" />
+	  <None Remove="Resources\Images\Cards\Spells\womanspell.png" />
+	  <None Remove="Resources\Images\chrishero.jpeg" />
+	  <None Remove="Resources\Images\deck.jpg" />
+	  <None Remove="Resources\Images\hearth.png" />
+	  <None Remove="Resources\Images\manacost.png" />
+	  <None Remove="Resources\Images\mirohero.jpeg" />
 	  <None Remove="Resources\Images\person.png" />
 	  <None Remove="Resources\Images\sword.png" />
 	</ItemGroup>
@@ -84,11 +148,20 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Compile Update="ViewElements\BaseMinionTemplate.xaml.cs">
+	    <DependentUpon>BaseMinionTemplate.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ViewElements\BaseSpellTemplate.xaml.cs">
+	    <DependentUpon>BaseSpellTemplate.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ViewElements\HeroCardTemplate.xaml.cs">
+	    <DependentUpon>HeroCardTemplate.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\BasePage.xaml.cs">
 	    <DependentUpon>BasePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\CardView.xaml.cs">
-	    <DependentUpon>CardView.xaml</DependentUpon>
+	  <Compile Update="View\DeckPage.xaml.cs">
+	    <DependentUpon>DeckPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\GamePage.xaml.cs">
 	    <DependentUpon>GamePage.xaml</DependentUpon>
@@ -99,15 +172,80 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ViewElements\BaseMinionTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewElements\BaseSpellTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewElements\HeroCardTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\BasePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\CardView.xaml">
+	  <MauiXaml Update="View\DeckPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Cards\Minions\alexcard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\andreicard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\ariancard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\bakiteocard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\buffedjadyncard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\chriscard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\corvincard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\crackedupmathewcard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\dimitricard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\evaldcard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\jadyncard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\mathewcard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\mirocard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\nathancard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\nathancard2.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\securityguycard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\teachercard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\codingbugspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\corridorcoffeespell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\examspell.jpeg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\goodargument3.jpeg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\goodargumentspell.jpeg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\goodargumentspell2.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\infomanagementspell.jpeg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\iotlabspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\itrelationshipspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\itrelationshipspell2.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\itrelationshipspellupgraded.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\landlordvisitspell.png" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\loremipsumspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\prayspell.png" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\robcard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\robcard2.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\teocard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\teocard2.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\terrycard.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\alcoholismspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\amogusspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\amogusspell2.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\amogusspell3.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\belastingdienstspell.jpeg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\gymspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\presentationspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\rentedroomspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\reportspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\resitspell.jpeg" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\sevenseventhreespell.png" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\sixoneprojectresitspell.png" />
+	  <MauiImage Include="Resources\Images\Cards\Spells\tatedspell.jpg" />
+	  <MauiImage Include="Resources\Images\Cards\Minions\womancard.png" />
+	  <MauiImage Include="Resources\Images\Heroes\alexhero.jpeg" />
+	  <MauiImage Include="Resources\Images\Heroes\chrishero.jpeg" />
+	  <MauiImage Include="Resources\Images\Heroes\mirohero.jpeg" />
 	</ItemGroup>
 
 	<Import Project="..\CardCraftShared\CardCraftShared.projitems" Label="Shared" />

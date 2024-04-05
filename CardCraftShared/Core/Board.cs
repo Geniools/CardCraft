@@ -1,11 +1,13 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
-public class Board : ICardStatsManager
+public class Board
 {
-    public List<IBaseCard> FriendlySide { get; set; }
-    public List<IBaseCard> EnemySide { get; set; }
+    public ObservableCollection<IMinion> FriendlySide { get; set; }
+    public ObservableCollection<IMinion> EnemySide { get; set; }
 
     
     public Board()
@@ -14,41 +16,51 @@ public class Board : ICardStatsManager
         EnemySide = new();
     }
 
-    public void AddCard(IBaseCard card, Player player)
+    public void PlayMinionFriendlySide(IMinion card)
     {
-        // TODO: Add a card to the correct side of the board
-        // if (player == ayer1)
-        // {
-        //     FriendlySide.Add(card);
-        // }
-        // else
-        // {
-        //     EnemySide.Add(card);
-        // }
+        // Check if the board is full
+        if (this.FriendlySide.Count >= 7)
+        {
+            throw new Exception("Board is full");
+        }
+
+        this.FriendlySide.Add(card);
+
+        // Subscribe to the minion's death event
+        card.OnDeath += (sender, args) =>
+        {
+            IMinion minion = (IMinion)sender;
+            this.RemoveMinionFriendlySide(minion);
+        };
     }
 
-    public void KillMinion(IBaseCard minion)
+    public void PlayMinionEnemySide(IMinion card)
     {
-        throw new NotImplementedException();
+        this.EnemySide.Add(card);
+
+        // Subscribe to the minion's death event
+        card.OnDeath += (sender, args) =>
+        {
+            IMinion minion = (IMinion)sender;
+            this.RemoveMinionEnemySide(minion);
+        };
     }
 
-    public void DamageAllMinions(int damage)
+    public void RemoveMinionFriendlySide(IMinion card)
     {
-        throw new NotImplementedException();
+        this.FriendlySide.Remove(card);
     }
 
-    public void HealAllMinions(int heal)
+    public void RemoveMinionEnemySide(IMinion card)
     {
-        throw new NotImplementedException();
+        this.EnemySide.Remove(card);
     }
 
-    public void DamageMinion(IBaseCard minion, int damage)
+    internal void EnableMinionsToAttack()
     {
-        throw new NotImplementedException();
-    }
-
-    public void HealMinion(IBaseCard minion, int heal)
-    {
-        throw new NotImplementedException();
+        foreach (IMinion minion in FriendlySide)
+        {
+            minion.CanAttack = true;
+        }
     }
 }

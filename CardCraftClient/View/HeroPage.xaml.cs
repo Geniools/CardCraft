@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CardCraftClient.ViewModel;
+﻿using CardCraftClient.ViewModel;
 
 namespace CardCraftClient.View;
 
@@ -13,14 +8,4 @@ public partial class HeroPage : BasePage
     {
         InitializeComponent();
     }
-
-    public HeroPageViewModel ViewModel { get; } = new HeroPageViewModel();
-
-    private async void OnHeroSelected(object sender, EventArgs e)
-    {
-        Button button = (Button)sender;
-        string selectedHero = (string)button.CommandParameter;
-        await ViewModel.OnHeroSelected(selectedHero);
-    }
-
 }

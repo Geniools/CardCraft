@@ -1,6 +1,5 @@
 ﻿using CardCraftClient.Model;
 using CardCraftClient.Service;
-using CardCraftClient.View;
 using CardCraftShared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,7 +9,8 @@ namespace CardCraftClient.ViewModel;
 
 public partial class LobbyPageViewModel : BaseViewModel
 {
-    private const int TIMER = 5;
+    private const int TIMER_DEFAULT = 5;
+    public Action OnTimerCompletedAction;
     private GameManager _gm;
 
     [ObservableProperty]
@@ -25,20 +25,20 @@ public partial class LobbyPageViewModel : BaseViewModel
     [ObservableProperty]
     private string _timerText;
 
-    [ObservableProperty] 
-    private bool _activityIndicatorRunning;
-
     public LobbyPageViewModel(SignalRService signalRService, GameManager gm)
     {
         this._gm = gm;
         this.TimerText = "Waiting for players";
         this.LobbyCode = signalRService.LobbyCode;
-        this.ActivityIndicatorRunning = true;
 
-        signalRService.OnGameStartedEvent += async () =>
+        this._gm.OnGameStartedEvent += async () =>
         {
-            gm.IsGameStarted = true;
-            await this.StartGame();
+            await this.StartTimer();
+        };
+
+        this.OnTimerCompletedAction = async () =>
+        {
+            await this._gm.NavigateToGamePage();
         };
 
         gm.CurrentPlayerChanged += (player) =>
@@ -61,34 +61,24 @@ public partial class LobbyPageViewModel : BaseViewModel
 
     private async Task StartTimer()
     {
-        this.ActivityIndicatorRunning = false;
-
-        for (int i = TIMER; i > 0; i--)
+        for (int i = TIMER_DEFAULT; i >= 0; i--)
         {
             this.TimerText = i.ToString();
 
             if (!CanStartGame())
             {
                 this.TimerText = "Waiting for players";
-                this.ActivityIndicatorRunning = true;
+            }
+
+            // If the timer is complete, start the game
+            if (i == 0)
+            {
+                this.TimerText = "Game starting";
+                this.OnTimerCompletedAction?.Invoke();
             }
 
             await Task.Delay(1000);
         }
-    }
-
-    private async Task StartGame()
-    {
-        await this.StartTimer();
-
-        if (!CanStartGame())
-        {
-            this.TimerText = "Waiting for players";
-            this.ActivityIndicatorRunning = true;
-        }
-
-        // If the contents of the "NavigateToGamePage" are placed here, the game will start regardless (could not fix it)
-        await this._gm.NavigateToGamePage();
     }
 
     private async Task PlayWaitingPlayersAnimation()
@@ -100,13 +90,14 @@ public partial class LobbyPageViewModel : BaseViewModel
                 break;
             }
 
-            if (this.TimerText.Substring(this.TimerText.Length - 4).Equals("...."))
+            if (this.TimerText.Substring(this.TimerText.Length - 3).Equals("..."))
             {
                 this.TimerText = "Waiting for players";
+                await Task.Delay(1000);
             }
 
-            await Task.Delay(1000);
             this.TimerText += ".";
+            await Task.Delay(1000);
         }
     }
 
@@ -118,9 +109,7 @@ public partial class LobbyPageViewModel : BaseViewModel
     [RelayCommand]
     private async Task ReturnToStartPage()
     {
-        Shell.Current.GoToAsync("..");
-
-        await this._gm.EndGame();
+        this._gm.EndGame();
     }
 }
 

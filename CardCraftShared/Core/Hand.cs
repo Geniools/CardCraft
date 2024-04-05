@@ -1,18 +1,30 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using System.Collections.ObjectModel;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
-public class Hand : ICardStatsManager
+public class Hand
 {
-    private List<IBaseCard> Cards { get; init; }
+    public const int MAX_HAND_SIZE = 10;
+
+    public ObservableCollection<IBaseCard> Cards { get; set; }
 
     public Hand()
     {
-        this.Cards = [];
+        this.Cards = new();
     }
 
     public void Add(IBaseCard card)
     {
+        // Check the hand size
+        if (this.Cards.Count >= MAX_HAND_SIZE)
+        {
+            // Trigger the CollectionChanged event
+            this.Cards.Add(card);
+            this.Cards.Remove(card);
+            return;
+        }
+
         this.Cards.Add(card);
     }
 
@@ -20,26 +32,18 @@ public class Hand : ICardStatsManager
     {
         Cards.Remove(card);
         return card;
-
     }
 
-    public void DamageAllMinions(int damage)
+    public void Update(IList<IBaseCard> cards)
     {
-        throw new NotImplementedException();
-    }
+        this.Cards.Clear();
 
-    public void HealAllMinions(int heal)
-    {
-        throw new NotImplementedException();
-    }
+        // A delay must be added, otherwise the list is updated too quickly, resulting in double cards (this is just a guess)
+        Task.Delay(100).Wait();
 
-    public void DamageMinion(IBaseCard minion, int damage)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HealMinion(IBaseCard minion, int heal)
-    {
-        throw new NotImplementedException();
+        foreach (IBaseCard card in cards)
+        {
+            this.Cards.Add(card);
+        }
     }
 }

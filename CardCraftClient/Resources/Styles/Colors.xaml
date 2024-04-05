@@ -6,12 +6,25 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
+    <!-- https://colorhunt.co/palette/efbc9bfbf3d5d6dac89cafaa -->
+    <Color x:Key="Primary">#EFBC9B</Color>
+    <Color x:Key="Secondary">#FBF3D5</Color>
+    <Color x:Key="Tertiary">#D6DAC8</Color>
+    <Color x:Key="Forth">#9CAFAA</Color>
+
+    
+    <Color x:Key="Main1">#525252</Color>
+    <Color x:Key="Main2">#FBB969</Color>
+    <Color x:Key="PageBackground">#cab070</Color>
+
+
+
+    <!-- <Color x:Key="Primary">#512BD4</Color> -->
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
+    <!-- <Color x:Key="Secondary">#DFD8F7</Color> -->
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- <Color x:Key="Tertiary">#2B0B98</Color> -->
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

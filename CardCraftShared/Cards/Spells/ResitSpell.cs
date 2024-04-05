@@ -1,13 +1,24 @@
-﻿namespace CardCraftShared.Cards.Spells;
+﻿using CardCraftShared.Core.Interfaces;
+
+namespace CardCraftShared.Cards.Spells;
 
 public class ResitSpell : BaseSpell
 {
-    public ResitSpell() : base(2, "Resit", "Resit is a spell that gives a minion divine shield", CardRarityEnum.COMMON)
-    {
-    }
+    public ResitSpell() : base(
+        7,
+        "Resit",
+        "Remove 2 Health from each minion in enemy Hero hand", 
+        CardRarityEnum.EPIC,
+        "resitspell.jpeg") { }
 
-    public override void Trigger(DeckPool deck, DeckPool enemyDeck, Board board, Board enemyBoard, BaseHero hero, BaseHero enemyHero)
+    public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        throw new NotImplementedException();
+        foreach (IBaseCard card in enemyPlayer.Hand.Cards)
+        {
+            if (card is IMinion minion)
+            {
+                minion.Health -= 2;
+            }
+        }
     }
 }
