@@ -13,7 +13,7 @@ Each player has a set number of health points, representing their overall vitali
 The primary objective is to deplete your opponent's health points to zero before they can do the same to you.
 
 The game progresses through a series of rounds, with each round consisting of players taking turns to play cards from
-their hands and deploy troops onto the battlefield.
+their hands and deploy minions onto the battlefield. Every minion has a specific mana cost that is deducted from Player's available mana pool.
 
 Battles in CardCraft are resolved through a combination of card abilities (*should have*), attack values, health points and mana points.
 Each card possesses specific attributes, such as attack strength, health, mana and special abilities (*should have*),
@@ -40,7 +40,7 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 * Card game
 * 2D view point
 * Multiplayer mode only 
-* To start, it will require **2 people**
+* To start, it will require **2 users**
 
 ### Installation Guide
 
@@ -70,10 +70,30 @@ Step 2: Start playing the game by following the `Play Guide`.
 
 ![ClassDiagram](./Assets/ClassDiagram.png)
 
-### Design Mockups
-#### Icon
+### Current Design
 
+#### Start Page
+![StartPage](./Assets/Card_CarftStartPage.png)
+
+#### Hero Selection
+![HeroSelection](./Assets/Card_CarftHeroSelection.png)
+
+#### Card Choice
+![CardChoice](./Assets/Card_CarftChooseCards.png)
+![CardChoice2](./Assets/Card_CarftChooseCards2.png)
+
+#### Lobby Page
+![LobbyPage](./Assets/Card_CarftLobbyPage.png)
+
+#### Board View
+![BoardViewPlayer1](./Assets/Card_CarftBoardPagePlayer.png)
+![BoardViewPlayer2](./Assets/Card_CarftBoardPagePlayer2.png)
+
+#### Icon
 ![Icon](./Assets/Card_Craft_Icon.png)
+
+
+### Design Mockups
 
 #### Splash Screen
 ![Splash](./Assets/Card_Craft_Splash.png)
@@ -85,8 +105,10 @@ Step 2: Start playing the game by following the `Play Guide`.
 ![Lobby](./Assets/Card_Craft_Lobby.png)
 
 #### Game
-
 ![Game](./Assets/Card_Craft_Board.png)
+
+#### Icon
+![Icon](./Assets/Card_Craft_Icon.png)
 
 ### MoSCoW Analysis
 
@@ -103,15 +125,15 @@ This chapter will describe what are the technical specifications of this applica
 
 
 ### * Using .NET MAUI Framework
-### * Using .NET version 8.0.0
+### * Using .NET version 8.0
 ### * SignalR Server
 
 ### Input
 
 |       Case       |   Type   |                              Conditions                              |
 |:----------------:|:--------:|:--------------------------------------------------------------------:|
-|   String Name    | `String` | not empty, more than 2 characters, cannot match other player's name  |
-| String LobbyCode | `String` |                  not empty, more than 3 characters                   | 
+|   String Name    | `String` | not empty, between 2 and 12 characters, cannot match other player's name, no special characters or whitespaces  |
+| String LobbyCode | `String` |                  not empty, between 2 and 6 characters, can only contain numbers or letters                   | 
 
 ### Output
 
@@ -122,7 +144,7 @@ This chapter will describe what are the technical specifications of this applica
 
 ### Calculations 
 
-1. Determining a winner: If(Player1Hero Health = 0 ){ Player2Hero wins} elseif( Player2Hero Health = 0) {Player1Hero wins}
+1. Determining a winner: if(Player1Hero Health = 0 ){ Player2Hero wins} elseif( Player2Hero Health = 0) Player1Hero wins}
 2. Cards attacking: Cards can attack each other, reducing the enemy's card health by the amount of attack points assigned to that card.
 3. Mana Deduction: Cards and spells deduct their assigned (cost) Mana points from the available to the player pool (of mana). 
 
@@ -144,6 +166,7 @@ This chapter will describe what are the technical specifications of this applica
 * (Multi)Threading - Helps making the game run few processes/threads simultanously and the keep the GUI responsive.<br><br>
 * Task - For working with async inputs and outputs, managing concurrent actions and executing mutliple tasks.<br><br>
 * Lock - Locks an object that is used in the thread so that the other thread does not use it. Used in adding and removing cards to the deck. Present in few methods in DeckPageViewModel class.
+* Async I/O - Allows the app run in the background, while the threads are still not finished.
 
 ### Cards Spreadsheet
 
