@@ -13,6 +13,7 @@ public class GameManager : ISignalRObserver
 {
     private object _lock = new();
     public const int DEFAULT_TURN_TIME = 30;
+    public const int MAX_MANA = 10;
 
     private int _turnTimer;
     public int TurnTimer
@@ -98,6 +99,7 @@ public class GameManager : ISignalRObserver
     // Game elements
     public Board Board { get; set; }
     public Graveyard Graveyard { get; set; }
+    public int AvailableMana { get; set; }
 
     public GameManager(SignalRService signalRService)
     {
@@ -112,7 +114,7 @@ public class GameManager : ISignalRObserver
     public async Task EndGame()
     {
         // Reset the players
-        await this.Reset();
+        this.Reset();
 
         MainThread.BeginInvokeOnMainThread(async () =>
         {
@@ -164,7 +166,7 @@ public class GameManager : ISignalRObserver
         });
     }
 
-    private Task Reset()
+    private void Reset()
     {
         // Reset the game state
         this.IsGameStarted = false;
@@ -178,8 +180,6 @@ public class GameManager : ISignalRObserver
         this.Board = new();
         // Reset the graveyard
         this.Graveyard = new();
-
-        return Task.CompletedTask;
     }
 
     private async Task StartTurnTimer()
@@ -190,7 +190,15 @@ public class GameManager : ISignalRObserver
         {
             await Task.Delay(1000);
             this.TurnTimer--;
+
+            if (!this.IsCurrentTurn)
+            {
+                this.TurnTimer = 0;
+                break;
+            }
         }
+
+        this.IsCurrentTurn = false;
     }
 
     public async Task NextTurn()
@@ -199,7 +207,11 @@ public class GameManager : ISignalRObserver
         this.CurrentPlayer?.DrawCard();
 
         // Increase the mana
-        this.CurrentPlayer?.IncreaseMana();
+        if (AvailableMana < MAX_MANA)
+        {
+            AvailableMana++;
+        }
+        this.CurrentPlayer.Mana = AvailableMana;
 
         Trace.WriteLine($"Starting Turn Timer! PLAYER: {this._signalRService.Player.Name}");
         // Start the timer
@@ -223,9 +235,6 @@ public class GameManager : ISignalRObserver
     public async Task EndTurn()
     {
         this.IsCurrentTurn = false;
-
-        // Reset the timer
-        this.TurnTimer = DEFAULT_TURN_TIME;
 
         Trace.WriteLine($"Turn ended! PLAYER: {this._signalRService.Player.Name}");
         // Send the end turn signal to the server

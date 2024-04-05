@@ -189,6 +189,8 @@
                         TextColor="{StaticResource Main1}"
                         FontFamily="CutOutsFLF"
                         FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
                     />
                 </Grid>
 
@@ -206,6 +208,7 @@
                         FontFamily="CutOutsFLF"
                         VerticalOptions="Center"
                         Command="{Binding AttackHeroCommand}"
+                        IsEnabled="{Binding IsCurrentTurn}"
                     />
 
                     <Button
@@ -215,6 +218,7 @@
                         FontFamily="CutOutsFLF"
                         VerticalOptions="Center"
                         Command="{Binding AttackMinionCommand}"
+                        IsEnabled="{Binding IsCurrentTurn}"
                     />
 
                     <Button
@@ -226,6 +230,7 @@
                         FontFamily="CutOutsFLF"
                         VerticalOptions="Center"
                         Command="{Binding PlayCardCommand}"
+                        IsEnabled="{Binding IsCurrentTurn}"
                     />
                 </Grid>
 
@@ -279,16 +284,30 @@
                     </CollectionView>
                 </Border>
 
-                <Label
+                <Grid
                     Grid.Row="0"
                     Grid.Column="2"
-                    Text="{Binding Timer}"
-                    TextColor="{StaticResource Main1}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    FontFamily="CutOutsFLF"
-                    FontSize="40"
-                />
+                    RowDefinitions="*, *"
+                    >
+                    <Label
+                        Text="{Binding TurnStatus}"
+                        TextColor="{StaticResource Main1}"
+                        FontFamily="CutOutsFLF"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+
+                    <Label
+                        Grid.Row="1"
+                        Text="{Binding Timer}"
+                        TextColor="{StaticResource Main1}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"
+                        FontFamily="CutOutsFLF"
+                        FontSize="40"
+                    />
+                </Grid>
 
                 <Button
                     Grid.Column="2"
@@ -301,6 +320,7 @@
                     VerticalOptions="Center"
                     CornerRadius="100"
                     Command="{Binding EndTurnCommand}"
+                    IsEnabled="{Binding IsCurrentTurn}"
                 />
 
                 <Grid
@@ -336,6 +356,25 @@
                     />
 
                 </Grid>
+
+                <!-- Display a spell in the center of the screen -->
+                <Border
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    Grid.Column="1"
+                    Padding="20"
+                    Margin="250, 50"
+                    BackgroundColor="{StaticResource Main1}"
+                    Opacity="0.7"
+                    StrokeThickness="4"
+                    Stroke="{StaticResource Main2}"
+                    StrokeShape="RoundRectangle 0, 40, 40, 40"
+                    IsVisible="False"
+                    >
+                    <Grid>
+                        
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
         

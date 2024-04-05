@@ -27,8 +27,8 @@ public class Hand
     {
         this.Cards.Clear();
 
-        // A delay must be added, otherwise the list is updated too quickly, resulting in double cards
-        Task.Delay(50).Wait();
+        // A delay must be added, otherwise the list is updated too quickly, resulting in double cards (this is just a guess)
+        Task.Delay(100).Wait();
 
         foreach (IBaseCard card in cards)
         {

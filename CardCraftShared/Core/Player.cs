@@ -1,9 +1,7 @@
 ﻿namespace CardCraftShared;
 
-public class Player : ICloneable
+public class Player
 {
-    public const int MAX_MANA = 10;
-
     public Player()
     {
         this.Hand = new Hand();
@@ -13,9 +11,7 @@ public class Player : ICloneable
     }
 
     // Connection-related properties
-
     public string? ConnectionId { get; set; }
-
     public string Name { get; set; }
 
     // This property contains details that need to be sent via SignalR
@@ -23,13 +19,24 @@ public class Player : ICloneable
     public PlayerSignalRDetails PlayerSignalRDetails { get; set; }
 
     // Game-related properties
-
     public BaseHero? Hero { get; set; }
-
     public DeckPool Deck { get; set; }
-
     public Hand Hand { get; set; }
-    public int Mana { get; set; }
+
+    private int _mana;
+    public int Mana
+    {
+        get => this._mana;
+        set
+        {
+            if (value >= 0)
+            {
+                this._mana = value;
+                this.OnManaChanged?.Invoke(this._mana);
+            }
+        }
+    }
+    public Action<int> OnManaChanged;
 
     public IBaseCard PlayCard(IBaseCard card)
     {
@@ -43,28 +50,6 @@ public class Player : ICloneable
             IBaseCard card = Deck.DrawCard();
             Hand.Add(card);
         }
-    }
-
-    public void IncreaseMana()
-    {
-        if (this.Mana < MAX_MANA)
-        {
-            this.Mana++;
-        }
-    }
-
-    public object Clone()
-    {
-        return new Player
-        {
-            ConnectionId = this.ConnectionId,
-            Name = this.Name,
-            PlayerSignalRDetails = this.PlayerSignalRDetails,
-            Hero = this.Hero,
-            Deck = this.Deck,
-            Hand = this.Hand,
-            Mana = this.Mana
-        };
     }
 
     public void GiveHealth(int health)

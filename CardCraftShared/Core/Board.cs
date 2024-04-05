@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
@@ -17,6 +16,11 @@ public class Board
 
     public void PlayMinionFriendlySide(IBaseCard card)
     {
+        // Check if the board is full
+        if (this.FriendlySide.Count >= 7)
+        {
+            throw new Exception("Board is full");
+        }
         this.FriendlySide.Add(card);
     }
 

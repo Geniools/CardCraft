@@ -10,11 +10,13 @@ namespace CardCraftClient.ViewModel;
 
 public partial class GamePageViewModel : BaseViewModel
 {
-    private GameManager _gameManager;
-    private SignalRService _signalRService;
+    private readonly GameManager _gameManager;
+    private readonly SignalRService _signalRService;
 
     [ObservableProperty] private int _timer;
+    [ObservableProperty] private string _turnStatus;
     [ObservableProperty] private string _statusMessage;
+    [ObservableProperty] private bool _isCurrentTurn;
 
     // Current Player
     [ObservableProperty] private int _availableMana;
@@ -76,6 +78,23 @@ public partial class GamePageViewModel : BaseViewModel
             this.EnemyPlayerBoard = gm.Board.EnemySide;
         };
 
+        gm.CurrentPlayer.OnManaChanged += async (int newManaValue) =>
+        {
+            this.AvailableMana = newManaValue;
+        };
+
+        gm.OnTurnTimerChanged += async (int newTimerValue) =>
+        {
+            this.Timer = newTimerValue;
+        };
+
+        gm.OnCurrentTurnChanged += async (bool isCurrentTurn) =>
+        {
+            this.IsCurrentTurn = isCurrentTurn;
+
+            this.TurnStatus = isCurrentTurn ? "Your Turn" : "Enemy Turn";
+        };
+
         // Set initial values
         this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
         this.EnemyPlayerHand = gm.EnemyPlayer.Hand.Cards;
@@ -99,27 +118,11 @@ public partial class GamePageViewModel : BaseViewModel
             PlayerDeckCardAmount = this.CurrentPlayerDeckCardCount
         });
 
-        gm.OnTurnTimerChanged += async (int newTimer) =>
-        {
-            this.Timer = newTimer;
-        };
-
-        gm.OnCurrentTurnChanged += async (bool isCurrentTurn) =>
-        {
-            Trace.WriteLine($"TURN CHANGED: {isCurrentTurn}. PLAYER: {this._signalRService.Player.Name}");
-            if (isCurrentTurn)
-            {
-                this.StatusMessage = "Your Turn";
-            }
-            else
-            {
-                this.StatusMessage = "Enemy Turn";
-            }
-        };
-
         this.Timer = gm.TurnTimer;
-        this.StatusMessage = gm.IsCurrentTurn ? "Your Turn" : "Enemy Turn";
+        this.TurnStatus = gm.IsCurrentTurn ? "Your Turn" : "Enemy Turn";
+        this.IsCurrentTurn = gm.IsCurrentTurn;
 
+        // Start the turn if it is the first turn
         if (gm.IsCurrentTurn)
         {
             _ = gm.NextTurn();
@@ -129,7 +132,8 @@ public partial class GamePageViewModel : BaseViewModel
     [RelayCommand]
     private async Task EndTurn()
     {
-        await this._gameManager.EndTurn();
+        // End the turn by changing the current turn to false (do not call EndTurn() => it will create a new Thread which will behave unexpectedly afterwards)
+        this._gameManager.IsCurrentTurn = false;
     }
 
     [RelayCommand]
@@ -151,18 +155,25 @@ public partial class GamePageViewModel : BaseViewModel
         //     return;
         // }
 
-        // Remove the card from the player's hand
-        this._gameManager.CurrentPlayer.Hand.Remove(card);
+        try
+        {
+            // Remove the card from the player's hand
+            this._gameManager.CurrentPlayer.Hand.Remove(card);
 
-        // Decrease the player's mana
-        // this.AvailableMana -= this.SelectedHandCard.ManaCost;
+            // Decrease the player's mana
+            // this.AvailableMana -= this.SelectedHandCard.ManaCost;
 
-        // Play the card
-        this._gameManager.Board.PlayMinionFriendlySide(card);
-        card.TriggerEffect(_gameManager.CurrentPlayer, _gameManager.EnemyPlayer, _gameManager.Board);
+            // Play the card
+            this._gameManager.Board.PlayMinionFriendlySide(card);
+            card.TriggerEffect(this._gameManager.CurrentPlayer, this._gameManager.EnemyPlayer, this._gameManager.Board);
 
-        // Notify the server
-        await this._signalRService.SendPlayedCardToEnemyPlayer(card);
+            // Notify the server
+            await this._signalRService.SendPlayedCardToEnemyPlayer(card);
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlert("Oops :(", e.Message, "OK");
+        }
     }
 
     [RelayCommand]
