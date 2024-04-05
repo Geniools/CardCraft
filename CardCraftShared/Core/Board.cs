@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
 public class Board
 {
-    public ObservableCollection<IBaseCard> FriendlySide { get; set; }
-    public ObservableCollection<IBaseCard> EnemySide { get; set; }
+    public ObservableCollection<IMinion> FriendlySide { get; set; }
+    public ObservableCollection<IMinion> EnemySide { get; set; }
 
     
     public Board()
@@ -14,7 +15,7 @@ public class Board
         EnemySide = new();
     }
 
-    public void PlayMinionFriendlySide(IBaseCard card)
+    public void PlayMinionFriendlySide(IMinion card)
     {
         // Check if the board is full
         if (this.FriendlySide.Count >= 7)
@@ -24,17 +25,17 @@ public class Board
         this.FriendlySide.Add(card);
     }
 
-    public void PlayMinionEnemySide(IBaseCard card)
+    public void PlayMinionEnemySide(IMinion card)
     {
         this.EnemySide.Add(card);
     }
 
-    public void RemoveMinionFriendlySide(IBaseCard card)
+    public void RemoveMinionFriendlySide(IMinion card)
     {
         this.FriendlySide.Remove(card);
     }
 
-    public void RemoveMinionEnemySide(IBaseCard card)
+    public void RemoveMinionEnemySide(IMinion card)
     {
         this.EnemySide.Remove(card);
     }

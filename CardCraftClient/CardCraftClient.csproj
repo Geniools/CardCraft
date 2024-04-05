@@ -152,9 +152,6 @@
 	  <Compile Update="View\BasePage.xaml.cs">
 	    <DependentUpon>BasePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\CardView.xaml.cs">
-	    <DependentUpon>CardView.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="View\DeckPage.xaml.cs">
 	    <DependentUpon>DeckPage.xaml</DependentUpon>
 	  </Compile>
@@ -177,9 +174,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\BasePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\CardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\DeckPage.xaml">

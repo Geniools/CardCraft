@@ -362,17 +362,117 @@
                     Grid.Row="0"
                     Grid.RowSpan="3"
                     Grid.Column="1"
-                    Padding="20"
-                    Margin="250, 50"
+                    Padding="30"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
                     BackgroundColor="{StaticResource Main1}"
-                    Opacity="0.7"
+                    Opacity="1"
                     StrokeThickness="4"
                     Stroke="{StaticResource Main2}"
                     StrokeShape="RoundRectangle 0, 40, 40, 40"
-                    IsVisible="False"
+                    IsVisible="{Binding IsTemporaryCentredDisplayedCardVisible}"
                     >
-                    <Grid>
-                        
+                    <Grid
+                        WidthRequest="230"
+                        Opacity="1"
+                    >
+                        <Border
+                            StrokeThickness="0">
+                            <Grid
+                                BackgroundColor="{Binding TemporaryCentredDisplayedCard.Color}"
+                                Padding="5"
+                                >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*" />
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+
+                                <Image
+                                    Grid.Row="0"
+                                    Source="{Binding TemporaryCentredDisplayedCard.Image}"
+                                    Aspect="AspectFill"
+                                />
+
+                                <AbsoluteLayout
+                                    Grid.Row="0"
+                                    >
+
+                                    <Image
+                                        Source="manacost2.png"
+                                        WidthRequest="40"
+                                        HeightRequest="30"
+                                        VerticalOptions="Start"
+                                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                                        Opacity="0.7"
+                                        >
+                                        <Image.Shadow>
+                                            <Shadow Brush="Black"
+                                                Offset="0, 0"
+                                                Radius="10"
+                                                Opacity="1" 
+                                            />
+                                        </Image.Shadow>
+                                    </Image>
+
+                                    <Label
+                                        Text="{Binding TemporaryCentredDisplayedCard.ManaCost}"
+                                        TextColor="{StaticResource White}"
+                                        Padding="5"
+                                        FontFamily="CutOutsFLF"
+                                        FontAttributes="Bold"
+                                        FontSize="17"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Start"
+                                        AbsoluteLayout.LayoutBounds="0, -5, 30, 30"
+                                        >
+                                        <Label.Shadow>
+                                            <Shadow Brush="White"
+                                                Offset="5, 5"
+                                                Radius="100"
+                                                Opacity="1" 
+                                            />
+                                        </Label.Shadow>
+                                    </Label>
+                                </AbsoluteLayout>
+
+                                <Grid
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    RowDefinitions="*, 2*"
+                                    >
+                                    <Label
+                                        Grid.Row="0"
+                                        Text="{Binding TemporaryCentredDisplayedCard.Name}"
+                                        FontSize="15"
+                                        FontFamily="CutOutsFLF"
+                                        TextColor="{Binding TemporaryCentredDisplayedCard.TextColor}"
+                                        HorizontalOptions="Center" 
+                                        Margin="0,1,0,0"
+                                    />
+
+                                    <ScrollView
+                                        Grid.Row="1"
+                                        VerticalScrollBarVisibility="Never"
+                                        >
+                                        <Border
+                                            Padding="5"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 10, 10, 10, 10"
+                                        >
+                                            <Label
+                                                Text="{Binding TemporaryCentredDisplayedCard.Description}"
+                                                FontSize="10"
+                                                TextColor="{Binding TemporaryCentredDisplayedCard.TextColor}" 
+                                                LineBreakMode="WordWrap"
+                                                LineHeight="1"
+                                            />
+                                        </Border>
+                                    </ScrollView>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
             </Grid>

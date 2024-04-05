@@ -5,6 +5,8 @@ namespace CardCraftShared;
 
 public class Hand
 {
+    public const int MAX_HAND_SIZE = 10;
+
     public ObservableCollection<IBaseCard> Cards { get; set; }
 
     public Hand()
@@ -14,6 +16,12 @@ public class Hand
 
     public void Add(IBaseCard card)
     {
+        // Check the hand size
+        if (this.Cards.Count >= MAX_HAND_SIZE)
+        {
+            return;
+        }
+
         this.Cards.Add(card);
     }
 

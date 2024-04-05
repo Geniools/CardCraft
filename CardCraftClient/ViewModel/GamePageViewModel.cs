@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using CardCraftClient.Model;
 using CardCraftClient.Service;
+using CardCraftShared.Core.Interfaces;
 using CommunityToolkit.Mvvm.Input;
 
 namespace CardCraftClient.ViewModel;
@@ -17,6 +18,20 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private string _turnStatus;
     [ObservableProperty] private string _statusMessage;
     [ObservableProperty] private bool _isCurrentTurn;
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsTemporaryCentredDisplayedCardVisible))] private BaseSpell _temporaryCentredDisplayedCard;
+
+    partial void OnTemporaryCentredDisplayedCardChanged(BaseSpell? value)
+    {
+        // Display the card for 2 seconds
+        if (value is not null)
+        {
+            Task.Delay(2000).ContinueWith(_ =>
+            {
+                this.TemporaryCentredDisplayedCard = null;
+            });
+        }
+    }
+    public bool IsTemporaryCentredDisplayedCardVisible => this.TemporaryCentredDisplayedCard is not null;
 
     // Current Player
     [ObservableProperty] private int _availableMana;
@@ -25,7 +40,7 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private int _currentPlayerDeckCardCount;
     [ObservableProperty] private ObservableCollection<IBaseCard> _currentPlayerHand;
     [ObservableProperty] private IBaseCard _selectedHandCard;
-    [ObservableProperty] private ObservableCollection<IBaseCard> _currentPlayerBoard;
+    [ObservableProperty] private ObservableCollection<IMinion> _currentPlayerBoard;
     [ObservableProperty] private IBaseCard _selectedFriendlyBoardCard;
 
     // Enemy Player
@@ -33,7 +48,7 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private int _enemyPlayerHeroHealth;
     [ObservableProperty] private int _enemyPlayerDeckCardCount;
     [ObservableProperty] private ObservableCollection<IBaseCard> _enemyPlayerHand;
-    [ObservableProperty] private ObservableCollection<IBaseCard> _enemyPlayerBoard;
+    [ObservableProperty] private ObservableCollection<IMinion> _enemyPlayerBoard;
     [ObservableProperty] private IBaseCard _selectedEnemyBoardCard;
 
     public GamePageViewModel(GameManager gm, SignalRService signalRService)
@@ -92,7 +107,12 @@ public partial class GamePageViewModel : BaseViewModel
         {
             this.IsCurrentTurn = isCurrentTurn;
 
-            this.TurnStatus = isCurrentTurn ? "Your Turn" : "Enemy Turn";
+            this.TurnStatus = isCurrentTurn ? "Your Turn" : "Enemy's Turn";
+        };
+
+        gm.OnTemporaryCardDisplayAction += async (card) =>
+        {
+            this.TemporaryCentredDisplayedCard = card as BaseSpell;
         };
 
         // Set initial values
@@ -111,7 +131,7 @@ public partial class GamePageViewModel : BaseViewModel
         this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
 
         // Send initial values to the server
-        this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
+        _ = this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
         {
             HeroHealth = this.CurrentPlayerHeroHealth,
             PlayerHandCardAmount = this.CurrentPlayerHand.Count,
@@ -119,7 +139,7 @@ public partial class GamePageViewModel : BaseViewModel
         });
 
         this.Timer = gm.TurnTimer;
-        this.TurnStatus = gm.IsCurrentTurn ? "Your Turn" : "Enemy Turn";
+        this.TurnStatus = gm.IsCurrentTurn ? "Your Turn" : "Enemy's Turn";
         this.IsCurrentTurn = gm.IsCurrentTurn;
 
         // Start the turn if it is the first turn
@@ -142,18 +162,18 @@ public partial class GamePageViewModel : BaseViewModel
         IBaseCard card = this.SelectedHandCard;
 
         // Check if there is a card to be played
-        if (this.SelectedHandCard is null)
+        if (card is null)
         {
             await Shell.Current.DisplayAlert("Error", "No card to be played selected", "OK");
             return;
         }
 
         // Check if the player has enough mana to play the card
-        // if (this.AvailableMana < this.SelectedHandCard.ManaCost)
-        // {
-        //     await Shell.Current.DisplayAlert("Error", "Not enough mana to play the card", "OK");
-        //     return;
-        // }
+        if (this.AvailableMana < card.ManaCost)
+        {
+            await Shell.Current.DisplayAlert("Error", "Not enough mana to play the card", "OK");
+            return;
+        }
 
         try
         {
@@ -161,10 +181,20 @@ public partial class GamePageViewModel : BaseViewModel
             this._gameManager.CurrentPlayer.Hand.Remove(card);
 
             // Decrease the player's mana
-            // this.AvailableMana -= this.SelectedHandCard.ManaCost;
+            this.AvailableMana -= card.ManaCost;
 
-            // Play the card
-            this._gameManager.Board.PlayMinionFriendlySide(card);
+            // If the card is a minion, play it on the board
+            if (card is IMinion minionCard)
+            {
+                this._gameManager.Board.PlayMinionFriendlySide(minionCard);
+            }
+            else
+            {
+                // Display it as a temporary card in the center of the screen
+                this.TemporaryCentredDisplayedCard = card as BaseSpell;
+            }
+
+            // Trigger the card effect
             card.TriggerEffect(this._gameManager.CurrentPlayer, this._gameManager.EnemyPlayer, this._gameManager.Board);
 
             // Notify the server

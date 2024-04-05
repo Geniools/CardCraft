@@ -4,6 +4,7 @@ using CardCraftClient.Core.Interfaces;
 using CardCraftClient.Service;
 using CardCraftClient.View;
 using CardCraftShared;
+using CardCraftShared.Core.Interfaces;
 using CardCraftShared.Core.Other;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -98,6 +99,7 @@ public class GameManager : ISignalRObserver
 
     // Game elements
     public Board Board { get; set; }
+    public Action<IBaseCard>? OnTemporaryCardDisplayAction;
     public Graveyard Graveyard { get; set; }
     public int AvailableMana { get; set; }
 
@@ -213,7 +215,7 @@ public class GameManager : ISignalRObserver
         }
         this.CurrentPlayer.Mana = AvailableMana;
 
-        Trace.WriteLine($"Starting Turn Timer! PLAYER: {this._signalRService.Player.Name}");
+        // Trace.WriteLine($"Starting Turn Timer! PLAYER: {this._signalRService.Player.Name}");
         // Start the timer
         await this.StartTurnTimer();
 
@@ -223,7 +225,7 @@ public class GameManager : ISignalRObserver
 
     public async Task OnTurnStarted(bool isFirstTurn)
     {
-        Trace.WriteLine($"Is first turn: {isFirstTurn}. Player Start Turn: {this._signalRService.Player.Name}");
+        // Trace.WriteLine($"Is first turn: {isFirstTurn}. Player Start Turn: {this._signalRService.Player.Name}");
         this.IsCurrentTurn = true;
 
         if (!isFirstTurn)
@@ -236,7 +238,7 @@ public class GameManager : ISignalRObserver
     {
         this.IsCurrentTurn = false;
 
-        Trace.WriteLine($"Turn ended! PLAYER: {this._signalRService.Player.Name}");
+        // Trace.WriteLine($"Turn ended! PLAYER: {this._signalRService.Player.Name}");
         // Send the end turn signal to the server
         await this._signalRService.SendEndTurn();
     }
@@ -265,7 +267,14 @@ public class GameManager : ISignalRObserver
 
     public async Task OnCardPlayed(IBaseCard card)
     {
-        this.Board.PlayMinionEnemySide(card);
+        // If the card is a minion, play it on the board
+        if (card is IMinion minion)
+        {
+           this.Board.PlayMinionEnemySide(minion);
+        }
+
+        // Display the card as a temporary card on the screen
+        this.OnTemporaryCardDisplayAction?.Invoke(card);
     }
 
     public async Task OnGameJoined(Player player, Player? otherPlayer)

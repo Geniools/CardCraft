@@ -69,7 +69,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\JunkCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ServerCallbacks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ViewCardColor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\BaseMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\CardMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\EnemyPlayerUpdateMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\PlayerSignalRDetails.cs" />
