@@ -5,7 +5,7 @@ public class ExamSpell : BaseSpell
     public ExamSpell() : base(
         3,
         "Exam",
-        "Ay blayt",
+        "Remove 2 Mana points from enemy Hero",
         CardRarityEnum.COMMON,
         "examspell.jpeg"
     )

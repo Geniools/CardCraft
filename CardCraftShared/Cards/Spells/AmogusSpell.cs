@@ -7,8 +7,8 @@ public class AmogusSpell : BaseSpell
     public AmogusSpell() : base
         (
             5,
-            "Amogus", 
-            "Get control over an enemy minion",
+            "Amogus",
+            "Remove 1 minion from enemy Hero hand",
             CardRarityEnum.RARE, 
             "amogusspell.jpg"
         ) { }

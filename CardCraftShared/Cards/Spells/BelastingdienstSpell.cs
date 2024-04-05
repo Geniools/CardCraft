@@ -5,7 +5,7 @@ public class BelastingdienstSpell : BaseSpell
     public BelastingdienstSpell(): base(
         5,
         "Belastingdienst",
-        "Demand 50% of the players mana",
+        "Deal 4 Damage to enemy Hero",
         CardRarityEnum.RARE,
         "belastingdienstspell.jpeg"
     ) { }

@@ -3,9 +3,9 @@
 public class CorridorCoffeeSpell : BaseSpell
 {
     public CorridorCoffeeSpell() : base(
-        1,
+        0,
         "Corridor Coffee",
-        "Sanity Restored",
+        "Adds 2 Mana to the Hero",
         CardRarityEnum.COMMON,
         "corridorcoffeespell.jpg"
     ) { }

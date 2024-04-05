@@ -7,7 +7,7 @@ public class InfoManagementSpell : BaseSpell
     public InfoManagementSpell() : base(
         6,
         "InfoManagement",
-        "3ECs",
+        "Remove 2 Attack points from each minion in enemy Hand",
         CardRarityEnum.RARE,
         "infomanagementspell.jpeg"
     ) { }

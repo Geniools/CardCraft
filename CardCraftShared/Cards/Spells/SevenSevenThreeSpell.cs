@@ -5,7 +5,7 @@ public class SevenSevenThreeSpell : BaseSpell
     public SevenSevenThreeSpell() : base(
         10,
         "773",
-        "Secret spell that deals 6 damage to the enemy hero",
+        "Deal 8 damage to enemy Hero",
         CardRarityEnum.LEGENDARY,
         "sevenseventhreespell.png"
     ) { }

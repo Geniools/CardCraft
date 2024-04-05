@@ -5,7 +5,7 @@ public class GymSpell : BaseSpell
     public GymSpell() : base(
         3,
         "Gym",
-        "What am i doing today? Chest and back",
+        "Deal 2 damage to enemy Hero",
         CardRarityEnum.COMMON,
         "gymspell.jpg"
     ) { }

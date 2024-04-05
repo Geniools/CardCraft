@@ -5,7 +5,7 @@ public class LandlordVisitSpell : BaseSpell
     public LandlordVisitSpell(): base(
         8,
         "Landlord visit",
-        "Sorry, but you need to pay 10.000$ for your gas bill",
+        "Remove 6 Mana from enemy Hero",
         CardRarityEnum.EPIC,
         "landlordvisitspell.png"
     ) { }
