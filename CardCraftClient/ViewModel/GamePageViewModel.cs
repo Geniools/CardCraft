@@ -41,7 +41,16 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private ObservableCollection<IBaseCard> _currentPlayerHand;
     [ObservableProperty] private IBaseCard _selectedHandCard;
     [ObservableProperty] private ObservableCollection<IMinion> _currentPlayerBoard;
-    [ObservableProperty] private IBaseCard _selectedFriendlyBoardCard;
+    [ObservableProperty] private IMinion _selectedFriendlyBoardCard;
+
+    partial void OnSelectedFriendlyBoardCardChanged(IMinion? value)
+    {
+        // If the minion cannot attack, deselect it
+        if (value is not null && !value.CanAttack)
+        {
+            this.SelectedFriendlyBoardCard = null;
+        }
+    }
 
     // Enemy Player
     [ObservableProperty] private Player _enemyPlayer;
@@ -49,7 +58,7 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private int _enemyPlayerDeckCardCount;
     [ObservableProperty] private ObservableCollection<IBaseCard> _enemyPlayerHand;
     [ObservableProperty] private ObservableCollection<IMinion> _enemyPlayerBoard;
-    [ObservableProperty] private IBaseCard _selectedEnemyBoardCard;
+    [ObservableProperty] private IMinion _selectedEnemyBoardCard;
 
     public GamePageViewModel(GameManager gm, SignalRService signalRService)
     {
@@ -178,7 +187,7 @@ public partial class GamePageViewModel : BaseViewModel
         try
         {
             // Remove the card from the player's hand
-            this._gameManager.CurrentPlayer.Hand.Remove(card);
+            this._gameManager.CurrentPlayer.PlayCard(card);
 
             // Decrease the player's mana
             this.AvailableMana -= card.ManaCost;
@@ -209,13 +218,48 @@ public partial class GamePageViewModel : BaseViewModel
     [RelayCommand]
     private async Task AttackMinion()
     {
+        IMinion friendlyMinion = this.SelectedFriendlyBoardCard;
+        IMinion enemyMinion = this.SelectedEnemyBoardCard;
 
+        // Check if there are selected minions to attack
+        if (friendlyMinion is null || enemyMinion is null)
+        {
+            await Shell.Current.DisplayAlert("Oops :(", "No minions selected to attack", "OK");
+            return;
+        }
+
+        // Check if the friendly minion is able to attack
+        if (!friendlyMinion.CanAttack)
+        {
+            await Shell.Current.DisplayAlert("Oops :(", $"Minion {friendlyMinion.Name} cannot attack (yet)", "OK");
+            return;
+        }
+
+        // Attack the enemy minion
+        friendlyMinion.AttackMinion(enemyMinion);
     }
 
     [RelayCommand]
     private async Task AttackHero()
     {
+        IMinion friendlyMinion = this.SelectedFriendlyBoardCard;
 
+        // Check if there is a selected minion to attack
+        if (friendlyMinion is null)
+        {
+            await Shell.Current.DisplayAlert("Oops :(", "No minion selected to attack", "OK");
+            return;
+        }
+
+        // Check if the friendly minion is able to attack
+        if (!friendlyMinion.CanAttack)
+        {
+            await Shell.Current.DisplayAlert("Oops :(", $"Minion {friendlyMinion.Name} cannot attack (yet)", "OK");
+            return;
+        }
+
+        // Attack the enemy hero
+        friendlyMinion.AttackHero(this._gameManager.EnemyPlayer.Hero);
     }
 
 

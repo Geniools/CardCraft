@@ -19,6 +19,9 @@ public class Hand
         // Check the hand size
         if (this.Cards.Count >= MAX_HAND_SIZE)
         {
+            // Trigger the CollectionChanged event
+            this.Cards.Add(card);
+            this.Cards.Remove(card);
             return;
         }
 

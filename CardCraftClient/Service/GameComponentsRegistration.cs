@@ -2,6 +2,7 @@
 using CardCraftShared.Cards.Heroes;
 using CardCraftShared.Cards.Minions;
 using CardCraftShared.Cards.Spells;
+using CardCraftShared.Core.Decorators;
 
 namespace CardCraftClient.Service;
 
@@ -41,7 +42,7 @@ public class GameComponentsRegistration
 
         cards.Add(new AlexCard());
 
-        cards.Add(new AndreiCard());
+        // cards.Add(new DivineShield(new AndreiCard()));
         cards.Add(new AndreiCard());
         cards.Add(new AndreiCard());
         cards.Add(new AndreiCard());
