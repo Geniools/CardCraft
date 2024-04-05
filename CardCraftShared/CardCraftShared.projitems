@@ -60,7 +60,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Board.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\DivineShield.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\MinionEffectDecorator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Decorators\TauntDecorator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Enums\CardRarityEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Minions\AlexCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Cards\Spells\ResitSpell.cs" />
