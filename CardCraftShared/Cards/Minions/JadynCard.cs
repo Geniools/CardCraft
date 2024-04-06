@@ -7,7 +7,7 @@ public class JadynCard : BaseMinion
         4,
         5,
         "Jadyn",
-        "Ticklish af",
+        "Ticklish",
         CardRarityEnum.COMMON,
         "jadyncard.jpg"
     ) { }

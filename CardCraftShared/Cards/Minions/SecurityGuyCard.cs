@@ -7,7 +7,7 @@ public class SecurityGuyCard : BaseMinion
         6,
         6,
         "Security Guy",
-        "You need to leave the room, the university is being closed. This card throws one enemy card back to the deck",
+        "You need to leave the room, the university is being closed",
         CardRarityEnum.RARE,
         "securityguycard.jpg"
     ) { }

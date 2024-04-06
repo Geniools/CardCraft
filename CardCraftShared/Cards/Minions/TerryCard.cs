@@ -8,7 +8,7 @@ public class TerryCard : BaseMinion
         3,
         5,
         "Terry",
-        "50% chance of attacking a random character",
+        "Has a 1/10 chance of showing up to university",
         CardRarityEnum.COMMON,
         "terrycard.jpg"
     ) { }

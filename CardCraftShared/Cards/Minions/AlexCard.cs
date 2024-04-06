@@ -8,7 +8,7 @@ public class AlexCard : BaseMinion
         10,
         10,
         "Alex",
-        "Solo army",
+        "Reads .NET documentation in his free time",
         CardRarityEnum.LEGENDARY,
         "alexcard.jpg"
     )
