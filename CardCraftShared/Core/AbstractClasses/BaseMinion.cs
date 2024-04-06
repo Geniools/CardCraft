@@ -1,41 +1,49 @@
-﻿using System.Diagnostics;
-using CardCraftShared.Core.Interfaces;
+﻿using CardCraftShared.Core.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CardCraftShared;
 
-public abstract class BaseMinion : IMinion
+public abstract partial class BaseMinion : ObservableObject, IMinion
 {
+    [ObservableProperty]
     private int _health;
+
+    partial void OnHealthChanged(int value)
+    {
+        if (this.Health <= 0)
+        {
+            UnaliveSelf();
+        }
+    }
+
+    [ObservableProperty]
     private int _attack;
+
+    partial void OnAttackChanged(int value)
+    {
+        if (this.Health <= 0)
+        {
+            UnaliveSelf();
+        }
+    }
 
     public event EventHandler OnDeath;
 
-    public int Attack
-    {
-        get => _attack;
-        set => _attack = Math.Max(value, 0);
-    }
-
-    public int Health
-    {
-        get => _health;
-        set
-        {
-            this._health = Math.Max(value, 0);
-
-            // If the health is 0 or below, unalive the minion
-            if (this._health <= 0)
-            {
-                UnaliveSelf();
-            }
-        } 
-    }
     public int ManaCost { get ; set; }
     public CardRarityEnum Rarity { get; init; }
-    public string Name { get; init; }
-    public string Description { get; set; }
-    public string Image { get; set; }
-    public bool CanAttack { get; set; }
+
+    [ObservableProperty]
+    private string _name;
+
+    [ObservableProperty]
+    private string _description;
+
+    [ObservableProperty]
+    private string _image;
+
+    // CanAttack property is used to determine if the minion can attack
+    [ObservableProperty]
+    private bool _canAttack;
 
     // Color and TextColor properties are used to determine the color of the card based on its rarity
     public string Color => Rarity switch
@@ -56,6 +64,8 @@ public abstract class BaseMinion : IMinion
         _ => "#000000"
     };
 
+    public string Id { get; set; }
+
     public BaseMinion(int health, int attack, int manaCost, string name, string description, CardRarityEnum rarity, string image)
     {
         _health = health;
@@ -66,6 +76,9 @@ public abstract class BaseMinion : IMinion
         Rarity = rarity;
         CanAttack = false;
         Image = image;
+
+        // Generate a unique id for the minion
+        Id = Guid.NewGuid().ToString();
     }
 
     public abstract void TriggerEffect(Player player, Player enemyPlayer, Board board);

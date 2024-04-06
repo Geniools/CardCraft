@@ -39,11 +39,16 @@ public class Hand
         this.Cards.Clear();
 
         // A delay must be added, otherwise the list is updated too quickly, resulting in double cards (this is just a guess)
-        Task.Delay(100).Wait();
+        Task.Delay(300).Wait();
 
         foreach (IBaseCard card in cards)
         {
             this.Cards.Add(card);
         }
+    }
+
+    public void Clear()
+    {
+        this.Cards.Clear();
     }
 }

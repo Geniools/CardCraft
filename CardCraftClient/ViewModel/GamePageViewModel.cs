@@ -6,6 +6,7 @@ using CardCraftClient.Model;
 using CardCraftClient.Service;
 using CardCraftShared.Core.Interfaces;
 using CommunityToolkit.Mvvm.Input;
+using System.ComponentModel;
 
 namespace CardCraftClient.ViewModel;
 
@@ -40,10 +41,10 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private int _currentPlayerDeckCardCount;
     [ObservableProperty] private ObservableCollection<IBaseCard> _currentPlayerHand;
     [ObservableProperty] private IBaseCard _selectedHandCard;
-    [ObservableProperty] private ObservableCollection<IMinion> _currentPlayerBoard;
-    [ObservableProperty] private IMinion _selectedFriendlyBoardCard;
+    [ObservableProperty] private ObservableCollection<BaseMinion> _currentPlayerBoard;
+    [ObservableProperty] private BaseMinion _selectedFriendlyBoardCard;
 
-    partial void OnSelectedFriendlyBoardCardChanged(IMinion? value)
+    partial void OnSelectedFriendlyBoardCardChanged(BaseMinion? value)
     {
         // If the minion cannot attack, deselect it
         if (value is not null && !value.CanAttack)
@@ -57,15 +58,15 @@ public partial class GamePageViewModel : BaseViewModel
     [ObservableProperty] private int _enemyPlayerHeroHealth;
     [ObservableProperty] private int _enemyPlayerDeckCardCount;
     [ObservableProperty] private ObservableCollection<IBaseCard> _enemyPlayerHand;
-    [ObservableProperty] private ObservableCollection<IMinion> _enemyPlayerBoard;
-    [ObservableProperty] private IMinion _selectedEnemyBoardCard;
+    [ObservableProperty] private ObservableCollection<BaseMinion> _enemyPlayerBoard;
+    [ObservableProperty] private BaseMinion _selectedEnemyBoardCard;
 
     public GamePageViewModel(GameManager gm, SignalRService signalRService)
     {
         this._gameManager = gm;
         this._signalRService = signalRService;
 
-        this.Title = "Game";
+        this.Title = "Card Craft";
 
         this.CurrentPlayer = gm.CurrentPlayer;
         this.EnemyPlayer = gm.EnemyPlayer;
@@ -75,12 +76,13 @@ public partial class GamePageViewModel : BaseViewModel
         {
             this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
             this.CurrentPlayerDeckCardCount = gm.CurrentPlayer.Deck.Cards.Count;
+            // this.CurrentPlayerHand = this.CurrentPlayer.Hand.Cards;
+            // this.CurrentPlayerDeckCardCount = this.CurrentPlayer.Deck.Cards.Count;
 
             // Make the message to be sent to the enemy player
             // Notify the server
-            await this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
+            await this._signalRService.SendCardAmountUpdateEnemyPlayer(new EnemyPlayerCardAmountUpdateMessage()
             {
-                HeroHealth = this.CurrentPlayerHeroHealth,
                 PlayerHandCardAmount = this.CurrentPlayerHand.Count,
                 PlayerDeckCardAmount = this.CurrentPlayerDeckCardCount
             });
@@ -94,11 +96,29 @@ public partial class GamePageViewModel : BaseViewModel
 
         gm.Board.FriendlySide.CollectionChanged += async (sender, e) =>
         {
+            // Subscribe the enemy minions to the event when added to the board
+            if (e.NewItems != null)
+            {
+                foreach (BaseMinion minion in e.NewItems)
+                {
+                    minion.PropertyChanged += OnFriendlyMinionStatsChanged;
+                }
+            }
+
             this.CurrentPlayerBoard = gm.Board.FriendlySide;
         };
 
         gm.Board.EnemySide.CollectionChanged += (sender, e) =>
         {
+            // Subscribe the enemy minions to the event when added to the board
+            if (e.NewItems != null)
+            {
+                foreach (BaseMinion minion in e.NewItems)
+                {
+                    minion.PropertyChanged += OnEnemyMinionStatsChanged;
+                }
+            }
+
             this.EnemyPlayerBoard = gm.Board.EnemySide;
         };
 
@@ -124,6 +144,41 @@ public partial class GamePageViewModel : BaseViewModel
             this.TemporaryCentredDisplayedCard = card as BaseSpell;
         };
 
+        // Hero health changed
+        gm.CurrentPlayer.Hero.OnHealthChanged += async (int newHealthValue) =>
+        {
+            if (this.CurrentPlayerHeroHealth == newHealthValue)
+            {
+                return;
+            }
+
+            this.CurrentPlayerHeroHealth = newHealthValue;
+
+            // Notify the server
+            await this._signalRService.SendHeroUpdateEnemyPlayer(new EnemyPlayerHeroUpdateMessage()
+            {
+                SenderEnemyHeroHealth = this.EnemyPlayerHeroHealth,
+                SenderFriendlyHeroHealth = newHealthValue
+            });
+        };
+
+        gm.EnemyPlayer.Hero.OnHealthChanged += async (int newHealthValue) =>
+        {
+            if (this.EnemyPlayerHeroHealth == newHealthValue)
+            {
+                return;
+            }
+
+            this.EnemyPlayerHeroHealth = newHealthValue;
+
+            // Notify the server
+            await this._signalRService.SendHeroUpdateEnemyPlayer(new EnemyPlayerHeroUpdateMessage()
+            {
+                SenderEnemyHeroHealth = newHealthValue,
+                SenderFriendlyHeroHealth = this.CurrentPlayerHeroHealth
+            });
+        };
+
         // Set initial values
         this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
         this.EnemyPlayerHand = gm.EnemyPlayer.Hand.Cards;
@@ -140,9 +195,8 @@ public partial class GamePageViewModel : BaseViewModel
         this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
 
         // Send initial values to the server
-        _ = this._signalRService.SendUpdateEnemyPlayer(new EnemyPlayerUpdateMessage()
+        _ = this._signalRService.SendCardAmountUpdateEnemyPlayer(new EnemyPlayerCardAmountUpdateMessage()
         {
-            HeroHealth = this.CurrentPlayerHeroHealth,
             PlayerHandCardAmount = this.CurrentPlayerHand.Count,
             PlayerDeckCardAmount = this.CurrentPlayerDeckCardCount
         });
@@ -193,7 +247,7 @@ public partial class GamePageViewModel : BaseViewModel
             this.AvailableMana -= card.ManaCost;
 
             // If the card is a minion, play it on the board
-            if (card is IMinion minionCard)
+            if (card is BaseMinion minionCard)
             {
                 this._gameManager.Board.PlayMinionFriendlySide(minionCard);
             }
@@ -231,12 +285,15 @@ public partial class GamePageViewModel : BaseViewModel
         // Check if the friendly minion is able to attack
         if (!friendlyMinion.CanAttack)
         {
-            await Shell.Current.DisplayAlert("Oops :(", $"Minion {friendlyMinion.Name} cannot attack (yet)", "OK");
+            await Shell.Current.DisplayAlert("Oops :(", $"Minion {friendlyMinion.Name} cannot attack", "OK");
             return;
         }
 
         // Attack the enemy minion
         friendlyMinion.AttackMinion(enemyMinion);
+
+        // Disable the friendly minion from attacking again
+        friendlyMinion.CanAttack = false;
     }
 
     [RelayCommand]
@@ -254,39 +311,58 @@ public partial class GamePageViewModel : BaseViewModel
         // Check if the friendly minion is able to attack
         if (!friendlyMinion.CanAttack)
         {
-            await Shell.Current.DisplayAlert("Oops :(", $"Minion {friendlyMinion.Name} cannot attack (yet)", "OK");
+            await Shell.Current.DisplayAlert("Oops :(", $"Minion {friendlyMinion.Name} cannot attack", "OK");
             return;
         }
 
         // Attack the enemy hero
         friendlyMinion.AttackHero(this._gameManager.EnemyPlayer.Hero);
+
+        // Disable the friendly minion from attacking again
+        friendlyMinion.CanAttack = false;
     }
 
-
-    private void LogAvailableCollections()
+    private void OnEnemyMinionStatsChanged(object? sender, PropertyChangedEventArgs e)
     {
-        Trace.WriteLine("Current Player Hand:");
-        foreach (var card in this.CurrentPlayerHand)
+        if (sender is BaseMinion minion)
         {
-            Trace.WriteLine(card.Name);
-        }
-        
-        Trace.WriteLine("Enemy Player Hand:");
-        foreach (var card in this.EnemyPlayerHand)
-        {
-            Trace.WriteLine(card.Name);
-        }
+            MinionCardUpdatedMessage message = new()
+            {
+                SenderBoardSide = "enemy",
+                Id = minion.Id,
+                Attack = minion.Attack,
+                Health = minion.Health,
+                Name = minion.Name,
+                Description = minion.Description,
+                Image = minion.Image
+            };
 
-        Trace.WriteLine("Current Player Board:");
-        foreach (var card in this.CurrentPlayerBoard)
-        {
-            Trace.WriteLine(card.Name);
-        }
+            Trace.WriteLine($"Enemy Minion {minion.Name} stats updated: {message.Attack}/{message.Health}. Id: {minion.Id}");
 
-        Trace.WriteLine("Enemy Player Board:");
-        foreach (var card in this.EnemyPlayerBoard)
+            // Notify the server
+            _ = this._signalRService.SendMinionUpdated(message);
+        }
+    }
+
+    private void OnFriendlyMinionStatsChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is BaseMinion minion)
         {
-            Trace.WriteLine(card.Name);
+            MinionCardUpdatedMessage message = new()
+            {
+                SenderBoardSide = "friendly",
+                Id = minion.Id,
+                Attack = minion.Attack,
+                Health = minion.Health,
+                Name = minion.Name,
+                Description = minion.Description,
+                Image = minion.Image
+            };
+
+            Trace.WriteLine($"Friendly Minion {minion.Name} stats updated: {message.Attack}/{message.Health}. Id: {minion.Id}");
+
+            // Notify the server
+            _ = this._signalRService.SendMinionUpdated(message);
         }
     }
 }

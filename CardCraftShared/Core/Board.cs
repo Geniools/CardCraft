@@ -1,13 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using CardCraftShared.Core.Interfaces;
+using CardCraftShared.Core.Other;
 
 namespace CardCraftShared;
 
 public class Board
 {
-    public ObservableCollection<IMinion> FriendlySide { get; set; }
-    public ObservableCollection<IMinion> EnemySide { get; set; }
+    public const int MAX_BOARD_SIZE = 6;
+
+    public ObservableCollection<BaseMinion> FriendlySide { get; set; }
+    public ObservableCollection<BaseMinion> EnemySide { get; set; }
+
+    public Action<BaseMinion> OnMinionDeath;
 
     
     public Board()
@@ -16,10 +21,10 @@ public class Board
         EnemySide = new();
     }
 
-    public void PlayMinionFriendlySide(IMinion card)
+    public void PlayMinionFriendlySide(BaseMinion card)
     {
         // Check if the board is full
-        if (this.FriendlySide.Count >= 7)
+        if (this.FriendlySide.Count > MAX_BOARD_SIZE)
         {
             throw new Exception("Board is full");
         }
@@ -29,34 +34,38 @@ public class Board
         // Subscribe to the minion's death event
         card.OnDeath += (sender, args) =>
         {
-            IMinion minion = (IMinion)sender;
+            BaseMinion minion = (BaseMinion)sender;
             this.RemoveMinionFriendlySide(minion);
+
+            this.OnMinionDeath?.Invoke(minion);
         };
     }
 
-    public void PlayMinionEnemySide(IMinion card)
+    public void PlayMinionEnemySide(BaseMinion card)
     {
         this.EnemySide.Add(card);
 
         // Subscribe to the minion's death event
         card.OnDeath += (sender, args) =>
         {
-            IMinion minion = (IMinion)sender;
+            BaseMinion minion = (BaseMinion)sender;
             this.RemoveMinionEnemySide(minion);
+
+            this.OnMinionDeath?.Invoke(minion);
         };
     }
 
-    public void RemoveMinionFriendlySide(IMinion card)
+    public void RemoveMinionFriendlySide(BaseMinion card)
     {
         this.FriendlySide.Remove(card);
     }
 
-    public void RemoveMinionEnemySide(IMinion card)
+    public void RemoveMinionEnemySide(BaseMinion card)
     {
         this.EnemySide.Remove(card);
     }
 
-    internal void EnableMinionsToAttack()
+    public void EnableMinionsToAttack()
     {
         foreach (IMinion minion in FriendlySide)
         {

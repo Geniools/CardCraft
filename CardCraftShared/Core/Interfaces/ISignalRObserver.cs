@@ -8,6 +8,8 @@ public interface ISignalRObserver
     public Task OnGameStarted();
     public Task OnGameEnded();
     public Task OnCardPlayed(IBaseCard card);
-    public Task OnEnemyPlayerUpdated(EnemyPlayerUpdateMessage message);
+    public Task OnEnemyPlayerCardAmountUpdated(EnemyPlayerCardAmountUpdateMessage message);
+    public Task OnEnemyPlayerHeroUpdated(EnemyPlayerHeroUpdateMessage message);
+    public Task OnMinionUpdated(MinionCardUpdatedMessage message);
     public Task OnTurnStarted(bool isFirstTurn);
 }

@@ -1,4 +1,5 @@
 ﻿using CardCraftShared.Core.Interfaces;
+using System.ComponentModel;
 
 namespace CardCraftShared.Core.Decorators;
 
@@ -22,9 +23,10 @@ internal abstract class MinionEffectDecorator : IMinion
 
     public int ManaCost { get; set; }
     public CardRarityEnum Rarity { get; init; }
-    public string Name { get; init; }
+    public string Name { get; set; }
     public string Description { get; set; }
     public bool CanAttack { get; set; }
+
     public string Image { get; set; }
     public string TextColor { get; set; }
     public string Color { get; set; }

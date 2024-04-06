@@ -5,7 +5,9 @@ namespace CardCraftShared;
 
 public abstract class BaseHero : IAttackable
 {
-    protected const int DefaultHealth = 30;
+    public const int DefaultHealth = 30;
+    public Action<BaseHero> OnDeath;
+
     // UI properties for the hero
     public string Color { get; init; }
     public string TextColor { get; init; }
@@ -39,7 +41,25 @@ public abstract class BaseHero : IAttackable
         }
     }
 
-    public int Health { get; set; }
+    private int _health;
+
+    public int Health
+    {
+        get => this._health;
+        set
+        {
+            this._health = value;
+
+            this.OnHealthChanged?.Invoke(this._health);
+
+            if (this._health <= 0)
+            {
+                this.OnDeath?.Invoke(this);
+            }
+        }
+    }
+
+    public Action<int> OnHealthChanged;
 
     protected BaseHero(ColorEnum color, string image, string name, string description)
     {

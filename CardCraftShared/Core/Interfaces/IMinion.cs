@@ -1,4 +1,6 @@
-﻿namespace CardCraftShared.Core.Interfaces;
+﻿using System.ComponentModel;
+
+namespace CardCraftShared.Core.Interfaces;
 
 public interface IMinion : IBaseCard, IAttackable
 {

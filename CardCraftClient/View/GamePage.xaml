@@ -44,7 +44,7 @@
                         TextColor="{Binding TextColor}"
                         ManaCost="{Binding ManaCost}"
                         Attack="{Binding Attack}"
-                        Health="{Binding Health}" 
+                        Health="{Binding Health}"
                     />
                 </Grid>
             </DataTemplate>
@@ -127,7 +127,7 @@
 
                     <Label
                         Grid.Column="2"
-                        Text="{Binding EnemyPlayer.Hero.Health}"
+                        Text="{Binding EnemyPlayerHeroHealth}"
                         TextColor="{StaticResource Secondary}"
                         FontFamily="CutOutsFLF"
                         FontSize="20"
@@ -542,7 +542,7 @@
 
                     <Label
                         Grid.Column="2"
-                        Text="{Binding CurrentPlayer.Hero.Health}"
+                        Text="{Binding CurrentPlayerHeroHealth}"
                         TextColor="{StaticResource Secondary}"
                         FontFamily="CutOutsFLF"
                         FontSize="20"

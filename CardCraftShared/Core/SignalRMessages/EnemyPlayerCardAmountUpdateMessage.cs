@@ -1,8 +1,7 @@
 ﻿namespace CardCraftShared;
 
-public class EnemyPlayerUpdateMessage
+public class EnemyPlayerCardAmountUpdateMessage
 {
-    public int HeroHealth { get; set; }
     public int PlayerHandCardAmount { get; set; }
     public int PlayerDeckCardAmount { get; set; }
 }

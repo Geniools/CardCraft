@@ -1,5 +1,4 @@
 ﻿using CardCraftClient.View;
-using SharpHook;
 
 namespace CardCraftClient;
 

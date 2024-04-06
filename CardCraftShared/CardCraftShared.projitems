@@ -69,7 +69,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ServerCallbacks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\ViewCardColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\CardMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\EnemyPlayerUpdateMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\EnemyPlayerCardAmountUpdateMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\EnemyPlayerHeroUpdateMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\MinionCardUpdatedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\SignalRMessages\PlayerSignalRDetails.cs" />
     <Compile Include="..\CardCraftShared\Core\DeckPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graveyard.cs" />
@@ -80,5 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Core\AbstractClasses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)libman.json" />
   </ItemGroup>
 </Project>
