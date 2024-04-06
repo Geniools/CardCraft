@@ -215,6 +215,9 @@ public class GameManager : ISignalRObserver
         }
         this.CurrentPlayer.Mana = AvailableMana;
 
+        // Make every minion from the board be able to attack
+        this.Board.EnableMinionsToAttack();
+
         // Trace.WriteLine($"Starting Turn Timer! PLAYER: {this._signalRService.Player.Name}");
         // Start the timer
         await this.StartTurnTimer();

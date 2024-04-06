@@ -1,4 +1,5 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using System.Diagnostics;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
 
@@ -18,7 +19,16 @@ public abstract class BaseMinion : IMinion
     public int Health
     {
         get => _health;
-        set => _health = Math.Max(value, 0);
+        set
+        {
+            this._health = Math.Max(value, 0);
+
+            // If the health is 0 or below, unalive the minion
+            if (this._health <= 0)
+            {
+                UnaliveSelf();
+            }
+        } 
     }
     public int ManaCost { get ; set; }
     public CardRarityEnum Rarity { get; init; }
@@ -78,7 +88,7 @@ public abstract class BaseMinion : IMinion
     }
     public void AttackMinion(IMinion minion)
     {
-        minion.Damage(_attack);
+        minion.Damage(Attack);
         TakeDamage(minion.Attack);
     }
 
@@ -89,12 +99,12 @@ public abstract class BaseMinion : IMinion
 
     public void Damage(int damage)
     {
-        _health -= damage;
+        Health -= damage;
     }
 
     public void TakeDamage(int damage)
     {
-        _health -= damage;
+        Health -= damage;
     }
 
     public void UnaliveSelf()

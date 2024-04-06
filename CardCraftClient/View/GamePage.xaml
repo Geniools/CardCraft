@@ -16,6 +16,7 @@
             <DataTemplate x:Name="BaseMinionTemplateHand" x:Key="BaseMinionTemplateHand" x:DataType="{x:Type model:BaseMinion}">
                 <Grid
                     WidthRequest="120"
+                    Padding="2"
                     >
                     <viewElements:BaseMinionTemplate
                         Name="{Binding Name}"
@@ -32,7 +33,8 @@
 
             <DataTemplate x:Name="BaseMinionTemplateBoard" x:Key="BaseMinionTemplateBoard" x:DataType="{x:Type model:BaseMinion}">
                 <Grid
-                    WidthRequest="170"
+                    WidthRequest="180"
+                    Padding="3"
                     >
                     <viewElements:BaseMinionTemplate
                         Name="{Binding Name}"
@@ -56,6 +58,25 @@
                     />
                 </Grid>
             </DataTemplate>
+            
+            <!-- Change the color of a selected item in a collection view -->
+            <Style TargetType="Grid">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter 
+                                        Property="BackgroundColor"
+                                        Value="{StaticResource Main1}" 
+                                    />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -234,6 +255,7 @@
                     />
                 </Grid>
 
+                <!-- Enemy side of the board -->
                 <Border
                     Grid.Row="0"
                     Grid.Column="1"
@@ -262,6 +284,7 @@
                     BackgroundColor="Black"
                     />
 
+                <!-- Friendly side of the board -->
                 <Border
                     Grid.Row="2"
                     Grid.Column="1"
@@ -354,7 +377,6 @@
                         HorizontalOptions="Center"
                         VerticalOptions="Start"
                     />
-
                 </Grid>
 
                 <!-- Display a spell in the center of the screen -->

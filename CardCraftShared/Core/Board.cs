@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared;
@@ -22,12 +23,27 @@ public class Board
         {
             throw new Exception("Board is full");
         }
+
         this.FriendlySide.Add(card);
+
+        // Subscribe to the minion's death event
+        card.OnDeath += (sender, args) =>
+        {
+            IMinion minion = (IMinion)sender;
+            this.RemoveMinionFriendlySide(minion);
+        };
     }
 
     public void PlayMinionEnemySide(IMinion card)
     {
         this.EnemySide.Add(card);
+
+        // Subscribe to the minion's death event
+        card.OnDeath += (sender, args) =>
+        {
+            IMinion minion = (IMinion)sender;
+            this.RemoveMinionEnemySide(minion);
+        };
     }
 
     public void RemoveMinionFriendlySide(IMinion card)
@@ -38,5 +54,13 @@ public class Board
     public void RemoveMinionEnemySide(IMinion card)
     {
         this.EnemySide.Remove(card);
+    }
+
+    internal void EnableMinionsToAttack()
+    {
+        foreach (IMinion minion in FriendlySide)
+        {
+            minion.CanAttack = true;
+        }
     }
 }
