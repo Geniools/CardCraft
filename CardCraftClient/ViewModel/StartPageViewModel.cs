@@ -1,4 +1,5 @@
-﻿using CardCraftClient.Service;
+﻿using CardCraftClient.Model;
+using CardCraftClient.Service;
 using CardCraftClient.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -24,10 +25,13 @@ public partial class StartPageViewModel : BaseViewModel
     private bool _canStartGame;
 
     private readonly SignalRService _signalRService;
+    private readonly GameManager _gm;
 
-    public StartPageViewModel(SignalRService signalRService)
+    public StartPageViewModel(SignalRService signalRService, GameManager gm)
     {
         this._signalRService = signalRService;
+        this._gm = gm;
+
         this._canStartGame = this._signalRService.HubConnection.State == HubConnectionState.Connected;
         this.IsBusy = false;
         this.GameName = "Card Craft";
@@ -103,6 +107,11 @@ public partial class StartPageViewModel : BaseViewModel
         this._signalRService.Player.Name = this.Username;
         this._signalRService.LobbyCode = this.LobbyCode;
 
+        // Before joining the game, clear the CurrentPlayer and EnemyPlayer in the GameManager
+        this._gm.CurrentPlayer = null;
+        this._gm.EnemyPlayer = null;
+
+        // Join the Game
         await this._signalRService.JoinGame(this.LobbyCode, this.Username);
 
         this.IsBusy = false;

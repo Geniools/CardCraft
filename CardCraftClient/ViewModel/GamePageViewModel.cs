@@ -74,10 +74,10 @@ public partial class GamePageViewModel : BaseViewModel
         // Subscribe to game manager events
         gm.CurrentPlayer.Hand.Cards.CollectionChanged += async (sender, e) =>
         {
-            this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
-            this.CurrentPlayerDeckCardCount = gm.CurrentPlayer.Deck.Cards.Count;
-            // this.CurrentPlayerHand = this.CurrentPlayer.Hand.Cards;
-            // this.CurrentPlayerDeckCardCount = this.CurrentPlayer.Deck.Cards.Count;
+            // this.CurrentPlayerHand = gm.CurrentPlayer.Hand.Cards;
+            // this.CurrentPlayerDeckCardCount = gm.CurrentPlayer.Deck.Cards.Count;
+            this.CurrentPlayerHand = this.CurrentPlayer.Hand.Cards;
+            this.CurrentPlayerDeckCardCount = this.CurrentPlayer.Deck.Cards.Count;
 
             // Make the message to be sent to the enemy player
             // Notify the server
@@ -92,6 +92,9 @@ public partial class GamePageViewModel : BaseViewModel
         {
             this.EnemyPlayerHand = gm.EnemyPlayer.Hand.Cards;
             this.EnemyPlayerDeckCardCount = gm.EnemyPlayer.Deck.Cards.Count;
+
+            this.EnemyPlayerHand = this.EnemyPlayer.Hand.Cards;
+            this.EnemyPlayerDeckCardCount = this.EnemyPlayer.Deck.Cards.Count;
         };
 
         gm.Board.FriendlySide.CollectionChanged += async (sender, e) =>
@@ -319,7 +322,7 @@ public partial class GamePageViewModel : BaseViewModel
         friendlyMinion.AttackHero(this._gameManager.EnemyPlayer.Hero);
 
         // Disable the friendly minion from attacking again
-        friendlyMinion.CanAttack = false;
+        // friendlyMinion.CanAttack = false;
     }
 
     private void OnEnemyMinionStatsChanged(object? sender, PropertyChangedEventArgs e)

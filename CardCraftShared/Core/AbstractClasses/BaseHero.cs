@@ -48,7 +48,8 @@ public abstract class BaseHero : IAttackable
         get => this._health;
         set
         {
-            this._health = value;
+            // The health can be at most the default health
+            this._health = Math.Min(DefaultHealth, value);
 
             this.OnHealthChanged?.Invoke(this._health);
 

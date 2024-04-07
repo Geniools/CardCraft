@@ -67,7 +67,7 @@ public class GameManager : ISignalRObserver
     public Player? CurrentPlayer
     {
         get => this._currentPlayer;
-        private set
+        set
         {
             this._currentPlayer = value;
 
@@ -83,7 +83,7 @@ public class GameManager : ISignalRObserver
     public Player? EnemyPlayer
     {
         get => this._enemyPlayer;
-        private set
+        set
         {
             this._enemyPlayer = value;
 
@@ -123,9 +123,6 @@ public class GameManager : ISignalRObserver
 
     public async Task EndGame()
     {
-        // Reset the players
-        this.Reset();
-
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
@@ -133,6 +130,9 @@ public class GameManager : ISignalRObserver
 
         // Will notify the server to remove the current player from the game online (so the player can connect to other games without issues)
         await this._signalRService.HubConnection.InvokeAsync(ServerCallbacks.LeaveGame);
+
+        // Reset the players
+        this.Reset();
     }
 
     public async Task AddPlayer(Player player)
@@ -208,11 +208,10 @@ public class GameManager : ISignalRObserver
         this.IsCurrentTurn = false;
 
         // Reset the players
-        this.CurrentPlayer = null;
-        this.EnemyPlayer = null;
+        // this.CurrentPlayer = null;
+        // this.EnemyPlayer = null;
+        this.AvailableMana = 0;
 
-        this._signalRService.Reset();
-        
         // Reset the board
         this.Board = new();
         
