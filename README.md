@@ -25,6 +25,7 @@ This game is being developed as a part of the Year 3, Period 3 courses at NHL St
 - The rules can be found [here](https://hearthstone.fandom.com/wiki/Gameplay).
 
 *Technical specifications:*
-* C# .NET MAUI
 * .NET 8.0
-* SignalR
+* C# .NET MAUI (the client)
+* ASP.NET Core (the server - hosted on Azure)
+* SignalR (makes the connection between the client and server possible)
