@@ -3,9 +3,9 @@
 public class PraySpell : BaseSpell
 {
     public PraySpell(): base(
-        2,
+        1,
         "Pray",
-        "Add 1 health point to Player/Hero",
+        "I hope this works this time \n Gain 1 Health",
         CardRarityEnum.COMMON,
         "prayspell.png"
     ) { }

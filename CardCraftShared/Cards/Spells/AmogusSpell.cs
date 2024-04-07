@@ -1,4 +1,5 @@
-﻿using CardCraftShared.Core.Interfaces;
+﻿using CardCraftShared.Cards.Minions;
+using CardCraftShared.Core.Interfaces;
 
 namespace CardCraftShared.Cards.Spells;
 
@@ -8,24 +9,27 @@ public class AmogusSpell : BaseSpell
         (
             5,
             "Amogus",
-            "Remove 1 minion from enemy Hero hand",
+            "Add one random card: Arian, Evald or Teo.",
             CardRarityEnum.RARE, 
             "amogusspell.jpg"
         ) { }
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        if (enemyPlayer.Hand.Cards.Count > 0)
-        {
-            Random random = new Random();
-            int randomIndex = random.Next(0, enemyPlayer.Hand.Cards.Count);
+        var random = new Random();
+        var randomCard = random.Next(1, 4);
 
-            IBaseCard randomCard = enemyPlayer.Hand.Cards[randomIndex];
-            
-            if (randomCard is IMinion minion)
-            {
-                enemyPlayer.Hand.Remove(minion);
-            }
+        switch (randomCard)
+        {
+            case 1:
+                player.Hand.Add(new ArianCard());
+                break;
+            case 2:
+                player.Hand.Add(new EvaldCard());
+                break;
+            case 3:
+                player.Hand.Add(new TeoCard());
+                break;
         }
     }
 }

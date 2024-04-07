@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using CardCraftClient.Core.Interfaces;
 using CardCraftClient.Service;
 using CardCraftClient.View;

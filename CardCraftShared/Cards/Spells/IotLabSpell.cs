@@ -5,7 +5,7 @@ public class IotLabSpell : BaseSpell
     public IotLabSpell() : base(
         0,
         "IoT Lab",
-        "Give 2 Mana to Hero",
+        "Motivational workspace! \n Gain 2 more Mana this turn",
         CardRarityEnum.COMMON,
         "iotlabspell.jpg"
     ) { }

@@ -5,7 +5,7 @@ public class LoremIpsumSpell : BaseSpell
     public LoremIpsumSpell() : base(
         0,
         "Lorem Ipsum",
-        "Give 1 Mana to Hero",
+        "Here's some data to help you debug. \n Gain 1 mana",
         CardRarityEnum.COMMON,
         "loremipsumspell.jpg"
     ) { }

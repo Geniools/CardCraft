@@ -269,6 +269,12 @@ public partial class GamePageViewModel : BaseViewModel
         catch (Exception e)
         {
             await Shell.Current.DisplayAlert("Oops :(", e.Message, "OK");
+
+            // Revert the changes
+            this.AvailableMana += card.ManaCost;
+
+            // Add the card back to the player's hand
+            this._gameManager.CurrentPlayer.Hand.Add(card);
         }
     }
 
@@ -322,7 +328,7 @@ public partial class GamePageViewModel : BaseViewModel
         friendlyMinion.AttackHero(this._gameManager.EnemyPlayer.Hero);
 
         // Disable the friendly minion from attacking again
-        // friendlyMinion.CanAttack = false;
+        friendlyMinion.CanAttack = false;
     }
 
     private void OnEnemyMinionStatsChanged(object? sender, PropertyChangedEventArgs e)
