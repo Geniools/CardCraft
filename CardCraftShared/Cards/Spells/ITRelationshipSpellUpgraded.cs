@@ -5,13 +5,20 @@ public class ITRelationshipSpellUpgraded : BaseSpell
     public ITRelationshipSpellUpgraded() : base(
         6,
         "IT Relationship",
-        "Give 4 Health to Hero",
+        "PEAK LOVE! \n Restore 5 Health. If player's Health is below or equal to 15, restore 10 instead",
         CardRarityEnum.RARE,
         "itrelationshipspellupgraded.jpg"
     ) { }
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        player.GiveHealth(4);
+        if (player.Hero.Health <= 15)
+        {
+            player.Hero.Health += 10;
+        }
+        else
+        {
+            player.Hero.Health += 5;
+        }
     }
 }

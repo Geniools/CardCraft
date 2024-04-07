@@ -3,9 +3,9 @@
 public class ExamSpell : BaseSpell
 {
     public ExamSpell() : base(
-        3,
+        4,
         "Exam",
-        "Remove 2 Mana points from enemy Hero",
+        "HAHAHAHAHAHA\n Good luck passing Design Patterns :) \n Deal 2 Damage to all enemy Minions",
         CardRarityEnum.COMMON,
         "examspell.jpeg"
     )
@@ -13,6 +13,9 @@ public class ExamSpell : BaseSpell
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        enemyPlayer.RemoveMana(2);
+        foreach (BaseMinion minion in board.EnemySide)
+        {
+            minion.TakeDamage(2);
+        }
     }
 }

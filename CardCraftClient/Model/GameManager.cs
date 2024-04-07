@@ -1,10 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using CardCraftClient.Core.Interfaces;
 using CardCraftClient.Service;
 using CardCraftClient.View;
 using CardCraftShared;
-using CardCraftShared.Core.Interfaces;
 using CardCraftShared.Core.Other;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -12,8 +10,7 @@ namespace CardCraftClient.Model;
 
 public class GameManager : ISignalRObserver
 {
-    private object _lock = new();
-    public const int DEFAULT_TURN_TIME = 30;
+    public const int DEFAULT_TURN_TIME = 60;
     public const int MAX_MANA = 10;
 
     private int _turnTimer;
@@ -65,11 +62,11 @@ public class GameManager : ISignalRObserver
     private readonly SignalRService _signalRService;
 
     // Players
-    private Player? _currentPlayer;
+    private Player _currentPlayer;
     public Player? CurrentPlayer
     {
         get => this._currentPlayer;
-        private set
+        set
         {
             this._currentPlayer = value;
 
@@ -81,11 +78,11 @@ public class GameManager : ISignalRObserver
     }
     public Action<Player?>? CurrentPlayerChanged;
 
-    private Player? _enemyPlayer;
+    private Player _enemyPlayer;
     public Player? EnemyPlayer
     {
         get => this._enemyPlayer;
-        private set
+        set
         {
             this._enemyPlayer = value;
 
@@ -109,15 +106,22 @@ public class GameManager : ISignalRObserver
         // Register the observer
         this._signalRService.AddObserver(this);
 
-        // Reset the game state
-        this.Reset();
+        // Set the initial values
+        this.IsGameStarted = false;
+
+        // Turn timer
+        this.TurnTimer = DEFAULT_TURN_TIME;
+        this.IsCurrentTurn = false;
+
+        this.Board = new();
+        this.Graveyard = new();
+
+        // Subscribe to events
+        this.Board.OnMinionDeath += this.OnCardUnalive;
     }
 
     public async Task EndGame()
     {
-        // Reset the players
-        this.Reset();
-
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
@@ -125,15 +129,29 @@ public class GameManager : ISignalRObserver
 
         // Will notify the server to remove the current player from the game online (so the player can connect to other games without issues)
         await this._signalRService.HubConnection.InvokeAsync(ServerCallbacks.LeaveGame);
+
+        // Reset the players
+        this.Reset();
     }
 
     public async Task AddPlayer(Player player)
     {
-        Trace.WriteLine($"Player {player.Name} adding to the game! SignalR: {this._signalRService.Player.Name}");
+        // Trace.WriteLine($"Player {player.Name} adding to the game! SignalR: {this._signalRService.Player.Name}");
 
         if (this._signalRService.Player.ConnectionId.Equals(player.ConnectionId))
         {
-            this.CurrentPlayer ??= this._signalRService.Player;
+            this.CurrentPlayer = this._signalRService.Player;
+
+            // Subscribe to the Hero's death event
+            this.CurrentPlayer.Hero.OnDeath += async (hero) =>
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    Shell.Current.DisplayAlert("Game Over", "You lost the game!", "Ok");
+                });
+
+                await this.EndGame();
+            };
         }
         else
         {
@@ -141,6 +159,17 @@ public class GameManager : ISignalRObserver
 
             // Instantiate the enemy's hero from the received type
             this.EnemyPlayer.Hero = (BaseHero)Activator.CreateInstance(Type.GetType(player.PlayerSignalRDetails.HeroType) ?? throw new Exception("Hero type not found!"));
+
+            // Subscribe to the Hero's death event
+            this.EnemyPlayer!.Hero.OnDeath += async (hero) =>
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    Shell.Current.DisplayAlert("Game Over", "You won the game!", "Ok");
+                });
+
+                await this.EndGame();
+            };
         }
     }
 
@@ -172,14 +201,19 @@ public class GameManager : ISignalRObserver
     {
         // Reset the game state
         this.IsGameStarted = false;
+        
         // Reset the turn timer
-        this.TurnTimer = 30;
+        this.TurnTimer = DEFAULT_TURN_TIME;
         this.IsCurrentTurn = false;
+
         // Reset the players
-        this.CurrentPlayer = null;
-        this.EnemyPlayer = null;
+        // this.CurrentPlayer = null;
+        // this.EnemyPlayer = null;
+        this.AvailableMana = 0;
+
         // Reset the board
         this.Board = new();
+        
         // Reset the graveyard
         this.Graveyard = new();
     }
@@ -218,7 +252,6 @@ public class GameManager : ISignalRObserver
         // Make every minion from the board be able to attack
         this.Board.EnableMinionsToAttack();
 
-        // Trace.WriteLine($"Starting Turn Timer! PLAYER: {this._signalRService.Player.Name}");
         // Start the timer
         await this.StartTurnTimer();
 
@@ -228,7 +261,6 @@ public class GameManager : ISignalRObserver
 
     public async Task OnTurnStarted(bool isFirstTurn)
     {
-        // Trace.WriteLine($"Is first turn: {isFirstTurn}. Player Start Turn: {this._signalRService.Player.Name}");
         this.IsCurrentTurn = true;
 
         if (!isFirstTurn)
@@ -241,22 +273,19 @@ public class GameManager : ISignalRObserver
     {
         this.IsCurrentTurn = false;
 
-        // Trace.WriteLine($"Turn ended! PLAYER: {this._signalRService.Player.Name}");
         // Send the end turn signal to the server
         await this._signalRService.SendEndTurn();
     }
 
-    public async Task OnEnemyPlayerUpdated(EnemyPlayerUpdateMessage message)
+    public async Task OnEnemyPlayerCardAmountUpdated(EnemyPlayerCardAmountUpdateMessage message)
     {
-        this.EnemyPlayer.Hero.Health = message.HeroHealth;
-
         // Add junk cards to the enemy player's hand to update the deck count
-        DeckPool deckPool = new();
+        List<IBaseCard> newDeck = new();
         for (int i = 0; i < message.PlayerDeckCardAmount; i++)
         {
-            deckPool.AddCard(new JunkCard{Image = "deck.jpg", Name = "JunkCard" });
+            newDeck.Add(new JunkCard{Image = "deck.jpg", Name = "JunkCard" });
         }
-        this.EnemyPlayer.Deck = deckPool;
+        this.EnemyPlayer.Deck.Update(newDeck);
 
         // Add junk cards to the enemy player's hand to update the hand count
         ObservableCollection<IBaseCard> updatedHandCards = new();
@@ -268,16 +297,68 @@ public class GameManager : ISignalRObserver
         this.EnemyPlayer.Hand.Update(updatedHandCards);
     }
 
+    public async Task OnEnemyPlayerHeroUpdated(EnemyPlayerHeroUpdateMessage message)
+    {
+        this.CurrentPlayer.Hero.Health = message.SenderEnemyHeroHealth;
+        this.EnemyPlayer.Hero.Health = message.SenderFriendlyHeroHealth;
+    }
+
     public async Task OnCardPlayed(IBaseCard card)
     {
         // If the card is a minion, play it on the board
-        if (card is IMinion minion)
+        if (card is BaseMinion minion)
         {
-           this.Board.PlayMinionEnemySide(minion);
+            this.Board.PlayMinionEnemySide(minion);
         }
 
         // Display the card as a temporary card on the screen
         this.OnTemporaryCardDisplayAction?.Invoke(card);
+    }
+
+    public async Task OnMinionUpdated(MinionCardUpdatedMessage message)
+    {
+        BaseMinion? minion = null;
+
+        // Find the minion on the board based on the Id
+        if (message.SenderBoardSide.Equals("enemy"))
+        {
+            minion = this.Board.FriendlySide.FirstOrDefault(m => m.Id.Equals(message.Id));
+        }
+        else
+        {
+            minion = this.Board.EnemySide.FirstOrDefault(m => m.Id.Equals(message.Id));
+        }
+
+        if (minion is null)
+        {
+            return;
+        }
+
+        // Update the minion's properties only if the values are different
+        if (minion.Health != message.Health)
+        {
+            minion.Health = message.Health;
+        }
+
+        if (minion.Attack != message.Attack)
+        {
+            minion.Attack = message.Attack;
+        }
+
+        if (minion.Name != message.Name)
+        {
+            minion.Name = message.Name;
+        }
+
+        if (minion.Description != message.Description)
+        {
+            minion.Description = message.Description;
+        }
+
+        if (minion.Image != message.Image)
+        {
+            minion.Image = message.Image;
+        }
     }
 
     public async Task OnGameJoined(Player player, Player? otherPlayer)
@@ -302,6 +383,7 @@ public class GameManager : ISignalRObserver
         if (this.CurrentPlayer is null)
         {
             await this.EndGame();
+            
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 this.IsGameStarted = false;
@@ -310,6 +392,7 @@ public class GameManager : ISignalRObserver
                 this.EnemyPlayer = null;
                 await Shell.Current.DisplayAlert("Error", "Could not start the game! Try again!", "Ok");
             });
+
             return;
         }
 
@@ -338,12 +421,9 @@ public class GameManager : ISignalRObserver
         }
     }
 
-    public void OnCardUnalive(object sender, EventArgs e)
+    public void OnCardUnalive(IBaseCard card)
     {
-        if (sender is IBaseCard card)
-        {
-            this.Graveyard.AddCard(card);
-        }
+        this.Graveyard.AddCard(card);
     }
 
     public async Task OnGameEnded()

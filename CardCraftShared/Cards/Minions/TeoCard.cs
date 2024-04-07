@@ -7,7 +7,7 @@ public class TeoCard : BaseMinion
         5,
         5, 
         "Teo",
-        "Teo is a very powerful card",
+        "Gym today?",
         CardRarityEnum.COMMON, 
         "teocard2.jpg"
         ) { }

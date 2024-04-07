@@ -5,7 +5,7 @@ public class CorridorCoffeeSpell : BaseSpell
     public CorridorCoffeeSpell() : base(
         0,
         "Corridor Coffee",
-        "Adds 2 Mana to the Hero",
+        "TIME FOR COFFEE!!! \n Adds 2 Mana to your Hero",
         CardRarityEnum.COMMON,
         "corridorcoffeespell.jpg"
     ) { }

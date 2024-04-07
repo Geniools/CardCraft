@@ -39,6 +39,7 @@
                             Grid.Column="0"
                             Text="Lobby Code: "
                             FontSize="20"
+                            FontFamily="CutOutsFLF"
                             HorizontalOptions="Start"
                             VerticalOptions="Center"
                             TextColor="#000000"
@@ -48,6 +49,7 @@
                             Grid.Column="1"
                             Text="{Binding LobbyCode}"
                             FontSize="20"
+                            FontFamily="CutOutsFLF"
                             FontAttributes="Bold"
                             TextColor="#525252"
                             HorizontalOptions="End"
@@ -85,6 +87,7 @@
                         <Label
                             Grid.Column="1"
                             Text="{Binding Player1.Name}"
+                            FontFamily="CutOutsFLF"
                             FontSize="70"
                             TextColor="#000000"
                         />
@@ -94,6 +97,7 @@
                         Grid.Row="1"
                         Text="VS"
                         FontSize="44"
+                        FontFamily="Progress"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
                         TextColor="#000000"
@@ -117,6 +121,7 @@
                         <Label
                             Grid.Column="1"
                             Text="{Binding Player2.Name}"
+                            FontFamily="CutOutsFLF"
                             FontSize="70"
                             TextColor="#000000"
                         />
@@ -128,7 +133,7 @@
         <Label
             Grid.Row="1"
             Text="{Binding TimerText}"
-            FontSize="44"
+            FontSize="40"
             HorizontalOptions="Center"
         />
     </Grid>

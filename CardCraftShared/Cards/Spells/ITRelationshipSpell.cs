@@ -3,9 +3,9 @@
 public class ITRelationshipSpell : BaseSpell
 {
     public ITRelationshipSpell(): base(
-        3,
+        1,
         "IT Relationship",
-        "Give 2 Health to Hero",
+        "We love each other :) \n Gain 2 Health",
         CardRarityEnum.COMMON,
         "itrelationshipspell.jpg"
     )

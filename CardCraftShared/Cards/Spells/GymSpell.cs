@@ -3,15 +3,15 @@
 public class GymSpell : BaseSpell
 {
     public GymSpell() : base(
-        3,
+        2,
         "Gym",
-        "Deal 2 damage to enemy Hero",
+        "Gain 3 health",
         CardRarityEnum.COMMON,
         "gymspell.jpg"
     ) { }
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        enemyPlayer.Hero.TakeDamage(2);
+        player.Hero.Health += 3;
     }
 }

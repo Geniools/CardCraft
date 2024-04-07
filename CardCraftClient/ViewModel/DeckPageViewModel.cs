@@ -43,6 +43,10 @@ public partial class DeckPageViewModel : BaseViewModel
         // Check if the player has a deck already
         if (this._signalRService.Player.Deck is not null)
         {
+            // Reset the Deck
+            this._signalRService.Player.Deck.Reset();
+
+            // Get the cards from the player's deck
             Deck = new ObservableCollection<IBaseCard>(this._signalRService.Player.Deck.Cards);
 
             this.DeckCardsCount = Deck.Count;

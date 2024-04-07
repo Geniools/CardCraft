@@ -5,7 +5,7 @@ public class BelastingdienstSpell : BaseSpell
     public BelastingdienstSpell(): base(
         5,
         "Belastingdienst",
-        "Deal 4 Damage to enemy Hero",
+        "The nightmare of any Dutch student... \nDeal 4 Damage to enemy Hero",
         CardRarityEnum.RARE,
         "belastingdienstspell.jpeg"
     ) { }

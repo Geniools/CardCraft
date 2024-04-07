@@ -25,8 +25,6 @@ public class GameHub : Hub
         {
             string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
 
-            this._onlineGameManagerDatabase.LogString($"Ending turn for lobby code {lobbyCode}. \n CONNECTION ID: {this.Context.ConnectionId}");
-
             await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.StartTurn, false);
         }
         catch (Exception e)
@@ -41,8 +39,6 @@ public class GameHub : Hub
         {
             Player player = this._onlineGameManagerDatabase.GetRandomPlayerFromConnectionId(this.Context.ConnectionId);
 
-            this._onlineGameManagerDatabase.LogString($"Picking random player to start turn! PLAYER: {player.Name}");
-
             await this.Clients.Client(player.ConnectionId).SendAsync(ServerCallbacks.StartTurn, true);
         }
         catch (GameAlreadyStarted)
@@ -54,13 +50,41 @@ public class GameHub : Hub
         }
     }
 
-    public async Task UpdateEnemyPlayer(EnemyPlayerUpdateMessage message)
+    public async Task UpdateMinion(MinionCardUpdatedMessage message)
     {
         try
         {
             string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
 
-            await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.EnemyPlayerUpdated, message);
+            await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.MinionUpdated, message);
+        }
+        catch (Exception e)
+        {
+            await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
+        }
+    }
+
+    public async Task UpdateEnemyPlayerHero(EnemyPlayerHeroUpdateMessage message)
+    {
+        try
+        {
+            string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+
+            await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.EnemyPlayerHeroUpdated, message);
+        }
+        catch (Exception e)
+        {
+            await this.Clients.Caller.SendAsync(ServerCallbacks.ErrorMessage, e.Message);
+        }
+    }
+
+    public async Task UpdateCardAmountEnemyPlayer(EnemyPlayerCardAmountUpdateMessage message)
+    {
+        try
+        {
+            string lobbyCode = this._onlineGameManagerDatabase.GetLobbyCodeFromConnectionId(this.Context.ConnectionId);
+
+            await this.Clients.OthersInGroup(lobbyCode).SendAsync(ServerCallbacks.EnemyPlayerCardAmountUpdated, message);
         }
         catch (Exception e)
         {

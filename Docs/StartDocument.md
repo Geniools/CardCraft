@@ -6,14 +6,14 @@ CardCraft is a card battle game for 2 people, where the players use a complex st
 their card decks.
 
 Before the battle begins, players construct their decks from a vast array of cards.
-Deck building is a crucial aspect of CardCraft, as players must carefully develop their decks to go forward with their
+Deck building is a crucial aspect of CardCraft, as players must carefully create their decks to go forward with their
 chosen strategy and adapt to their opponent's tactics.
 
 Each player has a set number of health points, representing their overall vitality in the game.
 The primary objective is to deplete your opponent's health points to zero before they can do the same to you.
 
-The game progresses through a series of rounds, with each round consisting of players taking turns to play cards from
-their hands and deploy minions onto the battlefield. Every minion has a specific mana cost that is deducted from Player's available mana pool.
+The game progresses through a series of turns, with each round consisting of players taking turns to play cards from
+their hands and deploy minions onto the battlefield (board). Every minion has a specific mana cost that is deducted from Player's available mana pool.
 
 Battles in CardCraft are resolved through a combination of card abilities (*should have*), attack values, health points and mana points.
 Each card possesses specific attributes, such as attack strength, health, mana and special abilities (*should have*),
@@ -39,31 +39,38 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 
 * Card game
 * 2D view point
-* Multiplayer mode only 
-* To start, it will require **2 users**
+* Multiplayer mode only (you need internet connection)
+* A game requires **2 users** to start
 
 ### Installation Guide
+Prerequisites: Visual Studio IDE, .NET 8.0 installed, .NET Maui framework installed.
 
-.exe file containing the game will be provided alongside the GitHub link to the repository
-
-Step 1: Run an exe file. 
-Step 2: Start playing the game by following the `Play Guide`.
+Step 1: Clone the repository from the following the link: https://github.com/Geniools/CardCraft.git<br>
+Step 2: Install the latest version *Visual Studio* <br>
+Step 3: Install **.NET Maui** framework, either within the IDE (VS Installer) or run "dotnet workload install maui". Use the following
+link as a reference: https://learn.microsoft.com/en-us/dotnet/maui/get-started/installation?view=net-maui-8.0&tabs=vswin<br>
+Step 4: Start Visual Studio and open the solution **(CardCraft.sln)**.<br>
+Step 5: If prompted, install any other necessary dependencies.<br>
+Step 6: If the solution is opened, press the Green arrow in the top toolbox section with "Windows Machine" option selected.<br>
+Step 7: Game should load soon.<br>
+Step 8: Start playing the game by following the `Play Guide`.
 
 ### Play Guide
 
 #### Phase 1
-1. User inputs the username that he would like to be represented with. Needs to be at least 2 characters and not match the other player's username.
+1. User inputs the username that he would like to be represented with. Needs to be at least 2 characters.
 2. Player then needs to, choose a Hero, and then move on to complete his Playing deck. There is an option to select each card individually or by random. Press Finish to save the deck.
-3. Player needs to go back by pressing Select Hero. Then press Start game with the Username and LobbyCode not being empty.
+3. Player needs to go back by pressing the *Select Hero*. Then press Start game with the Username and LobbyCode not being empty.
 4. Player either joins an existing lobby, by inputting a lobby code, or creates a new one. 
-5. He then is moved to a lobby that is either empty (waiting for a new player), or already with existing enemy player.
+5. He then is moved to a lobby that is either empty (waiting for a new player), or already with an existing enemy player.
 6. When 2 players are present in the lobby, the game is automatically started after 5 seconds.
 
 #### Phase 2
-1. The game is being played in Turns
-2. Player selects cards to be placed on the board
-3. The choice is between minions or spells. They can attack other minions or Hero.
-4. The player has a limited amount of mana to play the card, since each of them has their own cost.
+1. The game is being played in Turns. The player that goes first is randomly selected.
+2. Player selects a cardsto be placed on the board															
+3. The choice is between minions or spells. Each mininion has a cost of mana, attack and health points assigned to it. Spells have a cost of mana and a special ability.
+(Read their description to know what they do).
+4. The player has a limited amount of mana to play the card, since each of them has their own cost. The mana is being refilled each turn.
 5. The game is concluded/won by depleting the another hero health to 0 or lost if your health reaches 0.
 
 ### Class Diagram
@@ -96,16 +103,16 @@ Step 2: Start playing the game by following the `Play Guide`.
 ### Design Mockups
 
 #### Splash Screen
-![Splash](./Assets/Card_Craft_Splash.png)
+![Splash](./Assets/Card_Craft_SplashDraft.png)
 
 #### User Naming
-![PreLobby](./Assets/Card_Craft_PreLobby.png)
+![PreLobby](./Assets/Card_Craft_PreLobbyDraft.png)
 
 #### Lobby Screen
-![Lobby](./Assets/Card_Craft_Lobby.png)
+![Lobby](./Assets/Card_Craft_LobbyDraft.png)
 
 #### Game
-![Game](./Assets/Card_Craft_Board.png)
+![Game](./Assets/Card_Craft_BoardDraft.png)
 
 #### Icon
 ![Icon](./Assets/Card_Craft_Icon.png)
@@ -156,9 +163,13 @@ This chapter will describe what are the technical specifications of this applica
 
 ### Design Patterns used
 
-* Observer Pattern - This patterns lets you notify objects, when a certain event occurs. In this project, the Game Manager is the subscriber, that gets informed about all the events so that it can update necessary methods. The SignalR server is the place that holds all the observers in a list. ISignalRObserver class is the publisher <br> <br>
-* Object Pool Pattern - Lets you reuse instances of classes and avoid instantiating them again. <br><br>
-* Decorator Pattern - This pattern was used to make the game expandable and flexible. Having this allows us to build on top of the base card by adding new funcitonalities etc.
+* Observer Pattern - This patterns lets you notify objects, when a certain event occurs. 
+In this project, the Game Manager is the subscriber, that gets informed about all the events so that it can update necessary methods. 
+The SignalR server is the place that holds all the observers in a list. ISignalRObserver class is the publisher <br> <br>
+* Object Pool Pattern - Lets you reuse instances of classes and avoid instantiating them again. The Deck is a using the Object Pool Pattern, since
+the player only makes a deck once, and is updated afterwards depending on game's conditions<br><br>
+* Decorator Pattern - This pattern was used to make the game expandable and flexible. Having this allows us to build on top of the base card by adding
+new funcitonalities, such as *DevineShield* or *Taunt*...
 
 ### Threading used
 
@@ -168,7 +179,7 @@ This chapter will describe what are the technical specifications of this applica
 * Lock - Locks an object that is used in the thread so that the other thread does not use it. Used in adding and removing cards to the deck. Present in few methods in DeckPageViewModel class.
 * Async I/O - Allows the app run in the background, while the threads are still not finished.
 
-### Cards Spreadsheet
+### Cards Spreadsheet (not updated)
 
 #### *Cards*
 |       Name       |   Rarity    | ManaCost | Attack | Health |

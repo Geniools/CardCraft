@@ -6,18 +6,20 @@ public class DeckPool
 {
     public const int MAX_AMOUNT_CARDS = 30;
 
+    private Queue<IBaseCard> PersistentCards { get; set; }
     public Queue<IBaseCard> Cards { get; set; }
 
     public DeckPool()
     {
-        this.Cards = [];
         this.Cards = new();
+        this.PersistentCards = new();
     }
 
     public DeckPool(IList<IBaseCard> cards)
     {
         if (cards.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
         this.Cards = new(cards);
+        this.PersistentCards = new(cards);
     }
     
     public void Shuffle()
@@ -25,6 +27,13 @@ public class DeckPool
         var cards = Cards.ToList();
         var shuffled = cards.OrderBy(a => Guid.NewGuid()).ToList();
         Cards = new Queue<IBaseCard>(shuffled);
+    }
+
+    public void Update(IList<IBaseCard> cards)
+    {
+        if (cards.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
+        Cards = new(cards);
+        PersistentCards = new(cards);
     }
 
     public IBaseCard DrawCard() 
@@ -49,12 +58,8 @@ public class DeckPool
         return Cards.Count >= MAX_AMOUNT_CARDS;
     }
 
-    public void AddDeck(IList<IBaseCard> deck)
+    public void Reset()
     {
-        if (deck.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
-        foreach (var card in deck)
-        {
-            AddCard(card);
-        }
+        Cards = new(PersistentCards);
     }
 }

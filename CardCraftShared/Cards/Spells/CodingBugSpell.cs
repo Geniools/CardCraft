@@ -5,7 +5,7 @@ public class CodingBugSpell : BaseSpell
     public CodingBugSpell(): base (
         1,
         "Bug",
-        "Deal 1 damage to enemy Hero",
+        "Oops, here's a bug for you! \nDeal 1 damage to enemy Hero",
         CardRarityEnum.COMMON,
         "codingbugspell.jpg"
     ) { }

@@ -27,6 +27,8 @@ public partial class LobbyPageViewModel : BaseViewModel
 
     public LobbyPageViewModel(SignalRService signalRService, GameManager gm)
     {
+        signalRService.Reset();
+
         this._gm = gm;
         this.TimerText = "Waiting for players";
         this.LobbyCode = signalRService.LobbyCode;

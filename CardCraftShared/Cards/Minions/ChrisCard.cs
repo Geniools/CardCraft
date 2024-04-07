@@ -7,7 +7,7 @@ public class ChrisCard : BaseMinion
         9,
         9,
         "Chris",
-        "Removes one card from the enemy board that is less than 5 mana",
+        "Fun? What is that?",
         CardRarityEnum.EPIC,
         "chriscard.jpg"
     ) { }

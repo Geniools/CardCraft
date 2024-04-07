@@ -7,7 +7,7 @@ public class WomanCard : BaseMinion
             7,
         7,
         "A Woman",
-        "Enemy hero cannot play any card this round",
+        "Enemy is stunned, seeing woman for the first time in his life",
         CardRarityEnum.EPIC,
         "womancard.png"
     ) { }

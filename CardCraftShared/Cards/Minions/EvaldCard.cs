@@ -7,7 +7,7 @@ public class EvaldCard : BaseMinion
         3,
         4, 
         "Evald",
-        "Evald is a very powerful card",
+        "League of Legends Zoe main",
         CardRarityEnum.COMMON, 
         "evaldcard.jpg"
         ) { }

@@ -8,7 +8,7 @@ public class TatedSpell : BaseSpell
     (
         9,
         "Tated",
-        "Tates 1 enemy minion, change their health and attack to 1",
+        "Tates 1 random enemy minion, change their health and attack to 1",
         CardRarityEnum.EPIC,
         "tatedspell.jpg"
     ) { }
@@ -27,6 +27,7 @@ public class TatedSpell : BaseSpell
                 minion.Health = 1;
                 minion.Attack = 1;
                 minion.Image = "tatedspell.jpg";
+                minion.Description += " (Got Tated)";
             }
         }
     }

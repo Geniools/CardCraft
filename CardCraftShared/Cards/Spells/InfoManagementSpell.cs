@@ -7,18 +7,23 @@ public class InfoManagementSpell : BaseSpell
     public InfoManagementSpell() : base(
         6,
         "InfoManagement",
-        "Remove 2 Attack points from each minion in enemy Hand",
+        "We all remember this. Best subject ever... \n Deal 8 Damage to a random enemy minion",
         CardRarityEnum.RARE,
         "infomanagementspell.jpeg"
     ) { }
 
     public override void TriggerEffect(Player player, Player enemyPlayer, Board board)
     {
-        foreach (IBaseCard card in enemyPlayer.Hand.Cards)
+        if (board.EnemySide.Count > 0)
         {
-            if (card is IMinion minion)
+            Random random = new Random();
+            int randomIndex = random.Next(0, board.EnemySide.Count);
+
+            IBaseCard randomCard = board.EnemySide[randomIndex];
+
+            if (randomCard is IMinion minion)
             {
-                minion.Attack -= 2;
+                minion.TakeDamage(7);
             }
         }
     }

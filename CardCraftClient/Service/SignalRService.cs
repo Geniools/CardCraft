@@ -2,10 +2,8 @@
 using CardCraftClient.Core.Interfaces;
 using CardCraftClient.View;
 using CardCraftShared;
-using CardCraftShared.Cards.Minions;
 using CardCraftShared.Core.Other;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.Logging;
 
 namespace CardCraftClient.Service;
 
@@ -41,7 +39,12 @@ public class SignalRService
         // Define connection events
         this._hubConnection.Closed += async (error) =>
         {
-            // TODO: Inform users about the connection loss
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                Shell.Current.DisplayAlert("Error", "Connection with the server is lost! \n Try to run the application again.", "Ok");
+
+                await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
+            });
         };
 
         this._hubConnection.Reconnecting += async (error) =>
@@ -54,11 +57,11 @@ public class SignalRService
         // Called when an error occurs
         this._hubConnection.On<string>(ServerCallbacks.ErrorMessage, async (message) =>
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
-                Shell.Current.GoToAsync("..");
-
                 Shell.Current.DisplayAlert("Error", message, "Ok");
+
+                await Shell.Current.GoToAsync($"///{nameof(StartPage)}");
             });
         });
 
@@ -104,21 +107,36 @@ public class SignalRService
             {
                 minionCard.Attack = cardMessage.Attack;
                 minionCard.Health = cardMessage.Health;
+                minionCard.ManaCost = cardMessage.ManaCost;
+                minionCard.Id = cardMessage.Id;
             }
+
+            Trace.WriteLine($"Card received: {cardMessage.Id}");
 
             await this.NotifyObserversCardPlayed(card);
         });
 
         // Called when the enemy player is updated
-        this._hubConnection.On<EnemyPlayerUpdateMessage>(ServerCallbacks.EnemyPlayerUpdated, async (message) =>
+        this._hubConnection.On<EnemyPlayerCardAmountUpdateMessage>(ServerCallbacks.EnemyPlayerCardAmountUpdated, async (message) =>
         {
-            await this.NotifyObserversEnemyPlayerUpdated(message);
+            await this.NotifyObserversEnemyPlayerCardAmountUpdated(message);
+        });
+
+        // Called when a minion is updated
+        this._hubConnection.On<MinionCardUpdatedMessage>(ServerCallbacks.MinionUpdated, async (message) =>
+        {
+            await this.NotifyObserversMinionUpdated(message);
+        });
+
+        // Called when the enemy player hero is updated
+        this._hubConnection.On<EnemyPlayerHeroUpdateMessage>(ServerCallbacks.EnemyPlayerHeroUpdated, async (message) =>
+        {
+            await this.NotifyObserversEnemyPlayerHeroUpdated(message);
         });
 
         // Called when the turn starts
         this._hubConnection.On<bool>(ServerCallbacks.StartTurn, async (isFirstTurn) =>
         {
-            Trace.WriteLine($"Received StartTurn. PLAYER {this.Player.Name}");
             await this.NotifyObserversTurnStarted(isFirstTurn);
         });
 
@@ -126,6 +144,22 @@ public class SignalRService
         _ = this.StartConnection();
     }
 
+    public async Task StartConnection()
+    {
+        if (this._hubConnection.State == HubConnectionState.Disconnected)
+        {
+            await this._hubConnection.StartAsync();
+
+            this.Player.ConnectionId = this._hubConnection.ConnectionId;
+        }
+    }
+
+    public async Task StopConnection()
+    {
+        await this._hubConnection.StopAsync();
+    }
+
+    // Observer pattern
     public void AddObserver(ISignalRObserver observer)
     {
         this._observers.Add(observer);
@@ -168,11 +202,19 @@ public class SignalRService
         }
     }
 
-    private async Task NotifyObserversEnemyPlayerUpdated(EnemyPlayerUpdateMessage message)
+    private async Task NotifyObserversEnemyPlayerCardAmountUpdated(EnemyPlayerCardAmountUpdateMessage message)
     {
         foreach (ISignalRObserver observer in this._observers)
         {
-            await observer.OnEnemyPlayerUpdated(message);
+            await observer.OnEnemyPlayerCardAmountUpdated(message);
+        }
+    }
+
+    private async Task NotifyObserversEnemyPlayerHeroUpdated(EnemyPlayerHeroUpdateMessage message)
+    {
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnEnemyPlayerHeroUpdated(message);
         }
     }
 
@@ -184,16 +226,17 @@ public class SignalRService
         }
     }
 
-    public async Task StartConnection()
+    private async Task NotifyObserversMinionUpdated(MinionCardUpdatedMessage message)
     {
-        if (this._hubConnection.State == HubConnectionState.Disconnected)
-        { 
-            await this._hubConnection.StartAsync();
-
-            this.Player.ConnectionId = this._hubConnection.ConnectionId;
+        foreach (ISignalRObserver observer in this._observers)
+        {
+            await observer.OnMinionUpdated(message);
         }
     }
 
+    // ==================
+
+    // Functions to send messages to the server
     public async Task JoinGame(string lobbyCode, string playerName)
     {
         Player player = new Player();
@@ -233,14 +276,20 @@ public class SignalRService
         {
             cardMessage.Attack = minionCard.Attack;
             cardMessage.Health = minionCard.Health;
+            cardMessage.Id = minionCard.Id;
         }
 
         await this.HubConnection.InvokeAsync(ServerCallbacks.PlayCard, cardMessage);
     }
 
-    public async Task SendUpdateEnemyPlayer(EnemyPlayerUpdateMessage message)
+    public async Task SendCardAmountUpdateEnemyPlayer(EnemyPlayerCardAmountUpdateMessage message)
     {
-        await this.HubConnection.InvokeAsync(ServerCallbacks.UpdateEnemyPlayer, message);
+        await this.HubConnection.InvokeAsync(ServerCallbacks.UpdateCardAmountEnemyPlayer, message);
+    }
+
+    public async Task SendHeroUpdateEnemyPlayer(EnemyPlayerHeroUpdateMessage message)
+    {
+        await this.HubConnection.InvokeAsync(ServerCallbacks.UpdateEnemyPlayerHero, message);
     }
 
     public async Task SendPickRandomPlayerToStartTurn()
@@ -248,13 +297,22 @@ public class SignalRService
         await this.HubConnection.InvokeAsync(ServerCallbacks.PickRandomPlayerToStartTurn);
     }
 
+    public async Task SendMinionUpdated(MinionCardUpdatedMessage message)
+    {
+        await this.HubConnection.InvokeAsync(ServerCallbacks.UpdateMinion, message);
+    }
+
     public async Task SendEndTurn()
     {
         await this.HubConnection.InvokeAsync(ServerCallbacks.EndTurn);
     }
 
-    public async Task StopConnection()
+    public void Reset()
     {
-        await this._hubConnection.StopAsync();
+        this.Player.Hero.Health = BaseHero.DefaultHealth;
+        this.Player.Mana = 1;
+
+        this.Player.Hand.Clear();
+        this.Player.Deck.Reset();
     }
 }
