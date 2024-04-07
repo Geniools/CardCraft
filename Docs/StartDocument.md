@@ -43,11 +43,16 @@ here: (https://hearthstone.fandom.com/wiki/Gameplay)
 * To start, it will require **2 users**
 
 ### Installation Guide
+Prerequisites: Visual Studio IDE, .NET 8.0 installed, .NET Maui framework installed.
 
-.exe file containing the game will be provided alongside the GitHub link to the repository
-
-Step 1: Run an exe file. 
-Step 2: Start playing the game by following the `Play Guide`.
+Step 1: Clone the repository under the link: https://github.com/Geniools/CardCraft.git
+Step 2: Have a Visual Studio installed.
+Step 3: Install .net Maui framework, either within the IDE (VS Installer) or run "dotnet workload install maui"
+Step 4: Start Visual studio and open the repository folder. Press on the CardCraft.sln file twice to open it as a solution
+Step 5: If prompted, install any other necessary dependencies.
+Step 6: If the solution is opened, press Green arrow in the top toolbox section with "Windows Machine" option selected.
+Step 7: Game should load soon.
+Step 8: Start playing the game by following the `Play Guide`.
 
 ### Play Guide
 
