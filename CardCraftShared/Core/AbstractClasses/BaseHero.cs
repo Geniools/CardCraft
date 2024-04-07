@@ -74,12 +74,7 @@ public abstract class BaseHero : IAttackable
 
     public void AttackTarget(IAttackable target)
     {
-        throw new NotImplementedException();
-    }
-    
-    public void TriggerHeroPower()
-    {
-        throw new NotImplementedException();
+        //Hero too weak to attack :D
     }
 
     public void TakeDamage(int damage)

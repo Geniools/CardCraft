@@ -58,15 +58,6 @@ public class DeckPool
         return Cards.Count >= MAX_AMOUNT_CARDS;
     }
 
-    public void AddDeck(IList<IBaseCard> deck)
-    {
-        if (deck.Count > MAX_AMOUNT_CARDS) throw new Exception("Deck is too large");
-        foreach (var card in deck)
-        {
-            AddCard(card);
-        }
-    }
-
     public void Reset()
     {
         Cards = new(PersistentCards);
